@@ -102,17 +102,14 @@
     <div class="noise"></div>
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
-
-    <!-- Header -->
     <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
         <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
         <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
-            <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav-home">Ana Sayfa</a>
-            <a href="projeler.html" class="text-primary" data-i18n="nav-projects">Projeler</a>
-            <a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
+            <a href="index.html" class="hover:text-primary transition-colors">Ana Sayfa</a>
+            <a href="projeler.html" class="text-primary">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
         </nav>
-        
-        <!-- Language Switcher -->
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
         <div class="relative group">
             <button 
             id="lang-toggle-btn"
@@ -138,10 +135,13 @@
             </button>
             </div>
         </div>
-        <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars-staggered"></i></button>
+        <a href="mailto:yakupdelilakin@gmail.com" 
+            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
+            data-i18n="coffee">
+            Kahve İçelim
+        </a>
+        </div>
     </header>
-
-    <!-- Hero / Başlık Alanı -->
     <section class="min-h-[70vh] flex items-end pb-24 px-6 md:px-12 lg:px-24 relative project-hero">
         <div class="max-w-7xl mx-auto w-full">
             <div class="inline-block px-5 py-2 bg-primary/20 backdrop-blur-sm rounded-full mb-6">
@@ -155,7 +155,6 @@
             </p>
         </div>
     </section>
-
     <section class="py-24 px-6 md:px-12 lg:px-24 bg-bgDark">
         <div class="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12 lg:gap-16">
             <div class="lg:col-span-2 space-y-12">
@@ -168,9 +167,7 @@
                     <img src="images/athleticocore-camera.png" alt="Kamera" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
                 </div>
             </div>
-            
             <div class="space-y-12 lg:sticky lg:top-24 lg:h-fit">
-                <!-- Project Details -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-info-title">Proje Bilgileri</h3>
                     <dl class="space-y-4 text-sm text-zinc-400">
@@ -194,8 +191,6 @@
                         </div>
                     </dl>
                 </div>
-
-                <!-- Live Links -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-links-title">Canlı Linkler</h3>
                     <div class="flex flex-col gap-4">
@@ -209,8 +204,6 @@
                         </a>
                     </div>
                 </div>
-
-                <!-- Challenges -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-challenges">Karşılaşılan Zorluklar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
@@ -228,8 +221,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- System Workflow -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-system">Sistem Nasıl Çalışıyor?</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
@@ -255,8 +246,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- Technical Decisions -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-tech">Teknik Kararlar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
@@ -274,8 +263,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- Results -->
                 <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-results">Elde Edilen Sonuçlar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
@@ -296,15 +283,12 @@
             </div>
         </div>
     </section>
-
     <div class="py-16 text-center">
         <a href="projeler.html" class="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 rounded-full transition-all group">
             <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
             <span data-i18n="athleticocore-back">Tüm Projeleri Gör</span>
         </a>
     </div>
-
-    <!-- Cursor & Scroll Logic -->
     <script>
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
@@ -338,104 +322,115 @@
             }
         });
     </script>
-
-    <!-- Language Logic -->
     <script>
+        console.log('Tarayıcı dili:', navigator.language);
+        console.log('User language:', navigator.userLanguage);
+        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
         const supportedLanguages = ['tr', 'en'];
         const defaultLang = 'tr';
-
-        let currentLang = localStorage.getItem('preferredLanguage') || 
-                         (navigator.language || 'tr').slice(0, 2);
-
-        if (!supportedLanguages.includes(currentLang)) {
-            currentLang = defaultLang;
+        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
+        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
+            currentLang = 'tr';
+        } else {
+            currentLang = 'en';
         }
-
+        console.log('Tespit edilen dil:', currentLang);
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && supportedLanguages.includes(savedLang)) {
+            currentLang = savedLang;
+            console.log('LocalStorage dil tercihi:', savedLang);
+        }
         let translations = {};
-
         async function loadLanguage(lang) {
             try {
-                // Assuming json files are in 'locales/' folder
-                const res = await fetch(`locales/${lang}.json`);
-                if (!res.ok) throw new Error(`Could not load ${lang}.json`);
-                
-                translations = await res.json();
-
-                document.documentElement.lang = lang;
-                
-                // Update Title
-                if(translations.siteTitle) {
-                     document.title = translations.siteTitle;
+                console.log('Dil yükleniyor:', lang);
+                const response = await fetch(`locales/${lang}.json`);
+                if (!response.ok) {
+                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
+                    throw new Error('Dil dosyası yüklenemedi');
                 }
-
-                // Update all elements with data-i18n
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.dataset.i18n;
-                    const value = translations[key];
-                    if (!value) return;
-
+                translations = await response.json();
+                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
+                document.documentElement.lang = lang;
+                document.title = translations.siteTitle || document.title;
+                applyTranslations();
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (err) {
+                console.error('Dil yükleme hatası:', err);
+                if (lang !== 'tr') {
+                    console.log('Varsayılan Türkçe deniyor...');
+                    loadLanguage('tr');
+                }
+            }
+        }
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Çevrilecek element sayısı:', elements.length);
+            let translatedCount = 0;
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                let value = getNestedValue(translations, key);
+                if (value !== undefined && value !== null) {
+                    translatedCount++;
                     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                         el.placeholder = value;
+                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
+                        el.alt = value;
+                    } else if (el.hasAttribute('title')) {
+                        el.title = value;
+                    } else if (el.tagName === 'textPath') {
+                        el.textContent = value;
                     } else {
-                        // Use innerHTML if you need bold tags in translation, otherwise textContent
-                        // For safety, generally textContent is better unless you trust the JSON source explicitly
                         el.textContent = value;
                     }
-                });
-
-                updateLangUI(lang);
-                localStorage.setItem('preferredLanguage', lang);
-            } catch (e) {
-                console.error('Language loading failed:', e);
-            }
+                } else {
+                    console.log('Çeviri bulunamadı:', key);
+                }
+            });
+            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
         }
-
-        function changeLanguage(lang) {
-            if (!supportedLanguages.includes(lang)) return;
-            currentLang = lang;
-            loadLanguage(lang);
-            toggleLangDropdown(false); // Close dropdown after selection
+        function getNestedValue(obj, key) {
+            return key.split('.').reduce((o, k) => o && o[k], obj);
         }
-
-        function toggleLangDropdown(forceState) {
-            const dropdown = document.getElementById('lang-dropdown-menu');
-            const btnIcon = document.querySelector('#lang-toggle-btn i');
-            
-            const isHidden = dropdown.classList.contains('opacity-0');
-            const shouldShow = forceState !== undefined ? forceState : isHidden;
-
-            if (shouldShow) {
-                dropdown.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
-                btnIcon.classList.add('rotate-180');
-            } else {
-                dropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
-                btnIcon.classList.remove('rotate-180');
-            }
-        }
-
-        function updateLangUI(lang) {
-            const display = document.getElementById('current-lang-display');
-            if(display) display.textContent = lang.toUpperCase();
-            
-            const trCheck = document.getElementById('tr-check');
-            const enCheck = document.getElementById('en-check');
-            
-            if(trCheck) trCheck.style.opacity = lang === 'tr' ? '1' : '0';
-            if(enCheck) enCheck.style.opacity = lang === 'en' ? '1' : '0';
-        }
-
-        // Initialize on load
         window.addEventListener('load', () => {
+            console.log('Sayfa yüklendi, dil yükleniyor...');
             loadLanguage(currentLang);
         });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('lang-dropdown-menu');
-            const btn = document.getElementById('lang-toggle-btn');
-            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
-                toggleLangDropdown(false);
+        function changeLanguage(lang) {
+            if (supportedLanguages.includes(lang)) {
+                loadLanguage(lang);
             }
+        }
+        window.changeLanguage = changeLanguage;
+        function updateLangUI(lang) {
+        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
+        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
+        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        const btn = document.getElementById('lang-toggle-btn');
+        btn.classList.toggle('border-primary/50', true);
+        btn.classList.toggle('bg-primary/5', lang === currentLang);
+        }
+        function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang) && lang !== currentLang) {
+            currentLang = lang;
+            loadLanguage(lang);
+            updateLangUI(lang);
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        }
+        function toggleLangDropdown() {
+        const dropdown = document.getElementById('lang-dropdown-menu');
+        dropdown.classList.toggle('opacity-100');
+        dropdown.classList.toggle('scale-100');
+        dropdown.classList.toggle('pointer-events-auto');
+        }
+        document.addEventListener('click', (e) => {
+        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        });
+        window.addEventListener('load', () => {
+        updateLangUI(currentLang);
         });
     </script>
 </body>

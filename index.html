@@ -168,7 +168,7 @@
         YDA<span class="text-primary">.</span>
         </a>
         <nav class="hidden md:flex gap-8 lg:gap-10 font-medium uppercase text-[10px] md:text-xs tracking-[0.3em]">
-        <a href="#work" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
+        <a href="projeler.html" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
         <a href="#about" class="hover:text-primary transition-colors" data-i18n="nav-about">Hakkımda</a>
         <a href="#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
         </nav>
@@ -478,24 +478,18 @@
         window.addEventListener('load', loadSelectedProjects);
     </script>
     <script>
-        // Mevcut scriptin en üstüne bu kodu ekleyin
         console.log('Tarayıcı dili:', navigator.language);
         console.log('User language:', navigator.userLanguage);
         console.log('Saved language:', localStorage.getItem('preferredLanguage'));
-        // Desteklenen diller ve varsayılan
         const supportedLanguages = ['tr', 'en'];
-        const defaultLang = 'tr'; // Varsayılanı Türkçe yap
-        // Tarayıcı dilini tespit et (kesin Türkçe kontrolü)
+        const defaultLang = 'tr';
         let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
-        // Türkçe kontrolü daha spesifik yap
         if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
             currentLang = 'tr';
         } else {
             currentLang = 'en';
         }
-        // DEBUG için
         console.log('Tespit edilen dil:', currentLang);
-        // Kullanıcı tercihi varsa onu kullan
         const savedLang = localStorage.getItem('preferredLanguage');
         if (savedLang && supportedLanguages.includes(savedLang)) {
             currentLang = savedLang;
@@ -518,7 +512,6 @@
                 localStorage.setItem('preferredLanguage', lang);
             } catch (err) {
                 console.error('Dil yükleme hatası:', err);
-                // Hata durumunda varsayılan dil dosyasını dene
                 if (lang !== 'tr') {
                     console.log('Varsayılan Türkçe deniyor...');
                     loadLanguage('tr');

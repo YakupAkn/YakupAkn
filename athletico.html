@@ -105,11 +105,42 @@
     <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
         <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
         <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
-            <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav-home">Ana Sayfa</a>
-            <a href="projeler.html" class="text-primary" data-i18n="nav-projects">Projeler</a>
-            <a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
+            <a href="index.html" class="hover:text-primary transition-colors">Ana Sayfa</a>
+            <a href="projeler.html" class="text-primary">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
         </nav>
-        <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars-staggered"></i></button>
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+        <div class="relative group">
+            <button 
+            id="lang-toggle-btn"
+            onclick="toggleLangDropdown()"
+            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+            aria-label="Dil seç"
+            >
+            <span id="current-lang-display" class="font-bold">TR</span>
+            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+            </button>
+            <div id="lang-dropdown-menu" 
+                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+            
+            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇹🇷</span>
+                <span>Türkçe</span>
+                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇬🇧</span>
+                <span>English</span>
+                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            </div>
+        </div>
+        <a href="mailto:yakupdelilakin@gmail.com" 
+            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
+            data-i18n="coffee">
+            Kahve İçelim
+        </a>
+        </div>
     </header>
     <section class="min-h-[70vh] flex items-end pb-24 px-6 md:px-12 lg:px-24 relative project-hero">
         <div class="max-w-7xl mx-auto w-full">
@@ -255,6 +286,117 @@
                 header.classList.remove('nav-blur', 'py-4');
                 header.classList.add('py-6');
             }
+        });
+    </script>
+    <script>
+        console.log('Tarayıcı dili:', navigator.language);
+        console.log('User language:', navigator.userLanguage);
+        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
+        const supportedLanguages = ['tr', 'en'];
+        const defaultLang = 'tr';
+        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
+        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
+            currentLang = 'tr';
+        } else {
+            currentLang = 'en';
+        }
+        console.log('Tespit edilen dil:', currentLang);
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && supportedLanguages.includes(savedLang)) {
+            currentLang = savedLang;
+            console.log('LocalStorage dil tercihi:', savedLang);
+        }
+        let translations = {};
+        async function loadLanguage(lang) {
+            try {
+                console.log('Dil yükleniyor:', lang);
+                const response = await fetch(`locales/${lang}.json`);
+                if (!response.ok) {
+                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
+                    throw new Error('Dil dosyası yüklenemedi');
+                }
+                translations = await response.json();
+                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
+                document.documentElement.lang = lang;
+                document.title = translations.siteTitle || document.title;
+                applyTranslations();
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (err) {
+                console.error('Dil yükleme hatası:', err);
+                if (lang !== 'tr') {
+                    console.log('Varsayılan Türkçe deniyor...');
+                    loadLanguage('tr');
+                }
+            }
+        }
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Çevrilecek element sayısı:', elements.length);
+            let translatedCount = 0;
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                let value = getNestedValue(translations, key);
+                if (value !== undefined && value !== null) {
+                    translatedCount++;
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = value;
+                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
+                        el.alt = value;
+                    } else if (el.hasAttribute('title')) {
+                        el.title = value;
+                    } else if (el.tagName === 'textPath') {
+                        el.textContent = value;
+                    } else {
+                        el.textContent = value;
+                    }
+                } else {
+                    console.log('Çeviri bulunamadı:', key);
+                }
+            });
+            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
+        }
+        function getNestedValue(obj, key) {
+            return key.split('.').reduce((o, k) => o && o[k], obj);
+        }
+        window.addEventListener('load', () => {
+            console.log('Sayfa yüklendi, dil yükleniyor...');
+            loadLanguage(currentLang);
+        });
+        function changeLanguage(lang) {
+            if (supportedLanguages.includes(lang)) {
+                loadLanguage(lang);
+            }
+        }
+        window.changeLanguage = changeLanguage;
+        function updateLangUI(lang) {
+        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
+        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
+        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        const btn = document.getElementById('lang-toggle-btn');
+        btn.classList.toggle('border-primary/50', true);
+        btn.classList.toggle('bg-primary/5', lang === currentLang);
+        }
+        function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang) && lang !== currentLang) {
+            currentLang = lang;
+            loadLanguage(lang);
+            updateLangUI(lang);
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        }
+        function toggleLangDropdown() {
+        const dropdown = document.getElementById('lang-dropdown-menu');
+        dropdown.classList.toggle('opacity-100');
+        dropdown.classList.toggle('scale-100');
+        dropdown.classList.toggle('pointer-events-auto');
+        }
+        document.addEventListener('click', (e) => {
+        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        });
+        window.addEventListener('load', () => {
+        updateLangUI(currentLang);
         });
     </script>
 </body>

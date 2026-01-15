@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeler | YDA.</title>
+    <title data-i18n="projeler-title">Projeler | YDA.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -65,7 +65,38 @@
             <a href="#" class="text-primary">Projeler</a>
             <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
         </nav>
-        <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars-staggered"></i></button>
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+        <div class="relative group">
+            <button 
+            id="lang-toggle-btn"
+            onclick="toggleLangDropdown()"
+            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+            aria-label="Dil seç"
+            >
+            <span id="current-lang-display" class="font-bold">TR</span>
+            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+            </button>
+            <div id="lang-dropdown-menu" 
+                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+            
+            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇹🇷</span>
+                <span>Türkçe</span>
+                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇬🇧</span>
+                <span>English</span>
+                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            </div>
+        </div>
+        <a href="mailto:yakupdelilakin@gmail.com" 
+            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
+            data-i18n="coffee">
+            Kahve İçelim
+        </a>
+        </div>
     </header>
     <main class="pt-48 pb-20 px-6 lg:px-24 max-w-7xl mx-auto">
         <div class="mb-24">
@@ -99,7 +130,6 @@
             cursor.style.left = mouseX + 'px';
             cursor.style.top = mouseY + 'px';
         });
-
         function animateCursor() {
             outlineX += (mouseX - outlineX) * 0.15;
             outlineY += (mouseY - outlineY) * 0.15;
@@ -108,25 +138,18 @@
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
-
-        // --- FETCH PROJECTS ---
         async function loadProjects() {
             const list = document.getElementById('projects-list');
             const skeleton = document.getElementById('skeleton-loader');
-            
             try {
                 const response = await fetch('projeler.json');
                 const projects = await response.json();
-                
-                // Skeleton bekleme süresi
                 await new Promise(resolve => setTimeout(resolve, 800));
                 skeleton.remove();
-
                 projects.forEach((proj, index) => {
                     const row = document.createElement('a');
                     row.href = `${proj.id}.html`;
                     row.className = 'project-row group py-12 md:py-16 flex flex-col md:flex-row md:items-start justify-between transition-all duration-500';
-                    
                     row.innerHTML = `
                         <div class="flex items-start gap-6 md:gap-16">
                             <span class="text-zinc-700 font-mono text-xs mt-4 group-hover:text-primary transition-colors">
@@ -154,7 +177,6 @@
                             </div>
                         </div>
                     `;
-
                     row.addEventListener('mouseenter', () => {
                         document.body.classList.add('cursor-hover');
                     });
@@ -171,123 +193,123 @@
                 list.innerHTML = '<p class="text-primary py-20 font-mono text-center uppercase tracking-widest">VERİLER ÇEKİLEMEDİ</p>';
             }
         }
-
-        // --- HEADER EFFECT ---
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if(window.scrollY > 50) header.classList.add('nav-blur', 'py-4');
             else header.classList.remove('nav-blur', 'py-4');
         });
-
-        // Init
         window.onload = loadProjects;
     </script>
     <script>
-    // Desteklenen diller ve varsayılan
-    const supportedLanguages = ['tr', 'en'];
-    const defaultLang = 'en';
-
-    // Tarayıcı dilini tespit et
-    let currentLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2).toLowerCase();
-    if (!supportedLanguages.includes(currentLang)) currentLang = defaultLang;
-
-    // Kullanıcı tercihi varsa onu kullan
-    const savedLang = localStorage.getItem('preferredLanguage');
-    if (savedLang && supportedLanguages.includes(savedLang)) {
-        currentLang = savedLang;
-    }
-
-    let translations = {};
-
-    async function loadLanguage(lang) {
-        try {
-        const response = await fetch(`locales/${lang}.json`);
-        if (!response.ok) throw new Error('Dil dosyası yüklenemedi');
-        translations = await response.json();
-
-        document.documentElement.lang = lang;
-        document.title = translations.siteTitle || document.title;
-
-        applyTranslations();
-        localStorage.setItem('preferredLanguage', lang);
-        } catch (err) {
-        console.error('Dil yükleme hatası:', err);
+        console.log('Tarayıcı dili:', navigator.language);
+        console.log('User language:', navigator.userLanguage);
+        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
+        const supportedLanguages = ['tr', 'en'];
+        const defaultLang = 'tr';
+        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
+        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
+            currentLang = 'tr';
+        } else {
+            currentLang = 'en';
         }
-    }
-
-    async function loadProjects() {
-    const list = document.getElementById('projects-list');
-    const skeleton = document.getElementById('skeleton-loader');
-    
-    try {
-        await new Promise(r => setTimeout(r, 800));
-        skeleton?.remove();
-
-        const res = await fetch('projeler.json');
-        const projects = await res.json();
-
-        projects.forEach((proj, index) => {
-        const title = proj[`title_${currentLang}`] || proj.title_tr;
-        const desc = proj[`shortDescription_${currentLang}`] || proj.shortDescription_tr || translations.projectsPage?.noDescription;
-
-        const row = document.createElement('a');
-        row.href = `${proj.id}.html`;
-        row.innerHTML = `
-            ...
-            <h2 ...>${title}</h2>
-            <p class="project-desc ...">${desc}</p>
-            ...
-        `;
-        list.appendChild(row);
+        console.log('Tespit edilen dil:', currentLang);
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && supportedLanguages.includes(savedLang)) {
+            currentLang = savedLang;
+            console.log('LocalStorage dil tercihi:', savedLang);
+        }
+        let translations = {};
+        async function loadLanguage(lang) {
+            try {
+                console.log('Dil yükleniyor:', lang);
+                const response = await fetch(`locales/${lang}.json`);
+                if (!response.ok) {
+                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
+                    throw new Error('Dil dosyası yüklenemedi');
+                }
+                translations = await response.json();
+                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
+                document.documentElement.lang = lang;
+                document.title = translations.siteTitle || document.title;
+                applyTranslations();
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (err) {
+                console.error('Dil yükleme hatası:', err);
+                if (lang !== 'tr') {
+                    console.log('Varsayılan Türkçe deniyor...');
+                    loadLanguage('tr');
+                }
+            }
+        }
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Çevrilecek element sayısı:', elements.length);
+            let translatedCount = 0;
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                let value = getNestedValue(translations, key);
+                if (value !== undefined && value !== null) {
+                    translatedCount++;
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = value;
+                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
+                        el.alt = value;
+                    } else if (el.hasAttribute('title')) {
+                        el.title = value;
+                    } else if (el.tagName === 'textPath') {
+                        el.textContent = value;
+                    } else {
+                        el.textContent = value;
+                    }
+                } else {
+                    console.log('Çeviri bulunamadı:', key);
+                }
+            });
+            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
+        }
+        function getNestedValue(obj, key) {
+            return key.split('.').reduce((o, k) => o && o[k], obj);
+        }
+        window.addEventListener('load', () => {
+            console.log('Sayfa yüklendi, dil yükleniyor...');
+            loadLanguage(currentLang);
         });
-    } catch (error) {
-        // hata yönetimi
-    }
-    }
-
-    function applyTranslations() {
-        // index.html için
-        document.querySelector('[data-i18n="hero-badge"]')?.textContent = translations.hero?.badge;
-        document.querySelector('[data-i18n="hero-desc"]')?.textContent = translations.hero?.description;
-        document.querySelector('[data-i18n="portfolio-section"]')?.textContent = translations.portfolio?.sectionTitle;
-        document.querySelector('[data-i18n="selected-projects"]')?.textContent = translations.portfolio?.selectedProjects;
-        document.querySelector('[data-i18n="portfolio-desc"]')?.textContent = translations.portfolio?.description;
-        document.querySelector('[data-i18n="view-all"]')?.textContent = translations.portfolio?.viewAll;
-        document.querySelector('[data-i18n="about-section"]')?.textContent = translations.about?.sectionTitle;
-        document.querySelector('[data-i18n="about-heading"]')?.textContent = translations.about?.heading;
-        document.querySelector('[data-i18n="about-p1"]')?.textContent = translations.about?.p1;
-        document.querySelector('[data-i18n="about-p2"]')?.textContent = translations.about?.p2;
-        document.querySelector('[data-i18n="contact-section"]')?.textContent = translations.contact?.sectionTitle;
-        document.querySelector('[data-i18n="coffee"]')?.textContent = translations.contact?.coffee;
-        document.querySelector('[data-i18n="footer-copyright"]')?.textContent = translations.footer?.copyright;
-
-        // projeler.html için
-        document.querySelector('[data-i18n="archive"]')?.textContent = translations.projectsPage?.archive;
-        document.querySelector('[data-i18n="all-works"]')?.textContent = translations.projectsPage?.allWorks;
-
-        // athleticocore.html (ve diğer detay sayfaları) için
-        document.querySelector('[data-i18n="category"]')?.textContent = translations.projectDetail?.category;
-        document.querySelector('[data-i18n="back-to-projects"]')?.textContent = translations.projectDetail?.backToProjects;
-        document.querySelector('[data-i18n="project-info"]')?.textContent = translations.projectDetail?.projectInfo;
-        document.querySelector('[data-i18n="year-label"]')?.textContent = translations.projectDetail?.yearLabel;
-        document.querySelector('[data-i18n="role-label"]')?.textContent = translations.projectDetail?.roleLabel;
-        document.querySelector('[data-i18n="tech-label"]')?.textContent = translations.projectDetail?.technologiesLabel;
-        document.querySelector('[data-i18n="links-label"]')?.textContent = translations.projectDetail?.linksLabel;
-        document.querySelector('[data-i18n="demo-btn"]')?.textContent = translations.projectDetail?.demoButton;
-        document.querySelector('[data-i18n="github-btn"]')?.textContent = translations.projectDetail?.githubButton;
-        document.querySelector('[data-i18n="challenges-label"]')?.textContent = translations.projectDetail?.challengesLabel;
-        document.querySelector('[data-i18n="results-label"]')?.textContent = translations.projectDetail?.resultsLabel;
-    }
-
-    // Sayfa yüklendiğinde dili yükle
-    window.addEventListener('load', () => loadLanguage(currentLang));
-
-    // Manuel dil değiştirme fonksiyonu
-    function changeLanguage(lang) {
-        if (supportedLanguages.includes(lang)) {
-        loadLanguage(lang);
+        function changeLanguage(lang) {
+            if (supportedLanguages.includes(lang)) {
+                loadLanguage(lang);
+            }
         }
-    }
+        window.changeLanguage = changeLanguage;
+        function updateLangUI(lang) {
+        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
+        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
+        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        const btn = document.getElementById('lang-toggle-btn');
+        btn.classList.toggle('border-primary/50', true);
+        btn.classList.toggle('bg-primary/5', lang === currentLang);
+        }
+        function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang) && lang !== currentLang) {
+            currentLang = lang;
+            loadLanguage(lang);
+            updateLangUI(lang);
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        }
+        function toggleLangDropdown() {
+        const dropdown = document.getElementById('lang-dropdown-menu');
+        dropdown.classList.toggle('opacity-100');
+        dropdown.classList.toggle('scale-100');
+        dropdown.classList.toggle('pointer-events-auto');
+        }
+        document.addEventListener('click', (e) => {
+        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        });
+        window.addEventListener('load', () => {
+        updateLangUI(currentLang);
+        });
     </script>
 </body>
 </html>
