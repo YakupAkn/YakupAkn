@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Sayfa Bulunamadı | Yakup Delil Akın</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/footer.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        cardDark: '#141414',
+                        offWhite: '#F5F5F5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #0A0A0A; 
+            color: #F5F5F5; 
+            overflow-x: hidden; 
+            cursor: none; 
+        }
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.04;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+        #cursor {
+            width: 12px; height: 12px;
+            background: #FF3D00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s;
+        }
+        #cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 61, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
+        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+        @media (hover: none) {
+            #cursor, #cursor-outline { display: none; }
+        }
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- Header (diğer sayfalardaki ile aynı) -->
+    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-4 md:py-6 transition-all duration-500 backdrop-blur-sm bg-bgDark/70 border-b border-white/5" id="main-header">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+
+        <!-- Logo -->
+        <a href="index.html" class="text-2xl md:text-3xl font-bold font-display tracking-tighter hover-magnetic">
+        YDA<span class="text-primary">.</span>
+        </a>
+
+        <!-- Masaüstü Nav -->
+        <nav class="hidden md:flex gap-8 lg:gap-10 font-medium uppercase text-xs tracking-[0.3em]">
+        <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav-home">Ana Sayfa</a>
+        <a href="projeler.html" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
+        <a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
+        </nav>
+
+        <!-- Sağ kısım: Dil + Kahve + Hamburger -->
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+
+        <!-- Dil Değiştirici (masaüstü) -->
+        <div class="hidden md:flex items-center gap-2">
+            <button onclick="changeLanguage('tr')" class="text-xs px-3 py-1.5 border border-white/20 rounded hover:border-primary transition ${currentLanguage === 'tr' ? 'bg-primary/10 border-primary' : ''}">TR</button>
+            <button onclick="changeLanguage('en')" class="text-xs px-3 py-1.5 border border-white/20 rounded hover:border-primary transition ${currentLanguage === 'en' ? 'bg-primary/10 border-primary' : ''}">EN</button>
+        </div>
+
+        <!-- Kahve Butonu -->
+        <a href="mailto:contact@yakupdelil.com" class="hidden sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300" data-i18n="coffee">
+            Kahve İçelim
+        </a>
+
+        <!-- Hamburger Butonu -->
+        <button id="menu-toggle" class="md:hidden text-2xl text-white focus:outline-none z-50 relative">
+            <i class="fas fa-bars-staggered transition-transform duration-300" id="menu-icon"></i>
+        </button>
+        </div>
+    </div>
+
+    <!-- Mobil Menü (açılır panel) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-bgDark/95 backdrop-blur-lg z-40 transform translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+        <div class="flex flex-col h-full pt-24 px-6">
+        <!-- Kapat butonu -->
+        <button id="close-menu" class="self-end text-3xl text-white mb-12 focus:outline-none">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Menü linkleri -->
+        <nav class="flex flex-col gap-8 text-2xl font-medium uppercase tracking-widest">
+            <a href="index.html" class="hover:text-primary transition-colors py-3 border-b border-white/10" data-i18n="nav-home">Ana Sayfa</a>
+            <a href="projeler.html" class="hover:text-primary transition-colors py-3 border-b border-white/10" data-i18n="nav-projects">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors py-3 border-b border-white/10" data-i18n="nav-contact">İletişim</a>
+        </nav>
+
+        <!-- Dil değiştirici (mobil) -->
+        <div class="mt-12 flex justify-center gap-6">
+            <button onclick="changeLanguage('tr')" class="text-xl px-5 py-3 border border-white/20 rounded-full hover:border-primary transition ${currentLanguage === 'tr' ? 'bg-primary/10 border-primary' : ''}">TR</button>
+            <button onclick="changeLanguage('en')" class="text-xl px-5 py-3 border border-white/20 rounded-full hover:border-primary transition ${currentLanguage === 'en' ? 'bg-primary/10 border-primary' : ''}">EN</button>
+        </div>
+
+        <!-- Kahve butonu mobil -->
+        <a href="mailto:contact@yakupdelil.com" class="mt-12 mx-auto text-lg font-bold uppercase tracking-widest border border-white/20 px-8 py-4 rounded-full hover:bg-white hover:text-black transition-all" data-i18n="coffee">
+            Kahve İçelim
+        </a>
+        </div>
+    </div>
+    </header>
+
+    <!-- 404 İçerik -->
+    <main class="flex-grow flex items-center justify-center px-6 py-32 text-center">
+        <div class="max-w-2xl">
+            <h1 class="text-[20vw] md:text-[15vw] lg:text-[12vw] font-display font-black uppercase leading-none mb-8 text-primary opacity-80 animate-pulse">
+                404
+            </h1>
+            
+            <h2 class="text-4xl md:text-6xl font-display font-bold uppercase tracking-tighter mb-6">
+                Sayfa Bulunamadı<span class="text-primary">.</span>
+            </h2>
+            
+            <p class="text-lg md:text-xl text-zinc-400 mb-12 max-w-xl mx-auto leading-relaxed">
+                Aradığın sayfa ya taşındı, ya da hiç var olmadı. Ama merak etme, buradan çıkıp yeni maceralara yelken açabilirsin!
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="index.html" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-primary text-black font-bold uppercase text-sm rounded-full tracking-widest hover:bg-white hover:text-black transition-all duration-300 shadow-lg shadow-primary/20">
+                    <i class="fas fa-home"></i>
+                    Ana Sayfaya Dön
+                </a>
+                
+                <a href="projeler.html" class="inline-flex items-center justify-center gap-3 px-8 py-4 border border-white/30 text-white font-bold uppercase text-sm rounded-full tracking-widest hover:border-primary hover:text-primary transition-all duration-300">
+                    <i class="fas fa-project-diagram"></i>
+                    Projeleri İncele
+                </a>
+            </div>
+
+            <!-- Eğlenceli 404 efekti (opsiyonel) -->
+            <div class="mt-16 opacity-50">
+                <p class="text-sm text-zinc-500 font-mono">Error 404: Page not found. Redirecting creativity...</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Cursor logic (diğer sayfalardaki ile aynı)
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // Header scroll efekti
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('nav-blur', 'py-4');
+                header.classList.remove('py-6');
+            } else {
+                header.classList.remove('nav-blur', 'py-4');
+                header.classList.add('py-6');
+            }
+        });
+
+        // Mobil menü aç/kapa
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            menuIcon.classList.toggle('fa-bars-staggered');
+            menuIcon.classList.toggle('fa-times');
+            document.body.classList.toggle('overflow-hidden'); // arka plan kaydırmayı engelle
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+            menuIcon.classList.add('fa-bars-staggered');
+            menuIcon.classList.remove('fa-times');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        // Menü açıkken dışarı tıklayınca kapat
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+            mobileMenu.classList.add('translate-x-full');
+            menuIcon.classList.add('fa-bars-staggered');
+            menuIcon.classList.remove('fa-times');
+            document.body.classList.remove('overflow-hidden');
+            }
+        });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<DOCUMENT filename="index.html">
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="siteTitle">Yakup Delil Akın | Software Developer & Designer</title>
+    <meta name="description" content="Yakup Delil Akın'ın portföy sitesi. Kreatif web geliştirme, UI/UX tasarımı ve 3D web deneyimleri sunar.">
+    <link rel="alternate" hreflang="tr" href="https://site.com/">
+    <link rel="alternate" hreflang="en" href="https://site.com/en">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/footer.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        cardDark: '#141414',
+                        offWhite: '#F5F5F5',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            background-color: #0A0A0A; 
+            color: #F5F5F5; 
+            overflow-x: hidden; 
+            cursor: none; 
+        }
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.04;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+        #cursor {
+            width: 12px; height: 12px;
+            background: #FF3D00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        #cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 61, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
+        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(245, 245, 245, 0.2);
+            color: transparent;
+        }
+        .project-card-v2 {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: #141414;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .project-card-v2:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .project-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+        .project-image-wrapper img {
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .project-card-v2:hover img {
+            transform: scale(1.05);
+        }
+        .marquee {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 2rem;
+            background: #FF3D00;
+            padding: 1.5rem 0;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            gap: 2rem;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        #preloader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #0A0A0A;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        #mobile-menu {
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        }
+
+        #mobile-menu.translate-x-full {
+        transform: translateX(100%);
+        }
+        body.overflow-hidden {
+        overflow: hidden;
+        height: 100vh;
+        }
+        #menu-icon {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="preloader">
+        <div class="mb-4 overflow-hidden">
+            <h2 id="loader-name" class="text-2xl font-display font-bold tracking-tighter transform translate-y-full transition-transform duration-700">
+                YAKUP DELİL AKIN<span class="text-primary">.</span>
+            </h2>
+        </div>
+        <div class="w-48 h-[2px] bg-white/10 relative">
+            <div id="loader-progress" class="absolute top-0 left-0 h-full bg-primary transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-4 md:py-6 transition-all duration-500 backdrop-blur-sm bg-bgDark/70 border-b border-white/5" id="main-header">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="index.html" class="text-2xl md:text-3xl font-bold font-display tracking-tighter hover-magnetic transition-transform duration-300 hover:scale-105">
+        YDA<span class="text-primary">.</span>
+        </a>
+        <nav class="hidden md:flex gap-8 lg:gap-10 font-medium uppercase text-[10px] md:text-xs tracking-[0.3em]">
+        <a href="#work" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
+        <a href="#about" class="hover:text-primary transition-colors" data-i18n="nav-about">Hakkımda</a>
+        <a href="#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
+        </nav>
+        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+        <div class="relative group">
+            <button 
+            id="lang-toggle-btn"
+            onclick="toggleLangDropdown()"
+            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+            aria-label="Dil seç"
+            >
+            <span id="current-lang-display" class="font-bold">TR</span>
+            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+            </button>
+            <div id="lang-dropdown-menu" 
+                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+            
+            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇹🇷</span>
+                <span>Türkçe</span>
+                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇬🇧</span>
+                <span>English</span>
+                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            </div>
+        </div>
+        <a href="mailto:yakupdelilakin@gmail.com" 
+            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
+            data-i18n="coffee">
+            Kahve İçelim
+        </a>
+
+        </div>
+    </div>
+    </header>
+    <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 relative">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="inline-block px-4 py-2 border border-primary/30 rounded-full mb-8 animate-float">
+                <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold" data-i18n="hero-badge">Kreatif Web Developer</span>
+            </div>
+            <h1 class="text-[12vw] md:text-[9vw] leading-[0.85] font-display font-extrabold uppercase mb-12">
+                <span data-i18n="hero-titlePart1">Design</span> <br> 
+                <span class="text-outline" data-i18n="hero-titlePart2">That</span> <br> 
+                <span data-i18n="hero-titlePart3">Impacts</span><span class="text-primary">.</span>
+            </h1>
+            <div class="grid md:grid-cols-2 gap-12 items-end">
+                <p class="text-zinc-400 text-lg md:text-xl font-light leading-relaxed max-w-xl" data-i18n="hero-description">
+                    Ben <span class="text-white font-medium">Yakup Delil Akın</span>. Estetiği yüksek performanslı kodlarla birleştirerek markalar için unutulmaz dijital deneyimler inşa ediyorum.
+                </p>
+                <div class="flex justify-end">
+                    <div class="relative group cursor-pointer hover-magnetic" data-strength="30">
+                        <div class="w-32 h-32 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary transition-colors duration-500">
+                            <i class="fas fa-arrow-down text-2xl group-hover:text-primary transition-colors"></i>
+                        </div>
+                        <svg class="absolute inset-0 w-full h-full animate-spin-slow pointer-events-none" viewBox="0 0 100 100">
+                            <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
+                            <text class="text-[10px] uppercase tracking-[2px] fill-zinc-500">
+                                <textPath xlink:href="#circlePath" data-i18n="scroll-text">Aşağı Kaydır • Aşağı Kaydır • Aşağı Kaydır •</textPath>
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="marquee mt-20 rotate-[-1deg] scale-[1.02] z-10">
+        <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
+            <span data-i18n="marquee-item1">Creative Development</span>
+            <span>•</span>
+            <span data-i18n="marquee-item2">UI/UX Strategy</span>
+            <span>•</span>
+            <span data-i18n="marquee-item3">3D Immersive Web</span>
+            <span>•</span>
+            <span data-i18n="marquee-item4">Web Development</span>
+            <span>•</span>
+        </div>
+        <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
+            <span data-i18n="marquee-item1">Creative Development</span>
+            <span>•</span>
+            <span data-i18n="marquee-item2">UI/UX Strategy</span>
+            <span>•</span>
+            <span data-i18n="marquee-item3">3D Immersive Web</span>
+            <span>•</span>
+            <span data-i18n="marquee-item4">Web Development</span>
+            <span>•</span>
+        </div>
+    </div>
+    <section id="work" class="py-32 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+                <div>
+                    <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-4" data-i18n="portfolio-sectionTitle">Portfolyo</h2>
+                    <h3 class="text-5xl md:text-7xl font-display font-bold uppercase" data-i18n="portfolio-selectedProjects">Seçili Projeler</h3>
+                </div>
+                <p class="text-zinc-500 font-mono text-sm max-w-xs" data-i18n="portfolio-description">
+                    Her proje, teknoloji ve sanatın kesiştiği noktada özel bir hikaye anlatır.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="project-grid">
+                <!-- JSON'dan buraya kartlar eklenecek -->
+            </div>
+            <div class="mt-20 text-center">
+                <a href="projeler.html" class="inline-block text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-primary pb-2 hover:text-primary transition-all" data-i18n="portfolio-viewAll">Tüm Projeleri Gör</a>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="py-32 bg-offWhite text-bgDark px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
+            <div>
+                <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8" data-i18n="about-sectionTitle">Hakkımda</h2>
+                <h3 class="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-12" data-i18n="about-heading">
+                    Kodun Estetiği, <br>
+                    Tasarımın <span class="italic text-primary">Zekası</span>.
+                </h3>
+                <div class="space-y-6 text-zinc-600 text-lg font-light leading-relaxed">
+                    <p data-i18n="about-p1">
+                        Ben Yakup Delil Akın, dijital dünyada sadece var olan değil, fark yaratan ürünler geliştirmeye odaklanmış bir kreatif geliştiriciyim.
+                    </p>
+                    <p data-i18n="about-p2">
+                        Teknik becerilerimi tasarım vizyonumla harmanlayarak, kullanıcıların içinde kaybolmak isteyeceği akıcı ve anlamlı dijital yolculuklar tasarlıyorum. Modern teknolojileri (React, Three.js, WebGL) kullanarak sınırları zorlamayı seviyorum.
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-col justify-end">
+                <div class="grid grid-cols-2 gap-8 border-t border-zinc-200 pt-12">
+                    <div>
+                        <h4 class="font-bold text-xl mb-4" data-i18n="about-expertiseTitle">Uzmanlık</h4>
+                        <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
+                            <li data-i18n="about-expertise1">Frontend Architecture</li>
+                            <li data-i18n="about-expertise2">Interactive 3D Web</li>
+                            <li data-i18n="about-expertise3">Motion Graphics</li>
+                            <li data-i18n="about-expertise4">Product Design</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-4" data-i18n="about-toolsTitle">Araçlar</h4>
+                        <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
+                            <li data-i18n="about-tool1">Next.js / React</li>
+                            <li data-i18n="about-tool2">GSAP / Framer</li>
+                            <li data-i18n="about-tool3">Figma / Adobe Suite</li>
+                            <li data-i18n="about-tool4">Blender / Three.js</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="py-40 px-6 md:px-12 lg:px-24 text-center">
+        <div class="max-w-5xl mx-auto">
+            <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-10" data-i18n="contact-sectionTitle">Birlikte Çalışalım</p>
+            <h2 class="text-[8vw] leading-none font-display font-black uppercase mb-20 hover-magnetic" data-strength="40">
+                <a href="mailto:delil@example.com" class="hover:text-primary transition-colors" data-i18n="contact-heading">delil@example.com</a>
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <a href="#" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-instagram">Instagram</span>
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-linkedin">LinkedIn</span>
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/YakupAkn" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-github">GitHub</span>
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script>
+
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const bar = document.getElementById('loader-progress');
+            const name = document.getElementById('loader-name');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if(progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    name.style.transform = 'translateY(0)';
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => preloader.remove(), 800);
+                    }, 800);
+                }
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateOutline() {
+            let dt = 0.15;
+            outlineX += (mouseX - outlineX) * dt;
+            outlineY += (mouseY - outlineY) * dt;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateOutline);
+        }
+        animateOutline();
+        const hoverables = document.querySelectorAll('a, button, .project-card-v2, .hover-magnetic');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+        const magnets = document.querySelectorAll('.hover-magnetic');
+        magnets.forEach(m => {
+            m.addEventListener('mousemove', (e) => {
+                const rect = m.getBoundingClientRect();
+                const strength = m.getAttribute('data-strength') || 40;
+                const x = (e.clientX - rect.left - rect.width/2) / strength;
+                const y = (e.clientY - rect.top - rect.height/2) / strength;
+                m.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            });
+            m.addEventListener('mouseleave', () => {
+                m.style.transform = 'translate(0, 0)';
+            });
+        });
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(window.scrollY > 50) {
+                header.classList.add('nav-blur', 'py-4');
+                header.classList.remove('py-6');
+            } else {
+                header.classList.remove('nav-blur', 'py-4');
+                header.classList.add('py-6');
+            }
+        });
+        setInterval(() => {
+            document.getElementById('local-time').innerText = new Date().toLocaleTimeString('tr-TR');
+        }, 1000);
+        async function loadSelectedProjects() {
+            const grid = document.getElementById('project-grid');
+            try {
+                const response = await fetch('projeler.json');
+                if (!response.ok) throw new Error('Projeler Yüklenemedi. Sayfayı Yenileyin.');
+                const projects = await response.json();
+                const selected = projects
+                    .filter(p => p.featured)
+                    .sort((a, b) => a.order - b.order)
+                    .slice(0, 4);
+                selected.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card-v2 group';
+                    card.innerHTML = `
+                        <a href="${project.id}.html">
+                            <div class="project-image-wrapper">
+                                <img src="${project.image || 'https://via.placeholder.com/1200x750?text=' + encodeURIComponent(project.title)}" alt="${project.title}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                    <span class="px-8 py-3 bg-white text-black font-bold uppercase text-xs rounded-full tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">İncele</span>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="text-3xl font-display font-bold group-hover:text-primary transition-colors">${project.title}</h4>
+                                    <span class="text-zinc-500 font-mono text-xs">${project.year}</span>
+                                </div>
+                                <p class="text-zinc-400 text-sm mb-6 leading-relaxed">
+                                    ${project.shortDescription || project.description}
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${project.tags.map(tag => `
+                                        <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full">${tag}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Hata:', error);
+                grid.innerHTML = '<p class="text-center text-zinc-500">Projeler yüklenemedi. Lütfen daha sonra deneyin.</p>';
+            }
+        }
+        window.addEventListener('load', loadSelectedProjects);
+    </script>
+    <script>
+        // Mevcut scriptin en üstüne bu kodu ekleyin
+        console.log('Tarayıcı dili:', navigator.language);
+        console.log('User language:', navigator.userLanguage);
+        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
+        // Desteklenen diller ve varsayılan
+        const supportedLanguages = ['tr', 'en'];
+        const defaultLang = 'tr'; // Varsayılanı Türkçe yap
+        // Tarayıcı dilini tespit et (kesin Türkçe kontrolü)
+        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
+        // Türkçe kontrolü daha spesifik yap
+        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
+            currentLang = 'tr';
+        } else {
+            currentLang = 'en';
+        }
+        // DEBUG için
+        console.log('Tespit edilen dil:', currentLang);
+        // Kullanıcı tercihi varsa onu kullan
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && supportedLanguages.includes(savedLang)) {
+            currentLang = savedLang;
+            console.log('LocalStorage dil tercihi:', savedLang);
+        }
+        let translations = {};
+        async function loadLanguage(lang) {
+            try {
+                console.log('Dil yükleniyor:', lang);
+                const response = await fetch(`locales/${lang}.json`);
+                if (!response.ok) {
+                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
+                    throw new Error('Dil dosyası yüklenemedi');
+                }
+                translations = await response.json();
+                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
+                document.documentElement.lang = lang;
+                document.title = translations.siteTitle || document.title;
+                applyTranslations();
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (err) {
+                console.error('Dil yükleme hatası:', err);
+                // Hata durumunda varsayılan dil dosyasını dene
+                if (lang !== 'tr') {
+                    console.log('Varsayılan Türkçe deniyor...');
+                    loadLanguage('tr');
+                }
+            }
+        }
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Çevrilecek element sayısı:', elements.length);
+            let translatedCount = 0;
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                let value = getNestedValue(translations, key);
+                if (value !== undefined && value !== null) {
+                    translatedCount++;
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = value;
+                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
+                        el.alt = value;
+                    } else if (el.hasAttribute('title')) {
+                        el.title = value;
+                    } else if (el.tagName === 'textPath') {
+                        el.textContent = value;
+                    } else {
+                        el.textContent = value;
+                    }
+                } else {
+                    console.log('Çeviri bulunamadı:', key);
+                }
+            });
+            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
+        }
+        function getNestedValue(obj, key) {
+            return key.split('.').reduce((o, k) => o && o[k], obj);
+        }
+        window.addEventListener('load', () => {
+            console.log('Sayfa yüklendi, dil yükleniyor...');
+            loadLanguage(currentLang);
+        });
+        function changeLanguage(lang) {
+            if (supportedLanguages.includes(lang)) {
+                loadLanguage(lang);
+            }
+        }
+        window.changeLanguage = changeLanguage;
+        function updateLangUI(lang) {
+        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
+        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
+        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        const btn = document.getElementById('lang-toggle-btn');
+        btn.classList.toggle('border-primary/50', true);
+        btn.classList.toggle('bg-primary/5', lang === currentLang);
+        }
+        function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang) && lang !== currentLang) {
+            currentLang = lang;
+            loadLanguage(lang);
+            updateLangUI(lang);
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        }
+        function toggleLangDropdown() {
+        const dropdown = document.getElementById('lang-dropdown-menu');
+        dropdown.classList.toggle('opacity-100');
+        dropdown.classList.toggle('scale-100');
+        dropdown.classList.toggle('pointer-events-auto');
+        }
+        document.addEventListener('click', (e) => {
+        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        });
+        window.addEventListener('load', () => {
+        updateLangUI(currentLang);
+        });
+    </script>
+</body>
+</html>
+</DOCUMENT>

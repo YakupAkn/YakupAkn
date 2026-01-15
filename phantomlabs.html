@@ -1,0 +1,447 @@
+<!--  athleticocore.html  -->
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="siteTitle">AthleticoCore | Yakup Delil Akın</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        cardDark: '#141414',
+                        offWhite: '#F5F5F5',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #0A0A0A; 
+            color: #F5F5F5; 
+            overflow-x: hidden; 
+            cursor: none; 
+        }
+
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.04;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+        
+        #cursor {
+            width: 12px; height: 12px;
+            background: #FF3D00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        #cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255, 61, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+
+        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
+        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        .project-hero {
+            background: linear-gradient(to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.9)), url('images/athleticocore-hero-bg.jpg') center/cover no-repeat;
+        }
+
+        .gallery-img {
+            transition: transform 0.6s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
+        <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
+        <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
+            <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav-home">Ana Sayfa</a>
+            <a href="projeler.html" class="text-primary" data-i18n="nav-projects">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
+        </nav>
+        
+        <!-- Language Switcher -->
+        <div class="relative group">
+            <button 
+            id="lang-toggle-btn"
+            onclick="toggleLangDropdown()"
+            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+            aria-label="Dil seç"
+            >
+            <span id="current-lang-display" class="font-bold">TR</span>
+            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+            </button>
+            <div id="lang-dropdown-menu" 
+                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+            
+            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇹🇷</span>
+                <span>Türkçe</span>
+                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇬🇧</span>
+                <span>English</span>
+                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            </div>
+        </div>
+        <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars-staggered"></i></button>
+    </header>
+
+    <!-- Hero / Başlık Alanı -->
+    <section class="min-h-[70vh] flex items-end pb-24 px-6 md:px-12 lg:px-24 relative project-hero">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="inline-block px-5 py-2 bg-primary/20 backdrop-blur-sm rounded-full mb-6">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold" data-i18n="athleticocore-badge">Siber Güvenlik</span>
+            </div>
+            <h1 class="text-[11vw] md:text-[8vw] lg:text-[7vw] leading-none font-display font-black uppercase mb-8">
+                <span data-i18n="athleticocore-title">phantom</span><span class="text-primary">.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-light leading-relaxed" data-i18n="athleticocore-description">
+                .
+            </p>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12 lg:px-24 bg-bgDark">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12 lg:gap-16">
+            <div class="lg:col-span-2 space-y-12">
+                <div class="rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
+                    <img src="images/phantomlabs.png" alt="AthleticoCore Ana Ekran" class="w-full h-auto">
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <img src="images/phantomlabs1.png" alt="İstatistik Ekranı" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                    <img src="images/phantomlabs2.png" alt="Kamera Analizi" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                    <img src="images/phantomlabs3.png" alt="Kamera" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                </div>
+            </div>
+            
+            <div class="space-y-12 lg:sticky lg:top-24 lg:h-fit">
+                <!-- Project Details -->
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-info-title">Proje Bilgileri</h3>
+                    <dl class="space-y-4 text-sm text-zinc-400">
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-year-label">Yıl</dt>
+                            <dd>2026</dd>
+                        </div>
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-role-label">Rolüm</dt>
+                            <dd data-i18n="project-role-value">Tam Geliştirme (Solo)</dd>
+                        </div>
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-tech-label">Teknolojiler</dt>
+                            <dd class="flex flex-wrap gap-2 mt-2">
+                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">Python</span>
+                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">CLI</span>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-links-title">Canlı Linkler</h3>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://github.com/YakupAkn/Project-Phantom-Labs" target="_blank" class="flex items-center gap-3 px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
+                            <i class="fab fa-github"></i>
+                            <span data-i18n="link-repo">GitHub Repository</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Challenges -->
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="phantomlabs-section-challenges">Karşılaşılan Zorluklar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm leading-relaxed">
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-challenge-1">Tamamen offline ve client-side çalışırken, farklı Windows sürümlerinde (Win10/11) sistem artifact'larının (Prefetch, Temp, Event Logs) tutarlı ve güvenli tespiti — antivirüs yazılımlarının müdahalesi olmadan.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-challenge-2">Çeşitli donanım konfigürasyonlarında (düşük RAM/CPU, eski işlemciler) CPU sıcaklığı, batarya döngüsü ve disk kullanımı gibi çevresel verilerin hassas ölçümü ve raporlanması.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-challenge-3">Kötüye kullanım riskini sıfıra indirmek için tam kaynak kodunun public edilmemesi, ancak mantıksal akışın eğitim amaçlı etkili şekilde gösterilmesi ve self-cleanup mekanizmasının kusursuz çalışması.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-challenge-4">Farklı test ortamlarında (sanal makine, fiziksel cihaz, domain joined vs standalone) davranış tutarlılığı sağlamak ve forensic-safe artifact bırakmadan analiz döngüsünü tamamlamak.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="phantomlabs-section-system">Sistem Nasıl Çalışıyor?</h3>
+                    <ol class="space-y-4 text-zinc-400 text-sm leading-relaxed list-decimal list-inside marker:text-primary marker:font-bold">
+                        <li data-i18n="phantomlabs-system-1">
+                            <span class="font-medium text-white">Envanter Toplama:</span> CPU, RAM, OS sürümü, yüklü güvenlik yazılımları ve donanım bilgileri toplanır; tüm veriler yerel system_report.txt dosyasına yazılır.
+                        </li>
+                        <li data-i18n="phantomlabs-system-2">
+                            <span class="font-medium text-white">Ağ ve Bağlantı Analizi:</span> Yerel IP, ağ arayüzleri ve temel connectivity mapping yapılır (ağ keşfi için offline modüller kullanılır).
+                        </li>
+                        <li data-i18n="phantomlabs-system-3">
+                            <span class="font-medium text-white">Medya ve Periferik Test:</span> Ekran görüntüsü (screenshot) ve kamera sürücü testi ile donanım uyumluluğu doğrulanır (peripheral_test.jpg oluşturulur).
+                        </li>
+                        <li data-i18n="phantomlabs-system-4">
+                            <span class="font-medium text-white">Artifact ve Forensics İzleme:</span> Windows Prefetch, Temp klasörleri ve diğer dijital izler taranır; yazılımın sistemde bıraktığı footprint'ler raporlanır.
+                        </li>
+                        <li data-i18n="phantomlabs-system-5">
+                            <span class="font-medium text-white">Çevresel İzleme:</span> CPU sıcaklığı, batarya döngüsü sayısı ve disk doluluk oranı gibi metrikler health_log.txt dosyasına kaydedilir.
+                        </li>
+                        <li data-i18n="phantomlabs-system-6">
+                            <span class="font-medium text-white">Temizlik ve Kapanış:</span> Analiz tamamlandıktan sonra tüm geçici log ve artifact dosyaları otomatik olarak silinir (self-cleanup & final cleanup); sistem iz bırakmadan eski haline döner.
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Technical Decisions -->
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="phantomlabs-section-tech">Teknik Kararlar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm leading-relaxed">
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-tech-1">Tüm analiz işlemleri tamamen offline ve yerel çalışır — hiçbir veri ağa veya sunucuya gönderilmez; %100 gizlilik ve forensic güvenliği sağlamak için.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-tech-2">Modüler yapı (her versiyon ayrı bir odak alanı ekler) ve debug/self-cleanup mekanizmaları ile eğitim amaçlı kullanımda bile sistem bütünlüğü korunur.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-tech-3">Tam kaynak kodu public edilmez; sadece mantıksal akış gösteren örnekler paylaşılır — kötüye kullanım riskini minimize etmek için bilinçli tercih.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-tech-4">Çevresel metrikler (sıcaklık, batarya, disk) psutil veya benzeri kütüphanelerle çekilir; düşük kaynak tüketimi için optimize edilir.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-tech-5">Üç aşamalı metodoloji (envanter → davranış gözlemi → temizlik) ile analiz döngüsü adli bilişim standartlarına uygun hale getirildi.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Results -->
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="phantomlabs-section-results">Elde Edilen Sonuçlar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm leading-relaxed">
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-result-1">v13.0 itibarıyla tam kapsamlı offline uç nokta analiz framework'ü tamamlandı; tüm modüller entegre ve self-cleanup ile iz bırakmıyor.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-result-2">Farklı test ortamlarında (Win10/11, düşük-orta seviye donanım) artifact tespiti ve çevresel izleme %100 tutarlı çalıştı.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-result-3">Eğitim amaçlı kullanımda, sistem analizi metodolojilerini etkili şekilde göstermeyi başardı; kötüye kullanım riski sıfıra yakın tutuldu.</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="text-primary mt-1 flex-shrink-0">•</span>
+                            <span data-i18n="phantomlabs-result-4">Sıfır ağ bağımlılığı ve tamamen yerel işlem ile etik güvenlik araştırması için güvenli bir eğitim aracı haline geldi.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="py-16 text-center">
+        <a href="projeler.html" class="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 rounded-full transition-all group">
+            <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            <span data-i18n="athleticocore-back">Tüm Projeleri Gör</span>
+        </a>
+    </div>
+
+    <!-- Cursor & Scroll Logic -->
+    <script>
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+        function animateCursor() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('nav-blur', 'py-4');
+                header.classList.remove('py-6');
+            } else {
+                header.classList.remove('nav-blur', 'py-4');
+                header.classList.add('py-6');
+            }
+        });
+    </script>
+
+    <!-- Language Logic -->
+    <script>
+        const supportedLanguages = ['tr', 'en'];
+        const defaultLang = 'tr';
+
+        let currentLang = localStorage.getItem('preferredLanguage') || 
+                         (navigator.language || 'tr').slice(0, 2);
+
+        if (!supportedLanguages.includes(currentLang)) {
+            currentLang = defaultLang;
+        }
+
+        let translations = {};
+
+        async function loadLanguage(lang) {
+            try {
+                // Assuming json files are in 'locales/' folder
+                const res = await fetch(`locales/${lang}.json`);
+                if (!res.ok) throw new Error(`Could not load ${lang}.json`);
+                
+                translations = await res.json();
+
+                document.documentElement.lang = lang;
+                
+                // Update Title
+                if(translations.siteTitle) {
+                     document.title = translations.siteTitle;
+                }
+
+                // Update all elements with data-i18n
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.dataset.i18n;
+                    const value = translations[key];
+                    if (!value) return;
+
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = value;
+                    } else {
+                        // Use innerHTML if you need bold tags in translation, otherwise textContent
+                        // For safety, generally textContent is better unless you trust the JSON source explicitly
+                        el.textContent = value;
+                    }
+                });
+
+                updateLangUI(lang);
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (e) {
+                console.error('Language loading failed:', e);
+            }
+        }
+
+        function changeLanguage(lang) {
+            if (!supportedLanguages.includes(lang)) return;
+            currentLang = lang;
+            loadLanguage(lang);
+            toggleLangDropdown(false); // Close dropdown after selection
+        }
+
+        function toggleLangDropdown(forceState) {
+            const dropdown = document.getElementById('lang-dropdown-menu');
+            const btnIcon = document.querySelector('#lang-toggle-btn i');
+            
+            const isHidden = dropdown.classList.contains('opacity-0');
+            const shouldShow = forceState !== undefined ? forceState : isHidden;
+
+            if (shouldShow) {
+                dropdown.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                btnIcon.classList.add('rotate-180');
+            } else {
+                dropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                btnIcon.classList.remove('rotate-180');
+            }
+        }
+
+        function updateLangUI(lang) {
+            const display = document.getElementById('current-lang-display');
+            if(display) display.textContent = lang.toUpperCase();
+            
+            const trCheck = document.getElementById('tr-check');
+            const enCheck = document.getElementById('en-check');
+            
+            if(trCheck) trCheck.style.opacity = lang === 'tr' ? '1' : '0';
+            if(enCheck) enCheck.style.opacity = lang === 'en' ? '1' : '0';
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            loadLanguage(currentLang);
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('lang-dropdown-menu');
+            const btn = document.getElementById('lang-toggle-btn');
+            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+                toggleLangDropdown(false);
+            }
+        });
+    </script>
+</body>
+</html>

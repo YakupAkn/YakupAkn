@@ -1,0 +1,106 @@
+[
+  {
+    "id": "athletico",
+    "title": "Athletico",
+    "subtitle": "Sporcu Performans Takip PWA",
+    "shortDescription": "Antrenman ve performans verilerini takip eden offline destekli PWA. Hızlı arayüz ve Supabase ile gerçek kullanım odaklı.",
+    "fullDescription": "Sporcuların antrenman takibini manuel yöntemlerden kurtarmak amacıyla tasarlandı. Tamamen offline çalışabilme, yerel veri saklama ve Supabase ile bulut senkronizasyonu sunuyor. Kullanıcı dostu arayüz ile egzersiz kayıtları, ilerleme grafikleri ve hedef yönetimi yapılabiliyor.",
+    "year": 2025,
+    "tags": ["Web", "PWA", "JavaScript", "Supabase", "Sports Tech"],
+    "technologies": ["HTML5/CSS3/JavaScript", "Tailwind CSS", "Supabase (Auth + Database)", "IndexedDB", "Service Workers", "Netlify"],
+    "role": "Konsept, tasarım, geliştirme ve deploy (solo proje)",
+    "challenges": [
+      "Offline-first mimari ve veri senkronizasyonu",
+      "Mobil cihazlarda performans optimizasyonu",
+      "Kullanıcı verilerinin güvenli saklanması"
+    ],
+    "results": [
+      "Tam offline modda bile akıcı deneyim",
+      "Supabase ile gerçek zamanlı veri senkronizasyonu",
+      "Kullanıcı testlerinde %40 daha hızlı veri girişi"
+    ],
+    "image": "images/athletico-hero.jpg",
+    "gallery": [
+      "images/athletico-dashboard.jpg",
+      "images/athletico-progress.jpg",
+      "images/athletico-offline.jpg"
+    ],
+    "video": null,
+    "liveDemo": "https://athletico-demo.netlify.app", 
+    "github": "https://github.com/yourusername/athletico",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "athleticocore",
+    "title": "AthleticoCore",
+    "subtitle": "AI Destekli Şınav Koçu",
+    "shortDescription": "Kamera ile gerçek zamanlı form analizi yapan, tekrar sayan ve performans metrikleri üreten çekirdek sistem.",
+    "fullDescription": "Athletico altyapısı üzerine kurulu performans odaklı çekirdek. Tarayıcı kamerası üzerinden pose estimation ile dirsek/omuz/kalça açılarını hesaplayarak form doğruluğunu değerlendiriyor. Skorlama, hız, tekrar sayısı gibi istatistikler üretiyor.",
+    "year": 2025,
+    "tags": ["Frontend", "Performance", "Sports Science", "AI", "Computer Vision"],
+    "technologies": ["JavaScript", "TensorFlow.js / MediaPipe Pose", "WebRTC", "Canvas/WebGL", "Tailwind CSS", "Netlify"],
+    "role": "Tam geliştirme (model entegrasyonu, UI, optimizasyon)",
+    "challenges": [
+      "Düşük cihazlarda gerçek zamanlı 25+ FPS koruma",
+      "Farklı vücut tiplerinde doğru açı hesaplama",
+      "Tarayıcı izinleri ve gizlilik uyumu"
+    ],
+    "results": [
+      "Ortalama 28 FPS orta seviye telefonlarda",
+      "Form doğruluğu %88+ (test seti)",
+      "Kullanıcı motivasyonunda belirgin artış"
+    ],
+    "image": "images/athleticocore-hero.jpg",
+    "gallery": [
+      "images/athleticocore-camera.jpg",
+      "images/athleticocore-stats.jpg",
+      "images/athleticocore-feedback.jpg"
+    ],
+    "video": "videos/athleticocore-demo.mp4",
+    "liveDemo": "https://athleticocore.netlify.app",
+    "github": "https://github.com/yourusername/athleticocore",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "phantomlabs",
+    "title": "Phantom Labs",
+    "subtitle": "Python Tabanlı Güvenlik Araştırma Çerçevesi",
+    "shortDescription": "Eğitim sistemleri analizi, otomatik keşif ve uç nokta güvenlik testleri için tasarlanmış, çevrimdışı çalışan modüler bir siber güvenlik araştırma framework’ü.",
+    "fullDescription": "Phantom Labs, siber güvenlik araştırmacıları ve adli bilişim uzmanları için geliştirilmiş Python tabanlı kapsamlı bir güvenlik analiz çerçevesidir. Sistem envanteri çıkarma, ağ görünürlüğü, donanım ve çevresel analiz, dijital iz (artifact) tespiti ve test sonrası otomatik temizlik modüllerini içerir. Tüm analizler çevrimdışı çalışır ve elde edilen veriler yerel log dosyalarına kaydedilir. Kaynak kodu, kötüye kullanımı önlemek amacıyla kamuya açık değildir.",
+    "year": 2026,
+    "tags": ["Cybersecurity", "Python", "Forensics", "Endpoint Security"],
+    "technologies": [
+      "Python 3",
+      "OS & Hardware Inspection",
+      "Offline Log Analysis",
+      "Windows Artifacts (Prefetch, Temp)",
+      "Local File System Analysis"
+    ],
+    "role": "Araştırma, mimari tasarım ve tüm modüllerin geliştirilmesi (solo)",
+    "challenges": [
+      "Tüm analizlerin çevrimdışı ve izole ortamda çalıştırılması",
+      "Yanlış pozitif sonuçların minimize edilmesi",
+      "Adli bilişim uyumlu log ve artifact üretimi",
+      "Kötüye kullanımı önleyecek modüler yapı tasarımı"
+    ],
+    "results": [
+      "Tamamen çevrimdışı çalışan uç nokta analiz framework’ü",
+      "Donanım, ağ, çevresel ve dosya bazlı analizlerin tek merkezden yönetimi",
+      "Adli bilişim odaklı temiz ve takip edilebilir log çıktıları"
+    ],
+    "image": "images/phantomlabs-hero.jpg",
+    "gallery": [
+      "images/phantomlabs-inventory.jpg",
+      "images/phantomlabs-network.jpg",
+      "images/phantomlabs-artifacts.jpg"
+    ],
+    "video": null,
+    "liveDemo": null,
+    "github": null,
+    "featured": true,
+    "order": 3
+  }
+
+]

@@ -1,0 +1,294 @@
+<DOCUMENT filename="projeler.html">
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeler | YDA.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/footer.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        offWhite: '#F5F5F5',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: none; font-family: 'Space Grotesk', sans-serif; }
+        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
+        #cursor { width: 12px; height: 12px; background: #FF3D00; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; }
+        #cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 61, 0, 0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease-out; }
+        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
+        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+        @media (hover: none) {
+            body { cursor: auto; }
+            #cursor, #cursor-outline { display: none; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #141414 25%, #1c1c1c 50%, #141414 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .project-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; position: relative; }
+        .project-row:hover { background: rgba(255, 61, 0, 0.03); padding-left: 10px; border-bottom-color: #FF3D00; }
+        .nav-blur { backdrop-filter: blur(10px); background: rgba(10, 10, 10, 0.8); }
+        ::-webkit-scrollbar { width: 0px; }
+        .project-desc { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-row:hover .project-desc { max-height: 150px; opacity: 1; margin-top: 1rem; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+    <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
+        <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
+        <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
+            <a href="index.html" class="hover:text-primary transition-colors">Ana Sayfa</a>
+            <a href="#" class="text-primary">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
+        </nav>
+        <button id="menu-toggle" class="md:hidden text-2xl text-white"><i class="fas fa-bars-staggered"></i></button>
+    </header>
+    <main class="pt-48 pb-20 px-6 lg:px-24 max-w-7xl mx-auto">
+        <div class="mb-24">
+            <h2 class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-6">Arşiv</h2>
+            <h1 class="text-[10vw] md:text-[7vw] font-display font-black uppercase leading-[0.9]">
+                Tüm <br> <span class="text-zinc-800">İşler</span><span class="text-primary">.</span>
+            </h1>
+        </div>
+        <div id="projects-list" class="flex flex-col border-t border-white/5">
+            <div id="skeleton-loader">
+                <div class="py-16 flex justify-between items-center border-b border-white/5">
+                    <div class="flex items-center gap-12 w-full">
+                        <div class="skeleton w-8 h-4"></div>
+                        <div class="flex flex-col gap-2 w-1/3">
+                            <div class="skeleton w-full h-10"></div>
+                            <div class="skeleton w-1/2 h-4"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton w-24 h-6 rounded-full hidden md:block"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // --- FETCH PROJECTS ---
+        async function loadProjects() {
+            const list = document.getElementById('projects-list');
+            const skeleton = document.getElementById('skeleton-loader');
+            
+            try {
+                const response = await fetch('projeler.json');
+                const projects = await response.json();
+                
+                // Skeleton bekleme süresi
+                await new Promise(resolve => setTimeout(resolve, 800));
+                skeleton.remove();
+
+                projects.forEach((proj, index) => {
+                    const row = document.createElement('a');
+                    row.href = `${proj.id}.html`;
+                    row.className = 'project-row group py-12 md:py-16 flex flex-col md:flex-row md:items-start justify-between transition-all duration-500';
+                    
+                    row.innerHTML = `
+                        <div class="flex items-start gap-6 md:gap-16">
+                            <span class="text-zinc-700 font-mono text-xs mt-4 group-hover:text-primary transition-colors">
+                                ${(index + 1).toString().padStart(2, '0')}
+                            </span>
+                            <div class="flex flex-col">
+                                <h2 class="text-4xl md:text-6xl font-display font-bold uppercase tracking-tighter group-hover:italic transition-all">
+                                    ${proj.title}
+                                </h2>
+                                <p class="project-desc text-zinc-500 text-sm md:text-base max-w-xl leading-relaxed">
+                                    ${proj.shortDescription || proj.description || "Proje detayları ve teknik süreç hakkında kısa bir önizleme bilgisi bulunmuyor."}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-4 flex gap-4 items-center">
+                            <div class="flex gap-2">
+                                ${proj.tags.map(tag => `
+                                    <span class="px-4 py-1.5 border border-white/10 rounded-full text-[9px] uppercase tracking-widest text-zinc-500 group-hover:border-primary/40 group-hover:text-white transition-all">
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+                            <div class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-primary transition-all">
+                                <i class="fas fa-arrow-right text-[10px] text-primary"></i>
+                            </div>
+                        </div>
+                    `;
+
+                    row.addEventListener('mouseenter', () => {
+                        document.body.classList.add('cursor-hover');
+                    });
+
+                    row.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('cursor-hover');
+                    });
+
+                    list.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Hata:", error);
+                list.innerHTML = '<p class="text-primary py-20 font-mono text-center uppercase tracking-widest">VERİLER ÇEKİLEMEDİ</p>';
+            }
+        }
+
+        // --- HEADER EFFECT ---
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(window.scrollY > 50) header.classList.add('nav-blur', 'py-4');
+            else header.classList.remove('nav-blur', 'py-4');
+        });
+
+        // Init
+        window.onload = loadProjects;
+    </script>
+    <script>
+    // Desteklenen diller ve varsayılan
+    const supportedLanguages = ['tr', 'en'];
+    const defaultLang = 'en';
+
+    // Tarayıcı dilini tespit et
+    let currentLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2).toLowerCase();
+    if (!supportedLanguages.includes(currentLang)) currentLang = defaultLang;
+
+    // Kullanıcı tercihi varsa onu kullan
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang && supportedLanguages.includes(savedLang)) {
+        currentLang = savedLang;
+    }
+
+    let translations = {};
+
+    async function loadLanguage(lang) {
+        try {
+        const response = await fetch(`locales/${lang}.json`);
+        if (!response.ok) throw new Error('Dil dosyası yüklenemedi');
+        translations = await response.json();
+
+        document.documentElement.lang = lang;
+        document.title = translations.siteTitle || document.title;
+
+        applyTranslations();
+        localStorage.setItem('preferredLanguage', lang);
+        } catch (err) {
+        console.error('Dil yükleme hatası:', err);
+        }
+    }
+
+    async function loadProjects() {
+    const list = document.getElementById('projects-list');
+    const skeleton = document.getElementById('skeleton-loader');
+    
+    try {
+        await new Promise(r => setTimeout(r, 800));
+        skeleton?.remove();
+
+        const res = await fetch('projeler.json');
+        const projects = await res.json();
+
+        projects.forEach((proj, index) => {
+        const title = proj[`title_${currentLang}`] || proj.title_tr;
+        const desc = proj[`shortDescription_${currentLang}`] || proj.shortDescription_tr || translations.projectsPage?.noDescription;
+
+        const row = document.createElement('a');
+        row.href = `${proj.id}.html`;
+        row.innerHTML = `
+            ...
+            <h2 ...>${title}</h2>
+            <p class="project-desc ...">${desc}</p>
+            ...
+        `;
+        list.appendChild(row);
+        });
+    } catch (error) {
+        // hata yönetimi
+    }
+    }
+
+    function applyTranslations() {
+        // index.html için
+        document.querySelector('[data-i18n="hero-badge"]')?.textContent = translations.hero?.badge;
+        document.querySelector('[data-i18n="hero-desc"]')?.textContent = translations.hero?.description;
+        document.querySelector('[data-i18n="portfolio-section"]')?.textContent = translations.portfolio?.sectionTitle;
+        document.querySelector('[data-i18n="selected-projects"]')?.textContent = translations.portfolio?.selectedProjects;
+        document.querySelector('[data-i18n="portfolio-desc"]')?.textContent = translations.portfolio?.description;
+        document.querySelector('[data-i18n="view-all"]')?.textContent = translations.portfolio?.viewAll;
+        document.querySelector('[data-i18n="about-section"]')?.textContent = translations.about?.sectionTitle;
+        document.querySelector('[data-i18n="about-heading"]')?.textContent = translations.about?.heading;
+        document.querySelector('[data-i18n="about-p1"]')?.textContent = translations.about?.p1;
+        document.querySelector('[data-i18n="about-p2"]')?.textContent = translations.about?.p2;
+        document.querySelector('[data-i18n="contact-section"]')?.textContent = translations.contact?.sectionTitle;
+        document.querySelector('[data-i18n="coffee"]')?.textContent = translations.contact?.coffee;
+        document.querySelector('[data-i18n="footer-copyright"]')?.textContent = translations.footer?.copyright;
+
+        // projeler.html için
+        document.querySelector('[data-i18n="archive"]')?.textContent = translations.projectsPage?.archive;
+        document.querySelector('[data-i18n="all-works"]')?.textContent = translations.projectsPage?.allWorks;
+
+        // athleticocore.html (ve diğer detay sayfaları) için
+        document.querySelector('[data-i18n="category"]')?.textContent = translations.projectDetail?.category;
+        document.querySelector('[data-i18n="back-to-projects"]')?.textContent = translations.projectDetail?.backToProjects;
+        document.querySelector('[data-i18n="project-info"]')?.textContent = translations.projectDetail?.projectInfo;
+        document.querySelector('[data-i18n="year-label"]')?.textContent = translations.projectDetail?.yearLabel;
+        document.querySelector('[data-i18n="role-label"]')?.textContent = translations.projectDetail?.roleLabel;
+        document.querySelector('[data-i18n="tech-label"]')?.textContent = translations.projectDetail?.technologiesLabel;
+        document.querySelector('[data-i18n="links-label"]')?.textContent = translations.projectDetail?.linksLabel;
+        document.querySelector('[data-i18n="demo-btn"]')?.textContent = translations.projectDetail?.demoButton;
+        document.querySelector('[data-i18n="github-btn"]')?.textContent = translations.projectDetail?.githubButton;
+        document.querySelector('[data-i18n="challenges-label"]')?.textContent = translations.projectDetail?.challengesLabel;
+        document.querySelector('[data-i18n="results-label"]')?.textContent = translations.projectDetail?.resultsLabel;
+    }
+
+    // Sayfa yüklendiğinde dili yükle
+    window.addEventListener('load', () => loadLanguage(currentLang));
+
+    // Manuel dil değiştirme fonksiyonu
+    function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang)) {
+        loadLanguage(lang);
+        }
+    }
+    </script>
+</body>
+</html>
+</DOCUMENT>
