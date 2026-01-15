@@ -3,7 +3,7 @@
 YDA. — Estetiği yüksek performanslı kodlarla birleştiren dijital deneyimler.
 
 ## Canlı Site
-🌐 https://yakupakn.github.io (veya yakupdelil.com)
+🌐 https://yakupakn.github.io/YakupAkn
 
 ## Özellikler
 - Tailwind CSS + custom cursor + noise efekt
@@ -20,12 +20,7 @@ YDA. — Estetiği yüksek performanslı kodlarla birleştiren dijital deneyimle
 - Google Fonts (Space Grotesk + Syne)
 
 ## Projelerim
-- [AthleticoCore](link) — Gerçek zamanlı form düzeltme (MediaPipe)
-- [Project Phantom Labs](link) — Eğitim amaçlı güvenlik araştırma framework'ü
+- [Athletico](https:athleticoapp.netlify.app) - Sporcu Takip Uygulaması
+- [AthleticoCore](https:athleticocore.netlify.app) — Gerçek zamanlı form düzeltme (MediaPipe)
+- [Project Phantom Labs] — Eğitim amaçlı güvenlik araştırma framework'ü
 ...
-
-## İletişim
-📧 contact@yakupdelil.com  
-LinkedIn | GitHub | Instagram | Dribbble
-
-⭐ Bu repo'yu beğenirseniz sevinirim!
