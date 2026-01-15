@@ -1,16 +1,31 @@
-## Hi there 👋
+# Yakup Delil Akın - Creative Web Developer & Designer
 
-<!--
-**YakupAkn/YakupAkn** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+YDA. — Estetiği yüksek performanslı kodlarla birleştiren dijital deneyimler.
 
-Here are some ideas to get you started:
+## Canlı Site
+🌐 https://yakupakn.github.io (veya yakupdelil.com)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Özellikler
+- Tailwind CSS + custom cursor + noise efekt
+- Çok dilli destek (TR/EN)
+- GSAP animasyonları ve 3D hissi
+- Mobil uyumlu tasarım
+- Proje detayları JSON tabanlı dinamik yükleniyor
+
+## Teknolojiler
+- HTML5 / CSS3 / JavaScript
+- Tailwind CSS
+- GSAP & Framer Motion
+- Font Awesome
+- Google Fonts (Space Grotesk + Syne)
+
+## Projelerim
+- [AthleticoCore](link) — Gerçek zamanlı form düzeltme (MediaPipe)
+- [Project Phantom Labs](link) — Eğitim amaçlı güvenlik araştırma framework'ü
+...
+
+## İletişim
+📧 contact@yakupdelil.com  
+LinkedIn | GitHub | Instagram | Dribbble
+
+⭐ Bu repo'yu beğenirseniz sevinirim!
