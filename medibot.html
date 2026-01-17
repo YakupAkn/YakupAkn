@@ -209,6 +209,52 @@
                         </a>
                     </div>
                 </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="medibot-section-features">Temel Özellikler</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-feature-1">Doğal dil işleme ile semptom analizi</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-feature-2">Acil durumlar için en yakın hastane yönlendirmesi</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-feature-3">Kişiselleştirilmiş sağlık hatırlatıcıları</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="medibot-section-tech">Teknik Detaylar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-tech-1">RAG (Retrieval-Augmented Generation) mimarisi</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-tech-2">Vektör veritabanı ile hızlı bilgi erişimi</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="medibot-section-challenges">Zorluklar ve Çözümler</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-challenge-1">Tıbbi terimlerin doğru anlaşılması için özel prompt mühendisliği</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="medibot-challenge-2">LLM halüsinasyonlarını önlemek için doğrulama katmanları</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -331,12 +377,6 @@
             console.log('Sayfa yüklendi, dil yükleniyor...');
             loadLanguage(currentLang);
         });
-        function changeLanguage(lang) {
-            if (supportedLanguages.includes(lang)) {
-                loadLanguage(lang);
-            }
-        }
-        window.changeLanguage = changeLanguage;
         function updateLangUI(lang) {
         document.getElementById('current-lang-display').textContent = lang.toUpperCase();
         document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';

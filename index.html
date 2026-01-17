@@ -561,12 +561,6 @@
             console.log('Sayfa yüklendi, dil yükleniyor...');
             loadLanguage(currentLang);
         });
-        function changeLanguage(lang) {
-            if (supportedLanguages.includes(lang)) {
-                loadLanguage(lang);
-            }
-        }
-        window.changeLanguage = changeLanguage;
         function updateLangUI(lang) {
         document.getElementById('current-lang-display').textContent = lang.toUpperCase();
         document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';

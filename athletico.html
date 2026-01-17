@@ -105,9 +105,9 @@
     <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
         <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
         <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
-            <a href="index.html" class="hover:text-primary transition-colors">Ana Sayfa</a>
-            <a href="projeler.html" class="text-primary">Projeler</a>
-            <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
+            <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav-home">Ana Sayfa</a>
+            <a href="projeler.html" class="text-primary" data-i18n="nav-projects">Projeler</a>
+            <a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
         </nav>
         <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
         <div class="relative group">
@@ -219,6 +219,23 @@
                     </div>
                 </div>
                 <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athletico-section-features">Öne Çıkan Özellikler</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-feature-1">PWA desteği ile her platformda kurulumsuz kullanım</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-feature-2">Offline-first yapı sayesinde internet olmadan da veri kaydı</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-feature-3">Supabase ile otomatik bulut yedekleme</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athletico-section-challenges">Karşılaşılan Zorluklar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
                         <li class="flex gap-3">
@@ -249,6 +266,23 @@
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
                             <span data-i18n="athletico-result-3">Kullanıcı testlerinde %40 daha hızlı veri girişi</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athletico-section-future">Gelecek Planları</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-future-1">Sosyal paylaşım özellikleri</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-future-2">Akıllı saat entegrasyonu</span>
+                        </li>
+                         <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="athletico-future-3">Oyunlaştırma ve rozet sistemi</span>
                         </li>
                     </ul>
                 </div>
@@ -372,12 +406,6 @@
             console.log('Sayfa yüklendi, dil yükleniyor...');
             loadLanguage(currentLang);
         });
-        function changeLanguage(lang) {
-            if (supportedLanguages.includes(lang)) {
-                loadLanguage(lang);
-            }
-        }
-        window.changeLanguage = changeLanguage;
         function updateLangUI(lang) {
         document.getElementById('current-lang-display').textContent = lang.toUpperCase();
         document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
