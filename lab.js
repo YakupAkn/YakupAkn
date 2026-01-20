@@ -1,34 +1,28 @@
-let currentLang = localStorage.getItem('preferredLanguage') || 'tr';
-let translations = {};
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Önce Dili Yükle
-    await loadLabLanguage(currentLang);
-    
-    // 2. Sonra Projeleri Çek
-    fetchProjects();
+// lab.js - Integrated with i18n.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // i18n.js will trigger 'languageChanged' when translations are ready.
+    // We wait for that event to fetch projects.
 });
 
-// --- DİL YÜKLEME FONKSİYONU ---
-async function loadLabLanguage(lang) {
-    try {
-        const response = await fetch(`locales/${lang}.json`);
-        translations = await response.json();
-        
-        // Statik metinleri çevir (data-i18n olanlar)
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[key]) el.innerText = translations[key];
-        });
+window.addEventListener('languageChanged', () => {
+    console.log('Lab: Language changed, fetching projects...');
+    fetchProjects();
 
-    } catch (e) {
-        console.error("Dil yüklenemedi, varsayılan İngilizce kullanılacak.");
-    }
-}
+    // Update static texts that might have been missed if they were dynamically added
+    // But mostly i18n.js handles data-i18n.
+    // However, if we change language, i18n.js re-runs applyTranslations().
+});
 
 // --- LİSTE ÇEKME ---
 async function fetchProjects() {
     const container = document.getElementById('project-container');
+    const currentLang = localStorage.getItem('preferredLanguage') || 'tr';
+
+    // Use global translations object from i18n.js
+    const t = window.translations || {};
+
     try {
         const response = await fetch('data/lab-projects.json');
         const projects = await response.json();
@@ -45,7 +39,7 @@ async function fetchProjects() {
 
             // Özeti seçili dilde al, yoksa İngilizce, yoksa ilk bulduğunu al
             const summaryText = proj.summary[currentLang] || proj.summary['en'] || Object.values(proj.summary)[0];
-            const statusText = translations[statusKey] || proj.status;
+            const statusText = t[statusKey] || proj.status;
 
             const html = `
                 <article class="report-card cursor-pointer group" onclick="loadProjectDetail('${proj.id}')">
@@ -63,7 +57,7 @@ async function fetchProjects() {
             container.innerHTML += html;
         });
     } catch (error) {
-        container.innerHTML = `<div class="text-red-600 font-mono">${translations['lab-error'] || 'ERROR'}</div>`;
+        container.innerHTML = `<div class="text-red-600 font-mono">${t['lab-error'] || 'ERROR'}</div>`;
     }
 }
 
@@ -72,10 +66,12 @@ async function loadProjectDetail(projectId) {
     const listView = document.getElementById('view-list');
     const detailView = document.getElementById('view-detail');
     const contentDiv = document.getElementById('detail-content');
+    const currentLang = localStorage.getItem('preferredLanguage') || 'tr';
+    const t = window.translations || {};
 
     listView.classList.add('hidden');
     detailView.classList.remove('hidden');
-    contentDiv.innerHTML = `<div class="text-center font-mono mt-20">${translations['lab-loading'] || 'Loading...'}</div>`;
+    contentDiv.innerHTML = `<div class="text-center font-mono mt-20">${t['lab-loading'] || 'Loading...'}</div>`;
 
     try {
         const response = await fetch(`lab-projects/${projectId}.json`);
@@ -90,7 +86,7 @@ async function loadProjectDetail(projectId) {
         // Status metni
         let statusKey = 'lab-status-ongoing';
         if(data.status === 'PLANNED') statusKey = 'lab-status-planned';
-        const statusText = translations[statusKey] || data.status;
+        const statusText = t[statusKey] || data.status;
 
         contentDiv.innerHTML = `
             <article class="report-card relative overflow-hidden mt-8 animate-fade-in">
@@ -106,9 +102,9 @@ async function loadProjectDetail(projectId) {
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="md:col-span-2 space-y-4">
                         <p class="text-sm font-mono border-b pb-4 mb-4">
-                            <strong>${translations['lab-subject']}:</strong> ${subtitle}<br>
-                            <strong>${translations['lab-objective']}:</strong> ${objective}<br>
-                            <strong>${translations['lab-start-date']}:</strong> ${data.startDate}
+                            <strong>${t['lab-subject'] || 'Subject'}:</strong> ${subtitle}<br>
+                            <strong>${t['lab-objective'] || 'Objective'}:</strong> ${objective}<br>
+                            <strong>${t['lab-start-date'] || 'Start Date'}:</strong> ${data.startDate}
                         </p>
                         
                         <div class="p-4 bg-gray-100 text-xs font-mono border-l-4 border-black mb-6">
@@ -128,20 +124,20 @@ async function loadProjectDetail(projectId) {
                 </div>
 
                 <div class="mt-8 pt-6 border-t border-gray-200">
-                    <h3 class="text-sm font-bold mb-4">${translations['lab-growth']}</h3>
+                    <h3 class="text-sm font-bold mb-4">${t['lab-growth'] || 'Growth'}</h3>
                     <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                         <div class="h-full bg-black" style="width: ${data.growthData.progress}%"></div>
                     </div>
                     <div class="flex justify-between text-[10px] mt-1 text-gray-500">
-                        <span>${translations['lab-day']} ${data.growthData.currentDay}</span>
-                        <span>${translations['lab-target']} ${data.growthData.targetDay}</span>
+                        <span>${t['lab-day'] || 'Day'} ${data.growthData.currentDay}</span>
+                        <span>${t['lab-target'] || 'Target'} ${data.growthData.targetDay}</span>
                     </div>
                 </div>
             </article>
         `;
 
     } catch (error) {
-        contentDiv.innerHTML = `<div class="text-red-600 font-mono text-center mt-10">${translations['lab-error']}</div>`;
+        contentDiv.innerHTML = `<div class="text-red-600 font-mono text-center mt-10">${t['lab-error'] || 'Error loading project'}</div>`;
     }
 }
 
@@ -170,13 +166,40 @@ function updateCoords(e) {
     if(el) el.innerText = `X:${e.clientX} Y:${e.clientY}`;
 }
 
-// --- LANGUAGE & THEME (Mevcut fonksiyonlarına entegre edilecek) ---
-function setLanguage(lang) {
-    localStorage.setItem('preferredLanguage', lang);
-    location.reload(); // Sayfayı yenileyerek dili uygula
-}
+// --- THEME ---
+function setTheme(theme) {
+    // Basic Dark/Light mode implementation
+    if (theme === 'dark') {
+        document.body.style.backgroundColor = '#111';
+        document.body.style.color = '#f4f4f4';
 
-// --- HELP MODAL ---
-function showHelp() {
-    alert("SYSTEM DIAGNOSTICS:\n\n- Use 'System Config' to alter visual parameters.\n- All experiments are classified.\n- Do not touch the samples.");
+        const gridBg = document.querySelector('.grid-bg');
+        if(gridBg) {
+             gridBg.style.backgroundImage = `
+                linear-gradient(#333 1px, transparent 1px),
+                linear-gradient(90deg, #333 1px, transparent 1px)
+             `;
+        }
+
+        // Styles for dynamic elements
+        const style = document.createElement('style');
+        style.id = 'dark-theme-style';
+        style.innerHTML = `
+            .report-card { background: #222; border-color: #444; color: #f4f4f4; }
+            .back-btn { background: #222; border-color: #fff; color: #fff; }
+            .back-btn:hover { background: #fff; color: #000; }
+        `;
+        document.head.appendChild(style);
+
+    } else {
+        // Light (Default)
+        document.body.style.backgroundColor = '';
+        document.body.style.color = '';
+
+        const gridBg = document.querySelector('.grid-bg');
+        if(gridBg) gridBg.style.backgroundImage = '';
+
+        const style = document.getElementById('dark-theme-style');
+        if(style) style.remove();
+    }
 }

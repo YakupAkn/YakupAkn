@@ -101,8 +101,6 @@
   "athletico-result-2": "Supabase ile gerçek zamanlı veri senkronizasyonu",
   "athletico-result-3": "Kullanıcı testlerinde %40 daha hızlı veri girişi",
   "projeler-title":  "Projeler | YDA.",
-  "footer-copyright": "© 2026 Yakup Delil Akın. Tüm Hakları Saklıdır.",
-  "footer-profession": "Web Developer",
   "medibot-badge": "Sağlık Teknolojileri / YZ",
   "medibot-title": "MediBot",
   "medibot-description": "Teknofest için geliştirilen, temel sağlık bilgilendirmesi ve yönlendirmesi yapan yapay zeka destekli eğitim ve sağlık asistanı.",
@@ -135,8 +133,4 @@
   "phantomlabs-result-2": "Farklı test ortamlarında (Win10/11, düşük-orta seviye donanım) artifact tespiti ve çevresel izleme %100 tutarlı çalıştı.",
   "phantomlabs-result-3": "Eğitim amaçlı kullanımda, sistem analizi metodolojilerini etkili şekilde göstermeyi başardı; kötüye kullanım riski sıfıra yakın tutuldu.",
   "phantomlabs-result-4": "Sıfır ağ bağımlılığı ve tamamen yerel işlem ile etik güvenlik araştırması için güvenli bir eğitim aracı haline geldi."
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9160e54d43a7cfab43f942b45318c7daff65a14f
