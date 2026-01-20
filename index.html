@@ -198,6 +198,16 @@
                 <span>English</span>
                 <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
             </button>
+            <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇪🇸</span>
+                <span>Español</span>
+                <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
+            <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                <span class="text-lg">🇩🇪</span>
+                <span>Deutsch</span>
+                <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+            </button>
             </div>
         </div>
         <a href="mailto:yakupdelilakin@gmail.com" 
@@ -561,7 +571,7 @@
         console.log('Tarayıcı dili:', navigator.language);
         console.log('User language:', navigator.userLanguage);
         console.log('Saved language:', localStorage.getItem('preferredLanguage'));
-        const supportedLanguages = ['tr', 'en'];
+        const supportedLanguages = ['tr', 'en', 'es', 'de'];
         const defaultLang = 'tr';
         let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
         if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
@@ -641,6 +651,8 @@
         document.getElementById('current-lang-display').textContent = lang.toUpperCase();
         document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
         document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        document.getElementById('es-check').style.opacity = lang === 'es' ? '1' : '0';
+        document.getElementById('de-check').style.opacity = lang === 'de' ? '1' : '0';
         const btn = document.getElementById('lang-toggle-btn');
         btn.classList.toggle('border-primary/50', true);
         btn.classList.toggle('bg-primary/5', lang === currentLang);
