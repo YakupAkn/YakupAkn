@@ -169,6 +169,9 @@
         </a>
         <nav class="hidden md:flex gap-8 lg:gap-10 font-medium uppercase text-[10px] md:text-xs tracking-[0.3em]">
         <a href="projeler.html" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
+        <button onclick="initiateAirlock()" class="text-primary hover:text-white transition-colors animate-pulse font-bold border border-primary/30 px-3 py-1 rounded hover:bg-primary/20">
+            LAB ACCESS
+        </button>
         <a href="#about" class="hover:text-primary transition-colors" data-i18n="nav-about">Hakkımda</a>
         <a href="#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
         </nav>
@@ -185,7 +188,6 @@
             </button>
             <div id="lang-dropdown-menu" 
                 class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-            
             <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
                 <span class="text-lg">🇹🇷</span>
                 <span>Türkçe</span>
@@ -357,6 +359,84 @@
             </div>
         </div>
     </section>
+
+    <div id="airlock-overlay" class="fixed inset-0 z-[99999] hidden flex-col items-center justify-center bg-black text-[#00ff00] font-mono select-none">
+        <div class="w-full max-w-md px-6">
+            <div class="flex justify-between mb-2 text-xs uppercase tracking-widest">
+                <span>PROTOCOL: BIO-LAB</span>
+                <span id="airlock-status">INITIALIZING...</span>
+            </div>
+            <div class="w-full h-1 bg-[#111] mb-4 overflow-hidden">
+                <div id="airlock-bar" class="h-full bg-[#00ff00] w-0 transition-all duration-100 ease-out"></div>
+            </div>
+            <div class="font-mono text-[10px] text-[#00ff00]/60 space-y-1 h-20 overflow-hidden" id="airlock-logs">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function initiateAirlock() {
+            const overlay = document.getElementById('airlock-overlay');
+            const bar = document.getElementById('airlock-bar');
+            const status = document.getElementById('airlock-status');
+            const logs = document.getElementById('airlock-logs');
+            
+            // Ses efekti istersen buraya eklenebilir
+            
+            
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Scrollu kilitle
+
+            const systemMsgs = [
+                "Decontaminating suit...",
+                "Verifying biometrics...",
+                "Accessing isolated network...",
+                "Loading biological samples...",
+                "S.C.O.B.Y. environment check: STABLE",
+                "ACCESS GRANTED."
+            ];
+
+            let progress = 0;
+            let msgIndex = 0;
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 8;
+                if (progress > 100) progress = 100;
+                
+                bar.style.width = `${progress}%`;
+
+                // Rastgele log ekle
+                if (Math.random() > 0.7 && msgIndex < systemMsgs.length) {
+                    const p = document.createElement('div');
+                    p.innerText = `> ${systemMsgs[msgIndex]}`;
+                    logs.appendChild(p);
+                    logs.scrollTop = logs.scrollHeight;
+                    msgIndex++;
+                }
+
+                    const systemMsgs = [
+                        translations['lab-log-1'] || "Decontaminating suit...",
+                        translations['lab-log-2'] || "Verifying biometrics...",
+                        translations['lab-log-3'] || "Accessing isolated network...",
+                        translations['lab-log-4'] || "Loading biological samples...",
+                        translations['lab-log-5'] || "S.C.O.B.Y. environment check: STABLE",
+                        translations['lab-access-granted'] || "ACCESS GRANTED."
+                    ];
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    status.innerText = "COMPLETE";
+                    status.classList.add('animate-pulse');
+                    
+                    setTimeout(() => {
+                        // YENİ SAYFAYA YÖNLENDİRME
+                        window.location.href = 'lab.html';
+                    }, 800);
+                }
+            }, 150);
+        }
+    </script>
     <script>
 
 

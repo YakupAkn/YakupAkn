@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB // YDA RESEARCH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div id="view-list" class="max-w-4xl mx-auto pt-24 px-6 pb-20">
+        <a href="index.html" class="back-btn" data-i18n="lab-exit">← EXIT TO PORTFOLIO</a>
+        
+        <header class="mb-16 border-b-2 border-black pb-8">
+            <div class="text-xs font-bold mb-2" data-i18n="lab-logs-title">CLASSIFIED RESEARCH LOGS</div>
+            <h1 class="text-5xl font-bold tracking-tighter" data-i18n="lab-main-title">BIOLOGICAL EXPERIMENTS</h1>
+            <p class="mt-4 text-gray-600" data-i18n="lab-subtitle">Code is virtual...</p>
+            <div class="fixed top-5 right-5 z-50 font-mono text-xs">
+            <div class="relative group">
+                <button class="border border-black bg-white px-3 py-1 hover:bg-black hover:text-white transition-colors uppercase font-bold flex items-center gap-2">
+                    <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full"></span>
+                    SYSTEM CONFIG
+                </button>
+
+                <div class="absolute right-0 top-full mt-1 w-48 bg-white border border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hidden group-hover:block">
+                    
+                    <div class="relative group/sub border-b border-gray-200">
+                        <button class="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center">
+                            VISUAL MODE
+                            <span>›</span>
+                        </button>
+                        <div class="absolute right-full top-0 mr-1 w-32 bg-white border border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hidden group-hover/sub:block">
+                            <button onclick="setTheme('light')" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">STERILE (Light)</button>
+                            <button onclick="setTheme('dark')" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">VOID (Dark)</button>
+                        </div>
+                    </div>
+
+                    <div class="relative group/sub border-b border-gray-200">
+                        <button class="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center">
+                            LANGUAGE
+                            <span>›</span>
+                        </button>
+                        <div class="absolute right-full top-0 mr-1 w-32 bg-white border border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hidden group-hover/sub:block">
+                            <button onclick="setLanguage('tr')" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">TURKISH</button>
+                            <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">ENGLISH</button>
+                            <button onclick="setLanguage('de')" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">GERMAN</button>
+                        </div>
+                    </div>
+
+                    <div class="relative group/sub border-b border-gray-200">
+                        <button class="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center">
+                            BIOSENSOR
+                            <span>›</span>
+                        </button>
+                        <div class="absolute right-full top-0 mr-1 w-32 bg-white border border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hidden group-hover/sub:block">
+                            <button onclick="toggleBiosensor(true)" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">ACTIVE</button>
+                            <button onclick="toggleBiosensor(false)" class="w-full text-left px-4 py-2 hover:bg-black hover:text-white">OFFLINE</button>
+                        </div>
+                    </div>
+
+                    <button onclick="showHelp()" class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white">
+                        EMERGENCY HELP
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="biosensor-layer" class="fixed inset-0 pointer-events-none z-40 hidden mix-blend-multiply opacity-30">
+            <div class="absolute top-5 left-5 w-10 h-10 border-t-2 border-l-2 border-green-600"></div>
+            <div class="absolute top-5 right-5 w-10 h-10 border-t-2 border-r-2 border-green-600"></div>
+            <div class="absolute bottom-5 left-5 w-10 h-10 border-b-2 border-l-2 border-green-600"></div>
+            <div class="absolute bottom-5 right-5 w-10 h-10 border-b-2 border-r-2 border-green-600"></div>
+            <div class="w-full h-1 bg-green-400 opacity-20 absolute top-0 animate-[scan_3s_linear_infinite]"></div>
+            <div id="mouse-coords" class="absolute bottom-5 right-20 font-mono text-xs text-green-700">X:000 Y:000</div>
+        </div>
+        </header>
+
+        <div id="project-container" class="space-y-8">
+            <div class="text-center animate-pulse font-mono" data-i18n="lab-loading">Fetching data...</div>
+        </div>
+    </div>
+
+    <div id="view-detail" class="hidden max-w-4xl mx-auto pt-24 px-6 pb-20">
+        <button onclick="closeProject()" class="back-btn" data-i18n="lab-back-list">← BACK TO LOGS</button>
+        <div id="detail-content"></div>
+    </div>
+
+    <script src="lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "exp-001",
+  "title": "PROJECT: S.C.O.B.Y.",
+  "status": "ONGOING",
+  "startDate": "2026-01-20",
+  "subtitle": {
+    "tr": "Bakteri ve Mayanın Simbiyotik Kültürü",
+    "en": "Symbiotic Culture Of Bacteria and Yeast"
+  },
+  "objective": {
+    "tr": "Sürdürülebilir biyo-materyal (vegan deri) üretimi.",
+    "en": "Production of sustainable bio-material (vegan leather)."
+  },
+  "logs": {
+    "tr": [
+      "> Protokol başlatıldı.",
+      "> Besin çözeltisi hazırlandı (Siyah Çay + Sakkaroz).",
+      "> Acetobacter Xylinum kültürü eklendi.",
+      "> Durum: Fermantasyon aktif."
+    ],
+    "en": [
+      "> Protocol initiated.",
+      "> Nutrient solution prepared (Black Tea + Sucrose).",
+      "> Acetobacter Xylinum culture introduced.",
+      "> Status: Fermentation active."
+    ]
+  },
+  "description": {
+    "tr": "Bu deneyde, evsel atıkların...",
+    "en": "In this experiment, I aim to produce..."
+  },
+  "growthData": {
+    "currentDay": 2,
+    "targetDay": 20,
+    "progress": 10
+  }
+}
