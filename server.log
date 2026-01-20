@@ -1,0 +1,27 @@
+127.0.0.1 - - [20/Jan/2026 20:57:32] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:57:32] "GET /js/footer.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:57:32] "GET /js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:57:34] "GET /locales/en.json HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:57:34] "GET /projeler.json HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:57:34] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:57:34] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:57:34] "GET /images/athleticocore-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:57:34] "GET /images/athletico-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:57:34] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:57:34] "GET /images/phantomlabs-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /js/footer.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /locales/en.json HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /projeler.json HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /images/athletico-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /images/phantomlabs-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:58:13] code 404, message File not found
+127.0.0.1 - - [20/Jan/2026 20:58:13] "GET /images/athleticocore-hero.jpg HTTP/1.1" 404 -
+127.0.0.1 - - [20/Jan/2026 20:58:15] "GET /locales/tr.json HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:18] "GET /lab.html HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:18] "GET /lab.css HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:18] "GET /lab.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Jan/2026 20:58:18] "GET /data/lab-projects.json HTTP/1.1" 200 -
