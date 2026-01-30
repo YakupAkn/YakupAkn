@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "title": "Athletico - Geliştirme Süreci",
+        "category": "Projeler",
+        "tags": ["web-dev", "python", "backend"],
+        "content": "### Durum Raporu\nSpor takip uygulaması için backend mimarisi tamamlandı. \n\n- Yapılacaklar:\n - [ ] Bug fixing (14 günlük süreç)\n - [ ] API optimizasyonu\n - [ ] Frontend bağlantıları",
+        "date": "2026-01-25"
+    },
+    {
+        "id": 2,
+        "title": "S.C.O.B.Y - Protokol EXP-001",
+        "category": "Projeler",
+        "tags": ["biotech", "esp32", "diy"],
+        "content": "Çay atıklarından biyo-deri üretimi başlatıldı.\n\n> Not: Oda sıcaklığı 24C'de sabitlenmeli. Arduino ile nem sensörü verileri her saat başı loglanacak.",
+        "date": "2026-01-21"
+    },
+    {
+        "id": 3,
+        "title": "Python Otomasyon Fikirleri",
+        "category": "Bilgi Bankası",
+        "tags": ["python", "kod"],
+        "content": "Sentinel Vision projesi için göz takip algoritması OpenCV ile yazılacak. Uyku takibi için thread yapısı kurulmalı.",
+        "date": "2026-01-20"
+    },
+    {
+        "id": 4,
+        "title": "Nükleer Füzyon: Yıldızları Dünyaya Getirmek",
+        "category": "Genel",
+        "tags": ["fizik", "enerji", "gelecek", "bilim"],
+        "content": "Nükleer füzyon, iki hafif atom çekirdeğinin birleşerek daha ağır bir çekirdek oluşturduğu ve bu sırada muazzam miktarda enerji açığa çıkardığı bir reaksiyondur. Güneş'in ve diğer yıldızların güç kaynağıdır.\n\nTemel Prensipler:\nFüzyon için gereken temel koşul, atom çekirdeklerinin birbirini iten pozitif yüklerini (Coulomb bariyeri) yenmek için yeterli kinetik enerjiye sahip olmalarıdır. Bu, milyonlarca derece sıcaklıkta (plazma halinde) gerçekleşir. En umut verici yakıt izotopları, Döteryum (D) ve Trityum'dur (T). D-T reaksiyonu, 100 milyon derece civarında en verimli şekilde gerçekleşir.\n\nZorluklar ve Reaksiyon Kontrolü:\nTemel zorluk, bu ultra-sıcak plazmayı manyetik alanlar (tokamak veya stellarator) veya ataletle sınırlamak (lazer füzyonu) ve reaksiyondan elde edilen net enerjinin, reaksiyonu başlatmak için harcanan enerjiden fazla olmasını sağlamaktır. Q değeri (kazanılan enerji/girilen enerji) henüz 1'i aşamamıştır, ancak ITER projesi Q>10 hedeflemektedir.\n\nAvantajları ve Geleceği:\nFüzyon, neredeyse sınırsız bir yakıt kaynağına (okyanuslardaki döteryum) sahiptir, uzun ömürlü yüksek seviyeli radyoaktif atık üretmez ve reaksiyon kontrol edilemediği sürece zincirleme reaksiyon riski taşımaz. Başarılı olması halinde, insanlığın temiz ve bol enerji sorununa kesin bir çözüm olabilir.",
+        "date": "2026-01-30"
+    },
+    {
+        "id": 5,
+        "title": "Penguenler: Buzulların Uçarı Olmayan Kuşları",
+        "category": "Genel",
+        "tags": ["biyoloji", "hayvanlar", "antarktika", "evrim"],
+        "content": "Penguenler (Spheniscidae familyası), uçma yeteneğini kaybetmiş, bunun yerine mükemmel bir şekilde yüzmeye ve dalışa adapte olmuş, soğuk iklimlere özgü (birkaç tür hariç) deniz kuşlarıdır.\n\nFiziksel Adaptasyonlar:\n- Kanatlar: Uçmak için kullanılan kanatlar, yüzgeçlere dönüşmüştür. Kemikleri düzleşmiş ve eklemleri, kanatların bir kürek gibi güçlü çekişler yapmasına olanak verecek şekilde kilitlenmiştir.\n- Tüyler: Vücutlarını sıkıca örten, su geçirmez, yağlı ve kısa tüyleri vardır. Bu tüyler, derinin hemen altındaki kalın bir yağ tabakası ile birlikte hipotermiyi önleyen mükemmel bir yalıtım sağlar.\n- Isı Dengesi: Bacaklarında ve ayaklarında bulunan karşı-akım ısı değiştirici sistemi, vücut sıcaklığını korurken, ayakların donmasını engeller. Atardamardan gelen sıcak kan, toplardamardan dönen soğuk kanı ısıtır, böylece vücut ısısı korunurken ayaklar buz üzerinde durabilir.\n\nDavranış ve Sosyal Yaşam:\nPenguenler son derece sosyal hayvanlardır ve üreme dönemlerinde binlerce bireyden oluşan koloniler kurarlar. Bu, avcılara karşı koruma ve soğuktan korunmak için (huddling - toplanma) hayati öneme sahiptir. Örneğin İmparator Penguenleri, Antarktika kışında -60°C'de ve kasırga kuvvetindeki rüzgarlarda, sürekli yer değiştiren dev bir yığın halinde toplanarak hayatta kalırlar.\n\nTehditler:\nİklim değişikliği, penguenlerin ana besin kaynağı olan krill popülasyonlarını ve buzul üreme alanlarını tehdit etmektedir. Aşırı balıkçılık ve okyanus kirliliği de önemli risk faktörleridir.",
+        "date": "2026-02-02"
+    },
+    {
+        "id": 6,
+        "title": "Uzayda Yaşam: Evrende Yalnız mıyız?",
+        "category": "Genel",
+        "tags": ["astronomi", "astrobiyoloji", "uzay", "felsefe"],
+        "content": "Uzayda yaşam arayışı, insanlığın en eski ve en derin sorularından biridir. Bu arayış, biyoloji, astronomi, kimya ve jeolojiyi birleştiren astrobiyoloji bilim dalının konusudur.\n\nYaşamın Temel Gereksinimleri (Dünya Merkezli Bakış):\n1. Sıvı Su: Evrensel çözücü olarak biyokimyasal reaksiyonlar için vazgeçilmezdir.\n2. Enerji Kaynağı: Güneş'ten gelen ışık (fotosentez) veya jeotermal enerji (kemoseniz).\n3. Biyojenik Elementler: Karbon, hidrojen, oksijen, nitrojen, fosfor, kükürt (CHONPS).\n\nGüneş Sistemimizdeki Potansiyel Yaşam Alanları:\n- Mars: Geçmişte yüzeyinde sıvı su olduğuna dair güçlü kanıtlar (kuru nehir yatakları, killer). Yeraltı buzulları veya tuzlu su akıntıları (RSL) mikrobiyal yaşam barındırıyor olabilir.\n- Europa (Jüpiter'in Uydusu): Kalın buz kabuğunun altında, Dünya okyanuslarından daha fazla su içeren dev bir global okyanus olduğu düşünülüyor. Gelgit esnemesi ile ısınan kayalık bir çekirdek, deniz tabanında hidrotermal bacalar oluşturuyor olabilir; bu da Dünya'daki yaşamın başlangıç noktalarına benzer bir ortam sunar.\n- Enceladus (Satürn'ün Uydusu): Güney kutbundan uzaya su buharı ve buz fışkırtan (cryovolcanism) bu küçük uydunun da bir yeraltı okyanusu vardır. Fışkıran materyalde kompleks organik moleküller tespit edilmiştir.\n- Titan (Satürn'ün Uydusu): Yoğun bir nitrojen atmosferi ve yüzeyinde metan/etan gölleri ve nehirleri bulunur. Su-buzu, kayalık bir çekirdeğin üzerinde katman oluşturur. Farklı bir biyokimya (su yerine sıvı metan çözücü olarak) potansiyeli vardır.\n\nÖtegezegenler ve Drake Denklemi:\nSamanyolu Galaksisi'nde milyarlarca ötegezegen keşfedilmiştir. Bunların bir kısmı yıldızlarının yaşanabilir bölgesinde (Goldilocks Zone) bulunur. Drake Denklemi, galakside iletişim kurabilecek zeki uygarlıkların sayısını tahmin etmeye çalışan parametrik bir denklemdir. Değişkenlerin belirsizliği, sonucu spekülatif kılar. Fermi Paradoksu ise, "Eğer onlar varsa, neredeler?" sorusunu sorar.\n\nArayış Yöntemleri:\n1. Biyo-imzalar: Bir gezegenin atmosferinde yaşam tarafından üretilen kimyasal dengesizlikler (örneğin Dünya'da birlikte bulunan O2 ve CH4).\n2. Tekno-imzalar: Zeki yaşamın kanıtı (örneğin radyo sinyalleri - SETI projeleri, yapay ışıklar, Dyson küresi benzeri mega yapılar).\n\nSonuç olarak, henüz kesin bir kanıt bulunmasa da, evrende yaşam için uygun koşullara sahip çok sayıda ortamın varlığı, yaşamın yalnızca Dünya'ya özgü olma ihtimalini giderek düşürmektedir.",
+        "date": "2026-02-05"
+    }
+]

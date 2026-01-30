@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasyon & Harita Simülasyonu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            font-family: 'Roboto', Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Google Maps Tarzı Arama Çubuğu */
+        #search-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 350px;
+            background: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #555;
+            width: 100%;
+        }
+
+        .menu-icon { color: #555; cursor: pointer; }
+        .search-icon { color: #4285F4; font-size: 18px; cursor: pointer;}
+        .divider { width: 1px; height: 24px; background: #ddd; }
+
+        /* Sağ Alt Kontroller (Zoom ve Katmanlar) */
+        #map-controls {
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 30;
+        }
+
+        .fab-btn {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background 0.2s;
+            color: #666;
+            font-size: 20px;
+        }
+
+        .fab-btn:hover { background: #f8f8f8; color: #333; }
+        .fab-primary { background: #4285F4; color: #fff; }
+        .fab-primary:hover { background: #3367d6; color: #fff; }
+
+        /* Üst Ayar Paneli (Gizlenebilir) */
+        #settings-panel {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 29;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .setting-label {
+            font-size: 12px;
+            color: #777;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #4285F4;
+        }
+
+        /* Canvas ve Durum */
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #e5e3df; /* Google Maps Arka Plan Rengi */
+            overflow: hidden;
+        }
+
+        #status-card {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-weight: 500;
+            color: #333;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #status-card.visible { opacity: 1; pointer-events: auto; bottom: 40px; }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4285F4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        
+        .spinner.active { display: block; }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <!-- Arama Çubuğu -->
+    <div id="search-bar">
+        <i class="fas fa-bars menu-icon" onclick="resetMap()"></i>
+        <input type="text" class="search-input" id="locationInput" value="İstanbul, Türkiye" placeholder="Google Haritalar'da arayın">
+        <div class="divider"></div>
+        <i class="fas fa-search search-icon" onclick="resetMap()"></i>
+        <i class="fas fa-directions" style="color:#4285F4; margin-left:10px; cursor:pointer;" onclick="toggleSettings()"></i>
+    </div>
+
+    <!-- Ayarlar (Zoom ve Yoğunluk) -->
+    <div id="settings-panel">
+        <div class="setting-group">
+            <span class="setting-label">Şehir Yoğunluğu (Zoom)</span>
+            <input type="range" id="sizeSlider" min="20" max="200" value="60" step="5">
+        </div>
+        <div class="setting-group">
+            <span class="setting-label">Trafik Hızı</span>
+            <input type="range" id="speedSlider" min="1" max="50" value="5">
+        </div>
+    </div>
+
+    <!-- Harita Kontrolleri -->
+    <div id="map-controls">
+        <div class="fab-btn" onclick="zoomIn()" title="Yaklaş"><i class="fas fa-plus"></i></div>
+        <div class="fab-btn" onclick="zoomOut()" title="Uzaklaş"><i class="fas fa-minus"></i></div>
+        <div class="fab-btn fab-primary" onclick="resetMap()" title="Rota Oluştur"><i class="fas fa-route"></i></div>
+    </div>
+
+    <!-- Durum Kartı -->
+    <div id="status-card">
+        <div class="spinner" id="loadingSpinner"></div>
+        <span id="statusText">Harita verileri yükleniyor...</span>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="mapCanvas"></canvas>
+    </div>
+
+<script>
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+    const statusCard = document.getElementById('status-card');
+    const statusText = document.getElementById('statusText');
+    const spinner = document.getElementById('loadingSpinner');
+    const sizeSlider = document.getElementById('sizeSlider');
+    const speedSlider = document.getElementById('speedSlider');
+
+    // Google Maps Renk Paleti
+    const COLOR_BG = '#e5e3df'; // Blok Arkaplanı (Gri/Bej)
+    const COLOR_ROAD = '#ffffff'; // Yollar
+    const COLOR_WALL_OUTLINE = '#dcdbdb'; // Blok kenarları
+    const COLOR_PARK = '#c5e8c5'; // Park Alanları
+    const COLOR_WATER = '#aadaff'; // Su Birikintileri
+    
+    // Navigasyon Renkleri
+    const COLOR_START_PIN = '#EA4335'; // Kırmızı Pin
+    const COLOR_END_PIN = '#EA4335'; 
+    const COLOR_ROUTE_MAIN = '#4285F4'; // Rota (Mavi)
+    const COLOR_ROUTE_ALT = '#999999'; // Alternatif Rota (Gri)
+    const COLOR_TRAFFIC_SCAN = 'rgba(66, 133, 244, 0.2)'; // Tarama Rengi
+
+    // Ayarlar
+    let GRID_COLS = 60;
+    let CELL_SIZE = 20;
+    let SPEED_MULTIPLIER = 5;
+    
+    // Veri Yapıları
+    let cols, rows;
+    let grid = [];
+    let stack = []; 
+    let current;    
+
+    // Rota Verileri
+    let frontier = []; 
+    let path = [];
+    let startCell = null;
+    let endCell = null;
+
+    let gameState = 'generating'; // generating, ready, calculating, finished
+    let animationId;
+    let settingsOpen = true;
+
+    // --- Slider Olayları ---
+    sizeSlider.addEventListener('input', (e) => {
+        GRID_COLS = parseInt(e.target.value);
+    });
+    sizeSlider.addEventListener('change', resetMap);
+
+    speedSlider.addEventListener('input', (e) => {
+        SPEED_MULTIPLIER = parseInt(e.target.value);
+    });
+
+    function toggleSettings() {
+        const panel = document.getElementById('settings-panel');
+        settingsOpen = !settingsOpen;
+        panel.style.display = settingsOpen ? 'flex' : 'none';
+    }
+    
+    function zoomIn() {
+        sizeSlider.value = Math.max(20, parseInt(sizeSlider.value) - 10);
+        GRID_COLS = parseInt(sizeSlider.value);
+        resetMap();
+    }
+
+    function zoomOut() {
+        sizeSlider.value = Math.min(200, parseInt(sizeSlider.value) + 10);
+        GRID_COLS = parseInt(sizeSlider.value);
+        resetMap();
+    }
+
+    class Cell {
+        constructor(i, j) {
+            this.i = i;
+            this.j = j;
+            this.walls = [true, true, true, true]; 
+            this.visited = false;
+            
+            // Harita Özellikleri
+            this.type = 'normal'; // normal, park, water
+            if (Math.random() < 0.05) this.type = 'park';
+            
+            // Navigasyon
+            this.scanned = false;
+            this.distance = -1;
+            this.previous = undefined; 
+            this.inPath = false;
+            
+            this.isStart = false;
+            this.isEnd = false;
+        }
+
+        draw() {
+            const x = this.i * CELL_SIZE;
+            const y = this.j * CELL_SIZE;
+            // Hücrelerin birbirine yapışması için +1 tolerans
+            const w = CELL_SIZE + 0.5; 
+            
+            // 1. Zemin (Yol mu Blok mu?)
+            // Google Maps mantığı: Bizim grid hücrelerimiz aslında "YOL"dur.
+            // Duvarlar ise "BLOK" sınırlarıdır.
+            // Ancak görsel olarak bunu tersine çevirmek daha kolay:
+            // Hücrenin kendisi beyaz (yol) olsun.
+            // Duvar varsa orası kapalıdır.
+            
+            // Önce zemini (yolu) çiz
+            ctx.fillStyle = COLOR_ROAD;
+            ctx.fillRect(x, y, w, w);
+
+            // Eğer taranıyorsa (Navigasyon hesaplaması)
+            if (this.scanned && !this.inPath && gameState === 'calculating') {
+                ctx.fillStyle = COLOR_TRAFFIC_SCAN;
+                ctx.fillRect(x, y, w, w);
+            }
+
+            // Nihai Rota
+            if (this.inPath) {
+                // Rotayı hücrenin ortasından geçen bir çizgi gibi çiz
+                /* Arkaplanı hafif mavi yap */
+                ctx.fillStyle = '#e8f0fe';
+                ctx.fillRect(x, y, w, w);
+            }
+
+            // Özel Alanlar (Sadece estetik - blokların içine denk gelmeli ama grid yapımızda zor)
+            // Basitleştirme: Park alanlarını duvarların arkasına boyayamadığımız için
+            // eğer bu hücre bir "çıkmaz sokak" ise park yapalım.
+
+            // 2. Duvarlar (Şehir Blokları)
+            // Duvar kalınlığına göre blokları çiziyoruz
+            const wallW = Math.max(1, CELL_SIZE * 0.15); // Duvar kalınlığı
+            ctx.fillStyle = this.type === 'park' ? COLOR_PARK : (this.type === 'water' ? COLOR_WATER : COLOR_BG);
+            
+            // Duvarları "blok" gibi çizmek için ters mantık:
+            // Eğer duvar varsa, o yönde bina var demektir.
+            
+            // Basitleştirilmiş çizim:
+            // Sadece Yolları çizelim, kalanı zaten arkaplan rengi.
+            // Ancak canvas'ı temizlemiyoruz, üstüne çiziyoruz.
+            
+            // Kenar çizgileri
+            ctx.fillStyle = '#ccc'; // Blok kenarı
+            if (this.walls[0]) ctx.fillRect(x, y, w, wallW); // Üst
+            if (this.walls[1]) ctx.fillRect(x + w - wallW, y, wallW, w); // Sağ
+            if (this.walls[2]) ctx.fillRect(x, y + w - wallW, w, wallW); // Alt
+            if (this.walls[3]) ctx.fillRect(x, y, wallW, w); // Sol
+            
+            // Blok içleri (Biraz daha içeriden)
+            ctx.fillStyle = this.type === 'park' ? COLOR_PARK : (this.type === 'water' ? COLOR_WATER : COLOR_BG);
+            if (this.walls[0]) ctx.fillRect(x, y, w, wallW); 
+        }
+        
+        // Rota Çizimi (Line olarak)
+        drawPathLine() {
+             if (!this.previous) return;
+             
+             const cx = this.i * CELL_SIZE + CELL_SIZE/2;
+             const cy = this.j * CELL_SIZE + CELL_SIZE/2;
+             const px = this.previous.i * CELL_SIZE + CELL_SIZE/2;
+             const py = this.previous.j * CELL_SIZE + CELL_SIZE/2;
+             
+             ctx.strokeStyle = COLOR_ROUTE_MAIN;
+             ctx.lineWidth = Math.max(2, CELL_SIZE * 0.4);
+             ctx.lineCap = 'round';
+             ctx.lineJoin = 'round';
+             ctx.beginPath();
+             ctx.moveTo(px, py);
+             ctx.lineTo(cx, cy);
+             ctx.stroke();
+             
+             // Yön okları (detay)
+             if (this.distance % 5 === 0) {
+                 ctx.fillStyle = '#fff';
+                 ctx.beginPath();
+                 ctx.arc(cx, cy, ctx.lineWidth * 0.3, 0, Math.PI*2);
+                 ctx.fill();
+             }
+        }
+
+        checkNeighbors() {
+            let neighbors = [];
+            let top    = grid[index(this.i, this.j - 1)];
+            let right  = grid[index(this.i + 1, this.j)];
+            let bottom = grid[index(this.i, this.j + 1)];
+            let left   = grid[index(this.i - 1, this.j)];
+
+            if (top && !top.visited) neighbors.push(top);
+            if (right && !right.visited) neighbors.push(right);
+            if (bottom && !bottom.visited) neighbors.push(bottom);
+            if (left && !left.visited) neighbors.push(left);
+
+            if (neighbors.length > 0) {
+                // Şehir yapısı için bazen aynı yönde gitmeye meyil et
+                return neighbors[Math.floor(Math.random() * neighbors.length)];
+            }
+            return undefined;
+        }
+
+        getOpenNeighbors() {
+            let neighbors = [];
+            let top    = grid[index(this.i, this.j - 1)];
+            let right  = grid[index(this.i + 1, this.j)];
+            let bottom = grid[index(this.i, this.j + 1)];
+            let left   = grid[index(this.i - 1, this.j)];
+
+            if (top && !this.walls[0] && !top.scanned) neighbors.push(top);
+            if (right && !this.walls[1] && !right.scanned) neighbors.push(right);
+            if (bottom && !this.walls[2] && !bottom.scanned) neighbors.push(bottom);
+            if (left && !this.walls[3] && !left.scanned) neighbors.push(left);
+            
+            return neighbors;
+        }
+    }
+
+    function index(i, j) {
+        if (i < 0 || j < 0 || i > cols - 1 || j > rows - 1) return -1;
+        return i + j * cols;
+    }
+
+    function removeWalls(a, b) {
+        let x = a.i - b.i;
+        if (x === 1) { a.walls[3] = false; b.walls[1] = false; }
+        else if (x === -1) { a.walls[1] = false; b.walls[3] = false; }
+        let y = a.j - b.j;
+        if (y === 1) { a.walls[0] = false; b.walls[2] = false; }
+        else if (y === -1) { a.walls[2] = false; b.walls[0] = false; }
+    }
+    
+    // Şehir Döngüleri Oluştur
+    function createCityLoops() {
+        // Rastgele duvarları kaldırarak labirenti "şehre" dönüştür
+        // Her hücre için %5 ihtimalle rastgele bir duvarını yık
+        for(let cell of grid) {
+            if (Math.random() < 0.1) {
+                let neighbors = [];
+                let top    = grid[index(cell.i, cell.j - 1)];
+                let right  = grid[index(cell.i + 1, cell.j)];
+                if (top && cell.walls[0]) neighbors.push({cell: top, wall: 0, opp: 2});
+                if (right && cell.walls[1]) neighbors.push({cell: right, wall: 1, opp: 3});
+                
+                if(neighbors.length > 0) {
+                    let r = neighbors[Math.floor(Math.random() * neighbors.length)];
+                    cell.walls[r.wall] = false;
+                    r.cell.walls[r.opp] = false;
+                    // Görsel güncelle
+                    cell.draw();
+                    r.cell.draw();
+                }
+            }
+        }
+    }
+
+    function drawPin(cell, color) {
+        if (!cell) return;
+        const cx = cell.i * CELL_SIZE + CELL_SIZE/2;
+        const cy = cell.j * CELL_SIZE + CELL_SIZE/2;
+        
+        ctx.save();
+        ctx.translate(cx, cy - CELL_SIZE/2);
+        
+        // Pin Gölgesi
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath();
+        ctx.ellipse(0, CELL_SIZE/2, CELL_SIZE/4, CELL_SIZE/8, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        // Pin Gövdesi
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(CELL_SIZE/2, -CELL_SIZE/1.5, -CELL_SIZE/2, -CELL_SIZE/1.5, 0, 0);
+        ctx.fill();
+        
+        // Pin İçindeki Nokta
+        ctx.fillStyle = '#fff'; // İçindeki beyaz nokta (ikon alanı)
+        ctx.beginPath();
+        ctx.arc(0, -CELL_SIZE/3, CELL_SIZE/6, 0, Math.PI*2);
+        ctx.fill();
+        
+        ctx.restore();
+    }
+
+    function setup() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        CELL_SIZE = canvas.width / GRID_COLS;
+        cols = GRID_COLS;
+        rows = Math.floor(canvas.height / CELL_SIZE);
+        
+        grid = [];
+        stack = [];
+        frontier = [];
+        path = [];
+        startCell = null;
+        endCell = null;
+
+        // Grid oluştur
+        for (let j = 0; j < rows; j++) {
+            for (let i = 0; i < cols; i++) {
+                grid.push(new Cell(i, j));
+            }
+        }
+
+        current = grid[0];
+        current.visited = true;
+        
+        // Arka planı Blok Rengi yap (Varsayılan olarak her yer bina)
+        ctx.fillStyle = COLOR_BG;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        gameState = 'generating';
+        
+        // UI Güncelle
+        statusCard.classList.add('visible');
+        statusText.innerText = "Şehir Haritası Oluşturuluyor...";
+        spinner.classList.add('active');
+
+        if (animationId) cancelAnimationFrame(animationId);
+        animate();
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const i = Math.floor(mouseX / CELL_SIZE);
+        const j = Math.floor(mouseY / CELL_SIZE);
+        const clickedCell = grid[index(i, j)];
+        
+        if (!clickedCell) return;
+
+        if (gameState === 'ready') {
+            // İlk tık: Başlangıç
+            startCell = clickedCell;
+            startCell.isStart = true;
+            drawPin(startCell, '#4285F4'); // Mavi pin başlangıç için
+            
+            gameState = 'waiting_end';
+            statusText.innerText = "Varış Noktasını Seçiniz";
+            
+        } else if (gameState === 'waiting_end') {
+            // İkinci tık: Bitiş
+            if (clickedCell === startCell) return;
+            endCell = clickedCell;
+            endCell.isEnd = true;
+            drawPin(endCell, COLOR_END_PIN);
+            
+            startRouting();
+        }
+    });
+
+    function startRouting() {
+        gameState = 'calculating';
+        statusText.innerText = "En kısa rota hesaplanıyor...";
+        spinner.classList.add('active');
+
+        startCell.scanned = true;
+        startCell.distance = 0;
+        frontier = [startCell];
+    }
+
+    function animate() {
+        // --- FAZ 1: ŞEHİR OLUŞTURMA (Hızlı) ---
+        if (gameState === 'generating') {
+            // Çok hızlı oluştur
+            for(let n = 0; n < 50; n++) {
+                if (gameState !== 'generating') break;
+                
+                let next = current.checkNeighbors();
+                if (next) {
+                    next.visited = true;
+                    stack.push(current);
+                    removeWalls(current, next);
+                    
+                    // Sadece Yolları Çiz (Hafif görsel)
+                    current.draw();
+                    next.draw();
+
+                    current = next;
+                } else if (stack.length > 0) {
+                    current = stack.pop();
+                } else {
+                    // Labirent bitti, şimdi döngüler ekle (Şehirleştir)
+                    createCityLoops();
+                    
+                    gameState = 'ready';
+                    statusText.innerText = "Konum Seçin: Başlangıç Noktası";
+                    spinner.classList.remove('active');
+                    break;
+                }
+            }
+        }
+
+        // --- FAZ 2: ROTA HESAPLAMA (BFS / Dijkstra) ---
+        if (gameState === 'calculating') {
+            let loops = SPEED_MULTIPLIER * 2; 
+
+            for (let n = 0; n < loops; n++) {
+                if (gameState !== 'calculating') break;
+                
+                let nextFrontier = [];
+                let reachedEnd = false;
+
+                if (frontier.length > 0) {
+                    for (let cell of frontier) {
+                        let neighbors = cell.getOpenNeighbors();
+                        
+                        for (let neighbor of neighbors) {
+                            neighbor.scanned = true;
+                            neighbor.previous = cell;
+                            neighbor.distance = cell.distance + 1;
+                            
+                            // Tarama Efekti
+                            neighbor.draw(); 
+
+                            nextFrontier.push(neighbor);
+
+                            if (neighbor === endCell) {
+                                reachedEnd = true;
+                            }
+                        }
+                    }
+                    frontier = nextFrontier;
+                } else {
+                     gameState = 'finished';
+                     statusText.innerText = "Rota Bulunamadı";
+                     spinner.classList.remove('active');
+                     break;
+                }
+
+                if (reachedEnd) {
+                    gameState = 'finished';
+                    // Süreyi tahmini hesapla (her kare 10 saniye gibi)
+                    let time = Math.round(endCell.distance * 0.5); 
+                    statusText.innerText = `Varış Süresi: ${time} dk (${endCell.distance * 10}m)`;
+                    spinner.classList.remove('active');
+                    
+                    // Rota İşleme
+                    let temp = endCell;
+                    while (temp.previous) {
+                        temp.inPath = true;
+                        path.push(temp);
+                        temp = temp.previous;
+                    }
+                    path.push(startCell); // Başlangıcı da ekle
+                    path.reverse(); // Baştan sona çizmek için
+                    
+                    // Tüm rotayı animasyonlu çizmek yerine tek seferde çiz ama üstüne
+                    path.forEach(c => c.drawPathLine());
+                    
+                    // Pinleri tekrar çiz (üstte kalsın)
+                    drawPin(startCell, '#4285F4');
+                    drawPin(endCell, COLOR_END_PIN);
+                    break;
+                }
+            }
+        }
+
+        animationId = requestAnimationFrame(animate);
+    }
+
+    function resetMap() {
+        setup();
+    }
+
+    window.onload = setup;
+    window.onresize = () => {
+        setup();
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: none; }
+.noise { position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
+#cursor { width: 12px; height: 12px; background: #FF3D00; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; }
+#cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 61, 0, 0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease-out; }
+.cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
+.cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+.text-outline { -webkit-text-stroke: 1px rgba(245, 245, 245, 0.2); color: transparent; }
+.project-card-v2 { position: relative; overflow: hidden; border-radius: 1.5rem; background: #141414; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+.project-card-v2:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.project-image-wrapper { position: relative; overflow: hidden; aspect-ratio: 16/10; }
+.project-image-wrapper img { transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+.project-card-v2:hover img { transform: scale(1.05); }
+.marquee { display: flex; overflow: hidden; user-select: none; gap: 2rem; background: #FF3D00; padding: 1.5rem 0; }
+.marquee-content { flex-shrink: 0; display: flex; justify-content: space-around; min-width: 100%; gap: 2rem; animation: scroll 20s linear infinite; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+#preloader { position: fixed; inset: 0; z-index: 9999; background: #0A0A0A; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease; }
+.nav-blur { backdrop-filter: blur(10px); background: rgba(10, 10, 10, 0.8); }
+@media (max-width: 1024px) {
+    body { cursor: auto !important; }
+    #cursor, #cursor-outline, .noise, .magnetic-area { display: none !important; pointer-events: none !important; }
+    .project-card-v2:hover { transform: none !important; }
+    .project-card-v2:hover img { transform: none !important; }
+}

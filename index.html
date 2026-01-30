@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/footer.js"></script>
+    <link rel="stylesheet" href="css/index.css">
     <script>
         tailwind.config = {
             theme: {
@@ -40,113 +41,7 @@
             }
         }
     </script>
-    <style>
-        body { 
-            background-color: #0A0A0A; 
-            color: #F5F5F5; 
-            overflow-x: hidden; 
-            cursor: none; 
-        }
-        .noise {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.04;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-        }
-        #cursor {
-            width: 12px; height: 12px;
-            background: #FF3D00;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-        }
-        #cursor-outline {
-            width: 40px; height: 40px;
-            border: 1px solid rgba(255, 61, 0, 0.5);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: all 0.15s ease-out;
-        }
-        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
-        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
-        .text-outline {
-            -webkit-text-stroke: 1px rgba(245, 245, 245, 0.2);
-            color: transparent;
-        }
-        .project-card-v2 {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1.5rem;
-            background: #141414;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .project-card-v2:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .project-image-wrapper {
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 16/10;
-        }
-        .project-image-wrapper img {
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .project-card-v2:hover img {
-            transform: scale(1.05);
-        }
-        .marquee {
-            display: flex;
-            overflow: hidden;
-            user-select: none;
-            gap: 2rem;
-            background: #FF3D00;
-            padding: 1.5rem 0;
-        }
-        .marquee-content {
-            flex-shrink: 0;
-            display: flex;
-            justify-content: space-around;
-            min-width: 100%;
-            gap: 2rem;
-            animation: scroll 20s linear infinite;
-        }
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-100%); }
-        }
-        #preloader {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #0A0A0A;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .nav-blur {
-            backdrop-filter: blur(10px);
-            background: rgba(10, 10, 10, 0.8);
-        }
-        #mobile-menu {
-        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-        }
 
-        #mobile-menu.translate-x-full {
-        transform: translateX(100%);
-        }
-        body.overflow-hidden {
-        overflow: hidden;
-        height: 100vh;
-        }
-        #menu-icon {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-        }
-    </style>
 </head>
 <body class="antialiased">
     <div id="preloader">
@@ -162,62 +57,94 @@
     <div class="noise"></div>
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
-    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-4 md:py-6 transition-all duration-500 backdrop-blur-sm bg-bgDark/70 border-b border-white/5" id="main-header">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="index.html" class="text-2xl md:text-3xl font-bold font-display tracking-tighter hover-magnetic transition-transform duration-300 hover:scale-105">
-        YDA<span class="text-primary">.</span>
-        </a>
-        <nav class="hidden md:flex gap-8 lg:gap-10 font-medium uppercase text-[10px] md:text-xs tracking-[0.3em]">
-        <a href="projeler.html" class="hover:text-primary transition-colors" data-i18n="nav-projects">Projeler</a>
-        <button onclick="initiateAirlock()" class="text-primary hover:text-white transition-colors animate-pulse font-bold border border-primary/30 px-3 py-1 rounded hover:bg-primary/20">
-            LAB ACCESS
-        </button>
-        <a href="#about" class="hover:text-primary transition-colors" data-i18n="nav-about">Hakkımda</a>
-        <a href="#contact" class="hover:text-primary transition-colors" data-i18n="nav-contact">İletişim</a>
-        </nav>
-        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-        <div class="relative group">
-            <button 
-            id="lang-toggle-btn"
-            onclick="toggleLangDropdown()"
-            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
-            aria-label="Dil seç"
-            >
-            <span id="current-lang-display" class="font-bold">TR</span>
-            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
-            </button>
-            <div id="lang-dropdown-menu" 
-                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇹🇷</span>
-                <span>Türkçe</span>
-                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇬🇧</span>
-                <span>English</span>
-                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇪🇸</span>
-                <span>Español</span>
-                <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇩🇪</span>
-                <span>Deutsch</span>
-                <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
+    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group" id="main-header">
+        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100"></div>
+
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                YDA<span class="text-primary animate-pulse">_</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
+                    Projeler
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                
+                <button onclick="initiateAirlock()" class="relative flex items-center gap-2 text-primary border border-primary/40 px-4 py-1.5 rounded-sm bg-primary/5 hover:bg-primary hover:text-black transition-all duration-500 overflow-hidden group/lab">
+                    <span class="absolute inset-0 bg-primary/20 translate-y-full group-hover/lab:translate-y-0 transition-transform"></span>
+                    <i class="ri-shield-flash-line"></i>
+                    <span class="relative z-10">LAB ACCESS</span>
+                </button>
+
+                <a href="#about" class="nav-link relative group py-2" data-i18n="nav-about">
+                    Hakkımda
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
+                    İletişim
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                <div class="relative group">
+                    <button
+                    id="lang-toggle-btn"
+                    onclick="toggleLangDropdown()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                    aria-label="Dil seç"
+                    >
+                    <span id="current-lang-display" class="font-bold">TR</span>
+                    <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                    </button>
+                    <div id="lang-dropdown-menu"
+                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                    <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇹🇷</span>
+                        <span>Türkçe</span>
+                        <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
+
+                    <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                        <span class="text-lg">🇬🇧</span>
+
+                        <span>English</span>
+
+                        <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                    </button>
+
+                    <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                        <span class="text-lg">🇪🇸</span>
+
+                        <span>Español</span>
+
+                        <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                    </button>
+
+                    <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                        <span class="text-lg">🇩🇪</span>
+
+                        <span>Deutsch</span>
+
+                        <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                    </button>
+
+                    </div>
+
+                </div>
+                <a href="mailto:yakupdelilakin@gmail.com" 
+                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40" data-i18n="coffee">   
+                    Let's Talk
+                </a>
             </div>
         </div>
-        <a href="mailto:yakupdelilakin@gmail.com" 
-            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
-            data-i18n="coffee">
-            Kahve İçelim
-        </a>
-
-        </div>
-    </div>
     </header>
     <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 relative">
         <div class="max-w-7xl mx-auto w-full">
@@ -384,302 +311,7 @@
         </div>
     </div>
 
-    <script>
-        function initiateAirlock() {
-            const overlay = document.getElementById('airlock-overlay');
-            const bar = document.getElementById('airlock-bar');
-            const status = document.getElementById('airlock-status');
-            const logs = document.getElementById('airlock-logs');
-            
-            // Ses efekti istersen buraya eklenebilir
-            
-            
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-            document.body.style.overflow = 'hidden'; // Scrollu kilitle
-
-            const systemMsgs = [
-                "Decontaminating suit...",
-                "Verifying biometrics...",
-                "Accessing isolated network...",
-                "Loading biological samples...",
-                "S.C.O.B.Y. environment check: STABLE",
-                "ACCESS GRANTED."
-            ];
-
-            let progress = 0;
-            let msgIndex = 0;
-
-            const interval = setInterval(() => {
-                progress += Math.random() * 8;
-                if (progress > 100) progress = 100;
-                
-                bar.style.width = `${progress}%`;
-
-                // Rastgele log ekle
-                if (Math.random() > 0.7 && msgIndex < systemMsgs.length) {
-                    const p = document.createElement('div');
-                    p.innerText = `> ${systemMsgs[msgIndex]}`;
-                    logs.appendChild(p);
-                    logs.scrollTop = logs.scrollHeight;
-                    msgIndex++;
-                }
-
-                    const systemMsgs = [
-                        translations['lab-log-1'] || "Decontaminating suit...",
-                        translations['lab-log-2'] || "Verifying biometrics...",
-                        translations['lab-log-3'] || "Accessing isolated network...",
-                        translations['lab-log-4'] || "Loading biological samples...",
-                        translations['lab-log-5'] || "S.C.O.B.Y. environment check: STABLE",
-                        translations['lab-access-granted'] || "ACCESS GRANTED."
-                    ];
-
-                if (progress === 100) {
-                    clearInterval(interval);
-                    status.innerText = "COMPLETE";
-                    status.classList.add('animate-pulse');
-                    
-                    setTimeout(() => {
-                        // YENİ SAYFAYA YÖNLENDİRME
-                        window.location.href = 'lab.html';
-                    }, 800);
-                }
-            }, 150);
-        }
-    </script>
-    <script>
-
-
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const bar = document.getElementById('loader-progress');
-            const name = document.getElementById('loader-name');
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 20;
-                if(progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    name.style.transform = 'translateY(0)';
-                    setTimeout(() => {
-                        preloader.style.opacity = '0';
-                        setTimeout(() => preloader.remove(), 800);
-                    }, 800);
-                }
-                bar.style.width = progress + '%';
-            }, 100);
-        });
-        const cursor = document.getElementById('cursor');
-        const outline = document.getElementById('cursor-outline');
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
-
-        function animateOutline() {
-            let dt = 0.15;
-            outlineX += (mouseX - outlineX) * dt;
-            outlineY += (mouseY - outlineY) * dt;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateOutline);
-        }
-        animateOutline();
-        const hoverables = document.querySelectorAll('a, button, .project-card-v2, .hover-magnetic');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-        const magnets = document.querySelectorAll('.hover-magnetic');
-        magnets.forEach(m => {
-            m.addEventListener('mousemove', (e) => {
-                const rect = m.getBoundingClientRect();
-                const strength = m.getAttribute('data-strength') || 40;
-                const x = (e.clientX - rect.left - rect.width/2) / strength;
-                const y = (e.clientY - rect.top - rect.height/2) / strength;
-                m.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
-            });
-            m.addEventListener('mouseleave', () => {
-                m.style.transform = 'translate(0, 0)';
-            });
-        });
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if(window.scrollY > 50) {
-                header.classList.add('nav-blur', 'py-4');
-                header.classList.remove('py-6');
-            } else {
-                header.classList.remove('nav-blur', 'py-4');
-                header.classList.add('py-6');
-            }
-        });
-        setInterval(() => {
-            document.getElementById('local-time').innerText = new Date().toLocaleTimeString('tr-TR');
-        }, 1000);
-        async function loadSelectedProjects() {
-            const grid = document.getElementById('project-grid');
-            try {
-                const response = await fetch('projeler.json');
-                if (!response.ok) throw new Error('Projeler Yüklenemedi. Sayfayı Yenileyin.');
-                const projects = await response.json();
-                const selected = projects
-                    .filter(p => p.featured)
-                    .sort((a, b) => a.order - b.order)
-                    .slice(0, 4);
-                selected.forEach(project => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card-v2 group';
-                    card.innerHTML = `
-                        <a href="${project.id}.html">
-                            <div class="project-image-wrapper">
-                                <img src="${project.image || 'https://via.placeholder.com/1200x750?text=' + encodeURIComponent(project.title)}" alt="${project.title}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                                    <span class="px-8 py-3 bg-white text-black font-bold uppercase text-xs rounded-full tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">İncele</span>
-                                </div>
-                            </div>
-                            <div class="p-8">
-                                <div class="flex justify-between items-start mb-4">
-                                    <h4 class="text-3xl font-display font-bold group-hover:text-primary transition-colors">${project.title}</h4>
-                                    <span class="text-zinc-500 font-mono text-xs">${project.year}</span>
-                                </div>
-                                <p class="text-zinc-400 text-sm mb-6 leading-relaxed">
-                                    ${project.shortDescription || project.description}
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    ${project.tags.map(tag => `
-                                        <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full">${tag}</span>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                    grid.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Hata:', error);
-                grid.innerHTML = '<p class="text-center text-zinc-500">Projeler yüklenemedi. Lütfen daha sonra deneyin.</p>';
-            }
-        }
-        window.addEventListener('load', loadSelectedProjects);
-    </script>
-    <script>
-        console.log('Tarayıcı dili:', navigator.language);
-        console.log('User language:', navigator.userLanguage);
-        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
-        const supportedLanguages = ['tr', 'en', 'es', 'de'];
-        const defaultLang = 'tr';
-        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
-        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
-            currentLang = 'tr';
-        } else {
-            currentLang = 'en';
-        }
-        console.log('Tespit edilen dil:', currentLang);
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang && supportedLanguages.includes(savedLang)) {
-            currentLang = savedLang;
-            console.log('LocalStorage dil tercihi:', savedLang);
-        }
-        let translations = {};
-        async function loadLanguage(lang) {
-            try {
-                console.log('Dil yükleniyor:', lang);
-                const response = await fetch(`locales/${lang}.json`);
-                if (!response.ok) {
-                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
-                    throw new Error('Dil dosyası yüklenemedi');
-                }
-                translations = await response.json();
-                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
-                document.documentElement.lang = lang;
-                document.title = translations.siteTitle || document.title;
-                applyTranslations();
-                localStorage.setItem('preferredLanguage', lang);
-            } catch (err) {
-                console.error('Dil yükleme hatası:', err);
-                if (lang !== 'tr') {
-                    console.log('Varsayılan Türkçe deniyor...');
-                    loadLanguage('tr');
-                }
-            }
-        }
-        function applyTranslations() {
-            const elements = document.querySelectorAll('[data-i18n]');
-            console.log('Çevrilecek element sayısı:', elements.length);
-            let translatedCount = 0;
-            elements.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                let value = getNestedValue(translations, key);
-                if (value !== undefined && value !== null) {
-                    translatedCount++;
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = value;
-                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
-                        el.alt = value;
-                    } else if (el.hasAttribute('title')) {
-                        el.title = value;
-                    } else if (el.tagName === 'textPath') {
-                        el.textContent = value;
-                    } else {
-                        el.textContent = value;
-                    }
-                } else {
-                    console.log('Çeviri bulunamadı:', key);
-                }
-            });
-            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
-        }
-        function getNestedValue(obj, key) {
-            return key.split('.').reduce((o, k) => o && o[k], obj);
-        }
-        window.addEventListener('load', () => {
-            console.log('Sayfa yüklendi, dil yükleniyor...');
-            loadLanguage(currentLang);
-        });
-        function changeLanguage(lang) {
-            if (supportedLanguages.includes(lang)) {
-                loadLanguage(lang);
-            }
-        }
-        window.changeLanguage = changeLanguage;
-        function updateLangUI(lang) {
-        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
-        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
-        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
-        document.getElementById('es-check').style.opacity = lang === 'es' ? '1' : '0';
-        document.getElementById('de-check').style.opacity = lang === 'de' ? '1' : '0';
-        const btn = document.getElementById('lang-toggle-btn');
-        btn.classList.toggle('border-primary/50', true);
-        btn.classList.toggle('bg-primary/5', lang === currentLang);
-        }
-        function changeLanguage(lang) {
-        if (supportedLanguages.includes(lang) && lang !== currentLang) {
-            currentLang = lang;
-            loadLanguage(lang);
-            updateLangUI(lang);
-            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
-        }
-        }
-        function toggleLangDropdown() {
-        const dropdown = document.getElementById('lang-dropdown-menu');
-        dropdown.classList.toggle('opacity-100');
-        dropdown.classList.toggle('scale-100');
-        dropdown.classList.toggle('pointer-events-auto');
-        }
-        document.addEventListener('click', (e) => {
-        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
-            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
-        }
-        });
-        window.addEventListener('load', () => {
-        updateLangUI(currentLang);
-        });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
 </DOCUMENT>
