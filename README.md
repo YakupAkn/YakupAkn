@@ -48,3 +48,5 @@ Yapay zeka destekli, gerçek zamanlı form analizi aracı.
 
 ### 3. [Project Phantom Labs] 🛡️
 Eğitim amaçlı geliştirilen siber güvenlik araştırma framework'ü
+
+## 4. [Zinciri Kır]
