@@ -1,12 +1,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://athleticocore.netlify.app/</loc>
+    <loc>https://yakupakn.github.io/yakupakn</loc>
   </url>
   <url>
-    <loc>https://athleticocore.netlify.app/athleticocore</loc>
-    <loc>https://athleticocore.netlify.app/index.html</loc>
-    <loc>https://athleticocore.netlify.app/athletico.html</loc>
-    <loc>https://athleticocore.netlify.app/projeler.html</loc>
-    <loc>https://athleticocore.netlify.app/phantomlabs.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/index.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/lab.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/athleticocore.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/athletico.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/projeler.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/phantomlabs.html</loc>
+    <loc>https://yakupakn.github.io/yakupakn/oyun.html</loc>
+    
   </url>
 </urlset>

@@ -101,6 +101,54 @@
     "github": null,
     "featured": true,
     "order": 3
+  },
+
+  {
+    "id": "zincirikir",
+    "title": "Zinciri Kır",
+    "subtitle": "Bağımlılık bırakma projesi",
+    "shortDescription": "İnsanların bağımlılıklarını bırakabilmelerini ve yeni alışkanlıklar kazanmalarını sağlayan, backend bulunmayan bir PWA Web uygulaması.",
+    "fullDescription": "Zinciri Kır, kullanıcıların hedeflerine ulaşırken süreklilik sağlamaları için 'Zinciri Kırma' (Don't Break the Chain) metodolojisini dijitalleştiren minimalist bir takip uygulamasıdır. Tamamen istemci taraflı (client-side) çalışan bu proje, herhangi bir sunucuya ihtiyaç duymadan verileri kullanıcının tarayıcısında (LocalStorage/IndexedDB) şifreli olarak saklar. Progressive Web App (PWA) mimarisi sayesinde internet bağlantısı olmadan çalışabilir ve mobil cihazlara yerel bir uygulama gibi kurulabilir. Kullanıcı gizliliğini ön planda tutan yapısı, kişisel verilerin cihazdan dışarı çıkmamasını garanti eder.",
+    "year": 2026,
+    "tags": [
+      "HTML5",
+      "Tailwind CSS",
+      "JavaScript",
+      "No-Backend",
+      "PWA",
+      "Offline-First"
+    ],
+    "technologies": [
+      "HTML5",
+      "Tailwind CSS",
+      "Vanilla JavaScript (ES6+)",
+      "Service Workers (Workbox)",
+      "LocalStorage API",
+      "Web App Manifest"
+    ],
+    "role": "UI/UX Tasarımı, Frontend Geliştirme ve PWA Entegrasyonu (Solo)",
+    "challenges": [
+      "Herhangi bir veritabanı olmadan tarayıcı önbelleğinde veri bütünlüğünün sağlanması",
+      "Farklı cihaz ve tarayıcılarda tutarlı bir 'Native App' hissi yaratılması",
+      "Offline durumlarda veri kaybını önleyecek senkronizasyon mantığının kurulması",
+      "Kullanıcıyı motive edecek, oyunlaştırılmış (gamified) ama sade bir arayüz tasarımı"
+    ],
+    "results": [
+      "Sunucu maliyeti sıfır olan, %100 gizlilik odaklı bir alışkanlık takip aracı",
+      "İnternet bağlantısından bağımsız, anlık açılan yüksek performanslı arayüz",
+      "Kullanıcıların ilerlemelerini takvim üzerinde görselleştirerek motivasyon artışı sağlaması"
+    ],
+    "image": "images/zincirikir-hero.jpg",
+    "gallery": [
+      "images/zincirikir-calendar.jpg",
+      "images/zincirikir-mobile-view.jpg",
+      "images/zincirikir-darkmode.jpg"
+    ],
+    "video": null,
+    "liveDemo": null,
+    "github": null,
+    "featured": true,
+    "order": 4
   }
 
 ]

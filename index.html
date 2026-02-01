@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="siteTitle">Yakup Delil Akın | Software Developer & Designer</title>
-    <meta name="description" content="Yakup Delil Akın'ın portföy sitesi. Kreatif web geliştirme, UI/UX tasarımı ve 3D web deneyimleri sunar.">
-    <link rel="alternate" hreflang="tr" href="https://site.com/">
-    <link rel="alternate" hreflang="en" href="https://site.com/en">
+    <title>Yakup Delil Akın - Yazılım / Frontend / Full-Stack Portföy</title>
+    <meta name="description" content="Yakup Delil Akın'ın kişisel portföy sitesi. Projeler, deneyimler, teknolojiler ve iletişim bilgileri. Yazılım geliştirici / web developer portföyü.">
+    <meta name="keywords" content="Yakup Delil Akın, Yakup Delil, yazılım geliştirici, frontend developer, yazılımcı, portföy">
+    <meta name="author" content="Yakup Delil Akın">
+    <meta property="og:title" content="Yakup Delil Akın - Portföy">
+    <meta property="og:description" content="Yakup Delil Akın'ın portföy sitesi">
+    <meta property="og:url" content="https://yakupakn.github.io/yakupakn/">
+    <link rel="alternate" hreflang="tr" href="https://yakupkn.github.io/YakupAkn/">
+    <link rel="alternate" hreflang="en" href="https://yakupkn.github.io/YakupAkn/en">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -311,7 +317,287 @@
         </div>
     </div>
 
-    <script src="js/index.js"></script>
+    <script>
+        function initiateAirlock() {
+            const overlay = document.getElementById('airlock-overlay');
+            const bar = document.getElementById('airlock-bar');
+            const status = document.getElementById('airlock-status');
+            const logs = document.getElementById('airlock-logs');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            const systemMsgs = [
+                "Decontaminating suit...",
+                "Verifying biometrics...",
+                "Accessing isolated network...",
+                "Loading biological samples...",
+                "S.C.O.B.Y. environment check: STABLE",
+                "ACCESS GRANTED."
+            ];
+            let progress = 0;
+            let msgIndex = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 8;
+                if (progress > 100) progress = 100;
+                bar.style.width = `${progress}%`;
+                if (Math.random() > 0.7 && msgIndex < systemMsgs.length) {
+                    const p = document.createElement('div');
+                    p.innerText = `> ${systemMsgs[msgIndex]}`;
+                    logs.appendChild(p);
+                    logs.scrollTop = logs.scrollHeight;
+                    msgIndex++;
+                }
+                    const systemMsgs = [
+                        translations['lab-log-1'] || "Decontaminating suit...",
+                        translations['lab-log-2'] || "Verifying biometrics...",
+                        translations['lab-log-3'] || "Accessing isolated network...",
+                        translations['lab-log-4'] || "Loading biological samples...",
+                        translations['lab-log-5'] || "S.C.O.B.Y. environment check: STABLE",
+                        translations['lab-access-granted'] || "ACCESS GRANTED."
+                    ];
+                if (progress === 100) {
+                    clearInterval(interval);
+                    status.innerText = "COMPLETE";
+                    status.classList.add('animate-pulse');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'lab.html';
+                    }, 800);
+                }
+            }, 150);
+        }
+    </script>
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const bar = document.getElementById('loader-progress');
+            const name = document.getElementById('loader-name');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if(progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    name.style.transform = 'translateY(0)';
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => preloader.remove(), 800);
+                    }, 800);
+                }
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateOutline() {
+            let dt = 0.15;
+            outlineX += (mouseX - outlineX) * dt;
+            outlineY += (mouseY - outlineY) * dt;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateOutline);
+        }
+        animateOutline();
+        const hoverables = document.querySelectorAll('a, button, .project-card-v2, .hover-magnetic');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+        const magnets = document.querySelectorAll('.hover-magnetic');
+        magnets.forEach(m => {
+            m.addEventListener('mousemove', (e) => {
+                const rect = m.getBoundingClientRect();
+                const strength = m.getAttribute('data-strength') || 40;
+                const x = (e.clientX - rect.left - rect.width/2) / strength;
+                const y = (e.clientY - rect.top - rect.height/2) / strength;
+                m.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            });
+            m.addEventListener('mouseleave', () => {
+                m.style.transform = 'translate(0, 0)';
+            });
+        });
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(window.scrollY > 50) {
+                header.classList.add('nav-blur', 'py-4');
+                header.classList.remove('py-6');
+            } else {
+                header.classList.remove('nav-blur', 'py-4');
+                header.classList.add('py-6');
+            }
+        });
+        setInterval(() => {
+            document.getElementById('local-time').innerText = new Date().toLocaleTimeString('tr-TR');
+        }, 1000);
+        async function loadSelectedProjects() {
+            const grid = document.getElementById('project-grid');
+            try {
+                const response = await fetch('projeler.json');
+                if (!response.ok) throw new Error('Projeler Yüklenemedi. Sayfayı Yenileyin.');
+                const projects = await response.json();
+                const selected = projects
+                    .filter(p => p.featured)
+                    .sort((a, b) => a.order - b.order)
+                    .slice(0, 4);
+                selected.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card-v2 group';
+                    card.innerHTML = `
+                        <a href="${project.id}.html">
+                            <div class="project-image-wrapper">
+                                <img src="${project.image || 'https://via.placeholder.com/1200x750?text=' + encodeURIComponent(project.title)}" alt="${project.title}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                    <span class="px-8 py-3 bg-white text-black font-bold uppercase text-xs rounded-full tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">İncele</span>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="text-3xl font-display font-bold group-hover:text-primary transition-colors">${project.title}</h4>
+                                    <span class="text-zinc-500 font-mono text-xs">${project.year}</span>
+                                </div>
+                                <p class="text-zinc-400 text-sm mb-6 leading-relaxed">
+                                    ${project.shortDescription || project.description}
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${project.tags.map(tag => `
+                                        <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full">${tag}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Hata:', error);
+                grid.innerHTML = '<p class="text-center text-zinc-500">Projeler yüklenemedi. Lütfen daha sonra deneyin.</p>';
+            }
+        }
+        window.addEventListener('load', loadSelectedProjects);
+    </script>
+    <script>
+        console.log('Tarayıcı dili:', navigator.language);
+        console.log('User language:', navigator.userLanguage);
+        console.log('Saved language:', localStorage.getItem('preferredLanguage'));
+        const supportedLanguages = ['tr', 'en', 'es', 'de'];
+        const defaultLang = 'tr';
+        let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
+        if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
+            currentLang = 'tr';
+        } else {
+            currentLang = 'en';
+        }
+        console.log('Tespit edilen dil:', currentLang);
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang && supportedLanguages.includes(savedLang)) {
+            currentLang = savedLang;
+            console.log('LocalStorage dil tercihi:', savedLang);
+        }
+        let translations = {};
+        async function loadLanguage(lang) {
+            try {
+                console.log('Dil yükleniyor:', lang);
+                const response = await fetch(`locales/${lang}.json`);
+                if (!response.ok) {
+                    console.error('Dil dosyası bulunamadı:', `locales/${lang}.json`);
+                    throw new Error('Dil dosyası yüklenemedi');
+                }
+                translations = await response.json();
+                console.log('Çeviriler yüklendi:', Object.keys(translations).length, 'anahtar');
+                document.documentElement.lang = lang;
+                document.title = translations.siteTitle || document.title;
+                applyTranslations();
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (err) {
+                console.error('Dil yükleme hatası:', err);
+                if (lang !== 'tr') {
+                    console.log('Varsayılan Türkçe deniyor...');
+                    loadLanguage('tr');
+                }
+            }
+        }
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Çevrilecek element sayısı:', elements.length);
+            let translatedCount = 0;
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                let value = getNestedValue(translations, key);
+                if (value !== undefined && value !== null) {
+                    translatedCount++;
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = value;
+                    } else if (el.tagName === 'IMG' && el.hasAttribute('alt')) {
+                        el.alt = value;
+                    } else if (el.hasAttribute('title')) {
+                        el.title = value;
+                    } else if (el.tagName === 'textPath') {
+                        el.textContent = value;
+                    } else {
+                        el.textContent = value;
+                    }
+                } else {
+                    console.log('Çeviri bulunamadı:', key);
+                }
+            });
+            console.log('Başarıyla çevrilen element sayısı:', translatedCount);
+        }
+        function getNestedValue(obj, key) {
+            return key.split('.').reduce((o, k) => o && o[k], obj);
+        }
+        window.addEventListener('load', () => {
+            console.log('Sayfa yüklendi, dil yükleniyor...');
+            loadLanguage(currentLang);
+        });
+        function changeLanguage(lang) {
+            if (supportedLanguages.includes(lang)) {
+                loadLanguage(lang);
+            }
+        }
+        window.changeLanguage = changeLanguage;
+        function updateLangUI(lang) {
+        document.getElementById('current-lang-display').textContent = lang.toUpperCase();
+        document.getElementById('tr-check').style.opacity = lang === 'tr' ? '1' : '0';
+        document.getElementById('en-check').style.opacity = lang === 'en' ? '1' : '0';
+        document.getElementById('es-check').style.opacity = lang === 'es' ? '1' : '0';
+        document.getElementById('de-check').style.opacity = lang === 'de' ? '1' : '0';
+        const btn = document.getElementById('lang-toggle-btn');
+        btn.classList.toggle('border-primary/50', true);
+        btn.classList.toggle('bg-primary/5', lang === currentLang);
+        }
+        function changeLanguage(lang) {
+        if (supportedLanguages.includes(lang) && lang !== currentLang) {
+            currentLang = lang;
+            loadLanguage(lang);
+            updateLangUI(lang);
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        }
+        function toggleLangDropdown() {
+        const dropdown = document.getElementById('lang-dropdown-menu');
+        dropdown.classList.toggle('opacity-100');
+        dropdown.classList.toggle('scale-100');
+        dropdown.classList.toggle('pointer-events-auto');
+        }
+        document.addEventListener('click', (e) => {
+        if (!e.target.closest('#lang-toggle-btn') && !e.target.closest('#lang-dropdown-menu')) {
+            document.getElementById('lang-dropdown-menu').classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        }
+        });
+        window.addEventListener('load', () => {
+        updateLangUI(currentLang);
+        });
+    </script>
 </body>
 </html>
 </DOCUMENT>
