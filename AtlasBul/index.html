@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtlasBul - Müşteri Verisi Toplayıcı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GENEL AYARLAR --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        /* --- HEADER (Önceki Koddan) --- */
+        .site-header {
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-list { list-style: none; display: flex; gap: 20px; }
+        .btn-primary { background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; font-size: 1rem;}
+        .btn-primary:hover { background-color: var(--secondary); }
+
+        /* --- ANA ARAMA ALANI (HERO) --- */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 30px auto;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap; /* Mobilde alt alta geçsin */
+        }
+
+        /* Form Elemanları Tasarımı */
+        input, select {
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        /* --- SONUÇ KARTLARI (GRID) --- */
+        .results-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive Grid */
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border-left: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Üzerine gelince hafif yukarı kalkar */
+        }
+
+        .card h3 { margin: 0 0 10px 0; color: var(--primary); }
+        .card p { margin: 5px 0; font-size: 0.9rem; color: #666; }
+        
+        .blur-text {
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5); /* Sansür efekti */
+            user-select: none;
+        }
+
+        /* --- SİPARİŞ BUTONU ALANI --- */
+        .order-section {
+            text-align: center;
+            margin: 50px 0;
+            display: none; /* Başlangıçta gizli */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="#" class="logo">AtlasBul 🚀</a>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="#" style="text-decoration:none; color:#333;">Fiyatlar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <h1>Hedef Kitlenize 1 Saniyede Ulaşın</h1>
+        <p>Şehir ve Sektör seçin, potansiyel müşterilerinizi listeleyelim.</p>
+        
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Şehir (Örn: İstanbul)">
+            
+            <select id="categorySelect">
+                <option value="">Kategori Seçiniz</option>
+                <option value="Diş Hekimi">Diş Hekimi</option>
+                <option value="Avukat">Avukat</option>
+                <option value="Emlakçı">Emlakçı</option>
+                <option value="Diyetisyen">Diyetisyen</option>
+            </select>
+
+            <button class="btn-primary" onclick="verileriGetir()">Listeyi Getir 🔎</button>
+        </div>
+    </section>
+
+    <div id="sonucAlani" class="results-container">
+        </div>
+
+    <div id="siparisAlani" class="order-section">
+        <h2>Bu Listenin Tamamına İhtiyacın Var mı?</h2>
+        <p>Şu an sadece önizlemeyi görüyorsunuz. Tam Excel listesini (İsim, Tel, Web) sipariş verin.</p>
+        <button class="btn-primary" onclick="siparisVer()" style="background-color: #059669;">
+            📩 Teklif İste / Satın Al
+        </button>
+    </div>
+
+    <script>
+        // --- 1. MOCK DATA (SAHTE VERİ) ---
+        // Sanki Python scriptinden gelmiş gibi davranıyoruz.
+        const sahteVeriTabani = [
+            { isim: "Özel Kadıköy Diş Kliniği", sehir: "İstanbul", kategori: "Diş Hekimi", tel: "0216 555 ** **" },
+            { isim: "Avukat Mehmet Yılmaz", sehir: "İstanbul", kategori: "Avukat", tel: "0532 111 ** **" },
+            { isim: "Siirt Park Emlak", sehir: "Siirt", kategori: "Emlakçı", tel: "0484 222 ** **" },
+            { isim: "Dentist 34", sehir: "İstanbul", kategori: "Diş Hekimi", tel: "0212 999 ** **" },
+            { isim: "Ankara Hukuk Bürosu", sehir: "Ankara", kategori: "Avukat", tel: "0312 444 ** **" },
+            { isim: "Sağlıklı Yaşam Merkezi", sehir: "Siirt", kategori: "Diyetisyen", tel: "0555 777 ** **" }
+        ];
+
+        // --- 2. VERİLERİ GETİR FONKSİYONU ---
+        function verileriGetir() {
+            // Kullanıcının girdiği değerleri al
+            const sehir = document.getElementById("cityInput").value.trim(); // trim boşlukları siler
+            const kategori = document.getElementById("categorySelect").value;
+            const sonucDiv = document.getElementById("sonucAlani");
+            const siparisDiv = document.getElementById("siparisAlani");
+
+            // Konsola yazdır (İsteğin üzerine)
+            console.log(`${sehir} - ${kategori} aranıyor...`);
+
+            // Eğer seçim yapılmadıysa uyar
+            if (sehir === "" || kategori === "") {
+                alert("Lütfen bir şehir ve kategori giriniz!");
+                return;
+            }
+
+            // Mock Data içinde FİLTRELEME yap (JavaScript'in gücü)
+            // toLocaleLowerCase Türkçe karakter sorunu olmasın diye (İSTANBUL -> istanbul)
+            const filtrelenmisVeri = sahteVeriTabani.filter(item => 
+                item.sehir.toLocaleLowerCase('tr').includes(sehir.toLocaleLowerCase('tr')) && 
+                item.kategori === kategori
+            );
+
+            // Önce ekranı temizle
+            sonucDiv.innerHTML = "";
+
+            if (filtrelenmisVeri.length === 0) {
+                sonucDiv.innerHTML = "<p style='text-align:center; width:100%;'>Aradığınız kriterde örnek veri bulunamadı. (Test için: İstanbul - Diş Hekimi deneyin)</p>";
+                siparisDiv.style.display = "none";
+                return;
+            }
+
+            // Verileri ekrana kart olarak bas (map yerine forEach daha okunaklı olabilir burada)
+            filtrelenmisVeri.forEach(veri => {
+                // HTML oluşturuyoruz
+                const kartHTML = `
+                    <div class="card">
+                        <h3>${veri.isim}</h3>
+                        <p>📍 <strong>Konum:</strong> ${veri.sehir}</p>
+                        <p>💼 <strong>Kategori:</strong> ${veri.kategori}</p>
+                        <p>📞 <strong>Telefon:</strong> <span class="blur-text">${veri.tel}</span></p>
+                    </div>
+                `;
+                // HTML'i sayfaya ekle (+= operatörü ile üzerine ekliyoruz)
+                sonucDiv.innerHTML += kartHTML;
+            });
+
+            // Sipariş butonunu görünür yap
+            siparisDiv.style.display = "block";
+        }
+
+        // --- 3. MAILTO İŞLEMİ (MANUEL BACKEND) ---
+        function siparisVer() {
+            // Kullanıcının girdiği bilgileri tekrar alalım
+            const sehir = document.getElementById("cityInput").value;
+            const kategori = document.getElementById("categorySelect").value;
+            
+            // SENİN MAİL ADRESİN (Burayı kendi mailinle değiştir)
+            const benimMailim = "seninmailin@gmail.com";
+            
+            // Mail Konusu
+            const konu = encodeURIComponent(`AtlasBul Veri Siparişi: ${sehir} - ${kategori}`);
+            
+            // Mail İçeriği
+            const icerik = encodeURIComponent(
+`Merhaba,
+
+AtlasBul üzerinden aşağıdaki verileri talep ediyorum:
+
+Şehir: ${sehir}
+Kategori: ${kategori}
+
+Lütfen fiyat ve teslim süresi hakkında bilgi veriniz.
+
+İyi çalışmalar.`
+            );
+
+            // Mail uygulamasını aç
+            window.location.href = `mailto:${benimMailim}?subject=${konu}&body=${icerik}`;
+        }
+    </script>
+</body>
+</html>
