@@ -1,10 +1,8 @@
-# ✦ Yakup Delil Akın (YDA) — Creative Web Developer & Designer
+# Yakup Delil Akın
+Software Developer & Creative Web Designer  
+🌐 Portföy: https://yakupakn.github.io/YakupAkn/  
+LinkedIn: https://linkedin.com/in/yakupdelilakin
 
-
-> **"Estetiği yüksek performanslı kodlarla birleştiren dijital deneyimler."**
-
-[![Website](https://img.shields.io/website?label=yakupakn.github.io&style=flat-square&url=https%3A%2F%2Fyakupakn.github.io%2FYakupAkn)](https://yakupakn.github.io/YakupAkn)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/yakupdelilakin)
 
 ## 📜 Hakkında
 
