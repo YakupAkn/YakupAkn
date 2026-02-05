@@ -1,4 +1,4 @@
-const supportedLanguages = ['tr', 'en', 'es', 'de'];
+const supportedLanguages = ['tr', 'en', 'es', 'de', 'fr', 'it', 'pt', 'ru', 'jp'];
 const defaultLang = 'tr';
 
 // Initialize translations

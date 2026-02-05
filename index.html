@@ -107,35 +107,52 @@
                     </button>
 
                     <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-
                         <span class="text-lg">🇬🇧</span>
-
                         <span>English</span>
-
                         <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
-
                     </button>
 
                     <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-
                         <span class="text-lg">🇪🇸</span>
-
                         <span>Español</span>
-
                         <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
-
                     </button>
 
                     <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-
                         <span class="text-lg">🇩🇪</span>
-
                         <span>Deutsch</span>
-
                         <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
-
                     </button>
 
+                    <button onclick="changeLanguage('fr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇫🇷</span>
+                        <span>Français</span>
+                        <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
+
+                    <button onclick="changeLanguage('it')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇮🇹</span>
+                        <span>Italiano</span>
+                        <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
+
+                    <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇵🇹</span>
+                        <span>Português</span>
+                        <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
+
+                    <button onclick="changeLanguage('ru')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇷🇺</span>
+                        <span>Русский</span>
+                        <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
+
+                    <button onclick="changeLanguage('jp')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                        <span class="text-lg">🇯🇵</span>
+                        <span>日本語</span>
+                        <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                    </button>
                     </div>
 
                 </div>
@@ -483,7 +500,7 @@
         console.log('Tarayıcı dili:', navigator.language);
         console.log('User language:', navigator.userLanguage);
         console.log('Saved language:', localStorage.getItem('preferredLanguage'));
-        const supportedLanguages = ['tr', 'en', 'es', 'de'];
+        const supportedLanguages = ['tr', 'en', 'es', 'de', 'fr', 'it', 'pt', 'ru', 'jp'];
         const defaultLang = 'tr';
         let currentLang = (navigator.language || navigator.userLanguage || 'tr').slice(0, 2).toLowerCase();
         if (currentLang === 'tr' || currentLang === 'tr-TR' || currentLang === 'tr-tr') {
