@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyber Flap | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#facc15' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center overflow-hidden" onmousedown="jump()" onkeydown="jump()">
+    
+    <div class="absolute top-10 text-center pointer-events-none">
+        <h1 class="text-3xl font-black italic">CYBER <span class="text-primary">FLAP</span></h1>
+        <p class="text-xs text-gray-400">Tıkla veya Boşluk Tuşuna Bas</p>
+        <div class="text-4xl font-bold mt-2" id="score">0</div>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="600" class="bg-gradient-to-b from-gray-900 to-black border-x border-white/20"></canvas>
+    
+    <div id="startMsg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/80 p-6 rounded text-center">
+        <p class="text-xl font-bold mb-2">BAŞLAMAK İÇİN TIKLA</p>
+        <a href="index.html" class="text-xs text-gray-400 underline">Çıkış</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let bird = { x: 50, y: 150, w: 20, h: 20, velocity: 0, gravity: 0.5, jump: -8 };
+        let pipes = [];
+        let score = 0;
+        let gameRunning = false;
+        let frame = 0;
+
+        function jump() {
+            if(!gameRunning) {
+                gameRunning = true;
+                document.getElementById('startMsg').style.display = 'none';
+                pipes = [];
+                bird.y = 150;
+                bird.velocity = 0;
+                score = 0;
+                loop();
+                return;
+            }
+            bird.velocity = bird.jump;
+        }
+
+        function loop() {
+            if(!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Kuş Fizikleri
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            // Kuş Çizimi
+            ctx.fillStyle = "#facc15";
+            ctx.shadowBlur = 15; ctx.shadowColor = "#facc15";
+            ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
+            ctx.shadowBlur = 0;
+
+            // Boru Mantığı
+            if (frame % 100 === 0) {
+                let gapHeight = 150;
+                let pipeTopHeight = Math.random() * (canvas.height - gapHeight - 100) + 50;
+                pipes.push({ x: canvas.width, w: 40, topH: pipeTopHeight, gap: gapHeight });
+            }
+
+            ctx.fillStyle = "#22d3ee"; // Neon Mavi Borular
+            for (let i = 0; i < pipes.length; i++) {
+                let p = pipes[i];
+                p.x -= 3; // Boru Hızı
+
+                // Üst Boru
+                ctx.fillRect(p.x, 0, p.w, p.topH);
+                // Alt Boru
+                ctx.fillRect(p.x, p.topH + p.gap, p.w, canvas.height - (p.topH + p.gap));
+
+                // Çarpışma
+                if (
+                    bird.x < p.x + p.w &&
+                    bird.x + bird.w > p.x &&
+                    (bird.y < p.topH || bird.y + bird.h > p.topH + p.gap)
+                ) {
+                    gameOver();
+                }
+
+                // Skor ve Temizlik
+                if (p.x + p.w < 0) {
+                    pipes.splice(i, 1);
+                    score++;
+                    document.getElementById('score').innerText = score;
+                    i--;
+                }
+            }
+
+            // Yer Çarpışması
+            if(bird.y + bird.h > canvas.height || bird.y < 0) {
+                gameOver();
+            }
+
+            frame++;
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            document.getElementById('startMsg').style.display = 'block';
+            document.getElementById('startMsg').innerHTML = `<p class="text-xl font-bold text-red-500 mb-2">OYUN BİTTİ</p><p>Skor: ${score}</p><p class="text-xs text-gray-400 mt-2">Tekrar için tıkla</p>`;
+        }
+    </script>
+</body>
+</html>

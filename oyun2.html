@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyber Pong | YDA (Time Attack)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#00d4ff', danger: '#ff0055', warning: '#facc15' } } } }
+    </script>
+    <style>
+        @keyframes flash {
+            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .speed-alert {
+            animation: flash 1.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden relative">
+    
+    <div id="speedAlert" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-6xl font-black text-warning hidden z-50 shadow-black drop-shadow-lg text-center pointer-events-none whitespace-nowrap">
+        HIZ ARTIRILDI! ⚡
+    </div>
+
+    <h1 class="text-3xl font-black mb-4">CYBER <span class="text-primary">PONG</span></h1>
+    
+    <div class="flex gap-4 text-xs text-gray-500 mb-2 uppercase tracking-widest">
+        <span>Mod: <span class="text-danger">İmkansız</span></span>
+        <span>Hız: <span id="speedDisplay" class="text-white">Normal</span></span>
+    </div>
+    
+    <canvas id="pongCanvas" width="600" height="400" class="bg-white/5 border border-white/10 rounded cursor-none shadow-[0_0_30px_rgba(255,0,85,0.2)]"></canvas>
+    
+    <div class="mt-6">
+         <a href="index.html" class="px-6 py-2 border border-white/20 hover:bg-white/10 rounded-full transition text-sm font-bold uppercase">Ana Menü</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('pongCanvas');
+        const ctx = canvas.getContext('2d');
+        const alertBox = document.getElementById('speedAlert');
+        const speedDisplay = document.getElementById('speedDisplay');
+
+        const user = { x: 0, y: canvas.height/2 - 50, w: 10, h: 100, color: "#00d4ff", score: 0 };
+        const com = { x: canvas.width - 10, y: canvas.height/2 - 50, w: 10, h: 100, color: "#ff0055", score: 0 };
+        
+        // Top başlangıç hızı
+        let initialSpeed = 5;
+        const ball = { x: canvas.width/2, y: canvas.height/2, r: 10, speed: initialSpeed, velocityX: initialSpeed, velocityY: initialSpeed, color: "#fff" };
+
+        function drawRect(x, y, w, h, color) { ctx.fillStyle = color; ctx.fillRect(x, y, w, h); }
+        function drawCircle(x, y, r, color) { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2, false); ctx.closePath(); ctx.fill(); }
+        function drawText(text, x, y, color) { ctx.fillStyle = color; ctx.font = "45px monospace"; ctx.fillText(text, x, y); }
+
+        canvas.addEventListener("mousemove", getMousePos);
+        function getMousePos(evt) {
+            let rect = canvas.getBoundingClientRect();
+            user.y = evt.clientY - rect.top - user.h/2;
+        }
+
+        function resetBall() {
+            ball.x = canvas.width/2;
+            ball.y = canvas.height/2;
+            // Resetlendiğinde hızı tamamen sıfırlamıyoruz, mevcut zorluk seviyesinden devam etsin
+            // Ama yönünü ters çeviriyoruz
+            let direction = ball.velocityX > 0 ? -1 : 1;
+            ball.velocityX = direction * ball.speed; 
+            ball.velocityY = 5; 
+        }
+
+        function update() {
+            ball.x += ball.velocityX;
+            ball.y += ball.velocityY;
+
+            // --- YENİLMEZ AI ---
+            com.y = ball.y - (com.h / 2);
+            if(com.y < 0) com.y = 0;
+            if(com.y + com.h > canvas.height) com.y = canvas.height - com.h;
+
+            // Duvar çarpışması
+            if(ball.y + ball.r > canvas.height || ball.y - ball.r < 0) ball.velocityY = -ball.velocityY;
+
+            let player = (ball.x < canvas.width/2) ? user : com;
+            
+            if(collision(ball, player)) {
+                let collidePoint = (ball.y - (player.y + player.h/2));
+                collidePoint = collidePoint / (player.h/2);
+                let angleRad = (Math.PI/4) * collidePoint;
+                let direction = (ball.x < canvas.width/2) ? 1 : -1;
+                
+                // Vuruş sonrası hız hesaplama
+                ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+                ball.velocityY = ball.speed * Math.sin(angleRad);
+                
+                // Her vuruşta minik bir hızlanma (klasik pong kuralı)
+                ball.speed += 0.2; 
+            }
+
+            if(ball.x - ball.r < 0) { com.score++; resetBall(); }
+            else if(ball.x + ball.r > canvas.width) { user.score++; resetBall(); }
+        }
+
+        function collision(b, p) {
+            p.top = p.y; p.bottom = p.y + p.h; p.left = p.x; p.right = p.x + p.w;
+            b.top = b.y - b.r; b.bottom = b.y + b.r; b.left = b.x - b.r; b.right = b.x + b.r;
+            return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
+        }
+
+        function render() {
+            drawRect(0, 0, canvas.width, canvas.height, "#0a0a0a");
+            drawText(user.score, canvas.width/4, canvas.height/5, "#00d4ff");
+            drawText(com.score, 3*canvas.width/4, canvas.height/5, "#ff0055");
+            drawRect(canvas.width/2 - 1, 0, 2, canvas.height, "rgba(255,255,255,0.2)");
+            drawRect(user.x, user.y, user.w, user.h, user.color);
+            drawRect(com.x, com.y, com.w, com.h, com.color);
+            drawCircle(ball.x, ball.y, ball.r, ball.color);
+        }
+
+        // --- 30 SANİYE ZAMANLAYICISI ---
+        setInterval(() => {
+            // Hızı %25 artır
+            const speedMultiplier = 1.25;
+            
+            ball.speed *= speedMultiplier;
+            
+            // Havadaki topu da ANINDA hızlandır
+            ball.velocityX *= speedMultiplier;
+            ball.velocityY *= speedMultiplier;
+
+            // Görsel uyarıyı göster
+            alertBox.classList.remove('hidden');
+            alertBox.classList.add('speed-alert');
+            
+            // Bilgi ekranını güncelle
+            speedDisplay.innerText = Math.floor(ball.speed) + " birim/sn";
+            speedDisplay.classList.add('text-warning');
+
+            // 2 saniye sonra uyarıyı kaldır
+            setTimeout(() => {
+                alertBox.classList.remove('speed-alert');
+                alertBox.classList.add('hidden');
+                speedDisplay.classList.remove('text-warning');
+            }, 2000);
+
+        }, 30000); // 30000 ms = 30 saniye
+
+        function game() { update(); render(); }
+        const framePerSecond = 60;
+        setInterval(game, 1000/framePerSecond);
+    </script>
+</body>
+</html>

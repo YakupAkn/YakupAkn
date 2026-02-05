@@ -47,8 +47,16 @@
             }
         }
     </script>
+    <style>
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            animation: scroll 20s linear infinite;
+        }
+    </style>
 </head>
-
 <body class="antialiased">
     <div id="preloader">
         <div class="mb-4 overflow-hidden">
@@ -168,6 +176,21 @@
             <div class="inline-block px-4 py-2 border border-primary/30 rounded-full mb-8 animate-float">
                 <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold" data-i18n="hero-badge">Kreatif Web Developer</span>
             </div>
+            <button onclick="rastgeleOyunAc()"
+                class="group relative inline-flex items-center justify-center
+                    w-10 h-10
+                    bg-white/5 border border-white/10
+                    rounded-full
+                    hover:bg-primary/20 hover:border-primary/50
+                    transition-all duration-300
+                    active:scale-95 overflow-hidden">
+                <span class="text-lg group-hover:rotate-12 transition-transform duration-300">
+                    🎲
+                </span>
+                <div class="absolute inset-0 bg-primary/10 blur-lg opacity-0
+                            group-hover:opacity-100 transition-opacity duration-500"></div>
+            </button>
+
             <h1 class="text-[12vw] md:text-[9vw] leading-[0.85] font-display font-extrabold uppercase mb-12">
                 <span data-i18n="hero-titlePart1">Design</span> <br> 
                 <span class="text-outline" data-i18n="hero-titlePart2">That</span> <br> 
@@ -289,6 +312,8 @@
                 </div>
             </div>
         </div>
+
+        
     </section>
     <section id="contact" class="py-40 px-6 md:px-12 lg:px-24 text-center">
         <div class="max-w-5xl mx-auto">
@@ -296,7 +321,7 @@
             <h2 class="text-[8vw] leading-none font-display font-black uppercase mb-20 hover-magnetic" data-strength="40">
                 <a href="mailto:yakupdelilakin@gmail.com" class="hover:text-primary transition-colors" data-i18n="contact-heading">Kahve İçelim</a>
             </h2>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <a href="https://www.instagram.com/ykp._.56/" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
                     <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-instagram">Instagram</span>
@@ -314,70 +339,6 @@
         </div>
     </section>
 
-    <div id="airlock-overlay" class="fixed inset-0 z-[99999] hidden flex-col items-center justify-center bg-black text-[#00ff00] font-mono select-none">
-        <div class="w-full max-w-md px-6">
-            <div class="flex justify-between mb-2 text-xs uppercase tracking-widest">
-                <span>PROTOCOL: BIO-LAB</span>
-                <span id="airlock-status">INITIALIZING...</span>
-            </div>
-            <div class="w-full h-1 bg-[#111] mb-4 overflow-hidden">
-                <div id="airlock-bar" class="h-full bg-[#00ff00] w-0 transition-all duration-100 ease-out"></div>
-            </div>
-            <div class="font-mono text-[10px] text-[#00ff00]/60 space-y-1 h-20 overflow-hidden" id="airlock-logs">
-                </div>
-        </div>
-    </div>
-
-    <script>
-        function initiateAirlock() {
-            const overlay = document.getElementById('airlock-overlay');
-            const bar = document.getElementById('airlock-bar');
-            const status = document.getElementById('airlock-status');
-            const logs = document.getElementById('airlock-logs');
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-            const systemMsgs = [
-                "Decontaminating suit...",
-                "Verifying biometrics...",
-                "Accessing isolated network...",
-                "Loading biological samples...",
-                "S.C.O.B.Y. environment check: STABLE",
-                "ACCESS GRANTED."
-            ];
-            let progress = 0;
-            let msgIndex = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 8;
-                if (progress > 100) progress = 100;
-                bar.style.width = `${progress}%`;
-                if (Math.random() > 0.7 && msgIndex < systemMsgs.length) {
-                    const p = document.createElement('div');
-                    p.innerText = `> ${systemMsgs[msgIndex]}`;
-                    logs.appendChild(p);
-                    logs.scrollTop = logs.scrollHeight;
-                    msgIndex++;
-                }
-                    const systemMsgs = [
-                        translations['lab-log-1'] || "Decontaminating suit...",
-                        translations['lab-log-2'] || "Verifying biometrics...",
-                        translations['lab-log-3'] || "Accessing isolated network...",
-                        translations['lab-log-4'] || "Loading biological samples...",
-                        translations['lab-log-5'] || "S.C.O.B.Y. environment check: STABLE",
-                        translations['lab-access-granted'] || "ACCESS GRANTED."
-                    ];
-                if (progress === 100) {
-                    clearInterval(interval);
-                    status.innerText = "COMPLETE";
-                    status.classList.add('animate-pulse');
-                    
-                    setTimeout(() => {
-                        window.location.href = 'lab.html';
-                    }, 800);
-                }
-            }, 150);
-        }
-    </script>
     <script>
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
@@ -496,7 +457,39 @@
         }
         window.addEventListener('load', loadSelectedProjects);
     </script>
+    <script>
+    function rastgeleOyunAc() {
+        const oyunlar = [
+            "oyun.html",
+            "oyun1.html",
+            "oyun2.html",
+            "oyun3.html",
+            "oyun4.html",
+            "oyun5.html",
+            "oyun6.html",
+            "oyun7.html",
+            "oyun8.html",
+            "oyun9.html",
+            "oyun10.html",
+            "oyun11.html",
+            "oyun12.html",
+            "oyun13.html",
+            "oyun14.html",
+            "oyun15.html"
+        ];
+        let rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
+        let secilenOyun = oyunlar[rastgeleIndex];
+        const mevcutSayfa = window.location.pathname.split("/").pop();
+            while (secilenOyun === mevcutSayfa) {
+            rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
+            secilenOyun = oyunlar[rastgeleIndex];
+        }
+        window.location.href = secilenOyun;
+    }
+
+    </script>
     <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
 </DOCUMENT>

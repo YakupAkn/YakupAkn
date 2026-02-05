@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hafıza Matrix | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#00d4ff' } } } }
+    </script>
+    <style>
+        .card { perspective: 1000px; }
+        .card-inner { transform-style: preserve-3d; transition: transform 0.5s; }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .front, .back { backface-visibility: hidden; }
+        .back { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center">
+    <h1 class="text-2xl font-bold mb-6">HAFIZA <span class="text-primary">MATRİX</span></h1>
+    
+    <div id="game-board" class="grid grid-cols-4 gap-3"></div>
+    
+    <div class="mt-8 flex gap-4">
+        <button onclick="startGame()" class="px-6 py-2 bg-white/10 hover:bg-primary/20 hover:text-primary rounded-lg transition">Sıfırla</button>
+        <a href="index.html" class="px-6 py-2 border border-white/20 rounded-lg transition hover:bg-white/10">Çıkış</a>
+    </div>
+
+    <script>
+        const emojis = ['🚀', '💻', '🤖', '👾', '🔥', '⚡', '💎', '🧠'];
+        let cards = [...emojis, ...emojis];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function shuffle(array) { return array.sort(() => 0.5 - Math.random()); }
+
+        function createCard(emoji) {
+            const card = document.createElement('div');
+            card.className = 'card w-16 h-16 cursor-pointer';
+            card.innerHTML = `
+                <div class="card-inner w-full h-full relative">
+                    <div class="front absolute w-full h-full bg-white/10 rounded-lg flex items-center justify-center text-2xl border border-white/5 hover:border-primary/50 transition">❓</div>
+                    <div class="back absolute w-full h-full bg-primary/20 rounded-lg flex items-center justify-center text-3xl border border-primary">${emoji}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => flipCard(card, emoji));
+            return card;
+        }
+
+        function flipCard(card, emoji) {
+            if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCards.push({ card, emoji });
+
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMatch, 800);
+                }
+            }
+        }
+
+        function checkMatch() {
+            const [c1, c2] = flippedCards;
+            if (c1.emoji === c2.emoji) {
+                matchedPairs++;
+                if (matchedPairs === emojis.length) alert('Tebrikler! Kazandın!');
+            } else {
+                c1.card.classList.remove('flipped');
+                c2.card.classList.remove('flipped');
+            }
+            flippedCards = [];
+        }
+
+        function startGame() {
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+            matchedPairs = 0;
+            shuffle(cards).forEach(emoji => board.appendChild(createCard(emoji)));
+        }
+
+        startGame();
+    </script>
+</body>
+</html>

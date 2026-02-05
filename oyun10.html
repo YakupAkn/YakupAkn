@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Space Defender v2 | YDA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: '#050505',
+                        laser: '#00ffff',
+                        enemy: '#ff0055',
+                        drone: '#39ff14',
+                        powerup: '#facc15'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { overflow: hidden; user-select: none; }
+        canvas { cursor: none; } /* Canvas üzerinde mouse görünmesin */
+    </style>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center relative">
+    
+    <div class="absolute top-6 left-6 z-10 pointer-events-none">
+        <h1 class="font-black text-2xl tracking-tighter italic">SPACE <span class="text-laser">DEFENDER</span> <span class="text-xs not-italic bg-white/10 px-2 py-0.5 rounded text-gray-300">v2.0</span></h1>
+        <div class="mt-2 text-lg font-mono">SKOR: <span id="score" class="text-laser font-bold">0</span></div>
+        <div id="drone-bar-container" class="mt-2 w-32 h-2 bg-white/10 rounded-full overflow-hidden hidden">
+            <div id="drone-bar" class="h-full bg-drone w-full transition-all duration-100 ease-linear"></div>
+        </div>
+        <div id="drone-text" class="text-xs text-drone font-bold mt-1 hidden">DRONE DESTEĞİ AKTİF!</div>
+    </div>
+
+    <canvas id="gameCanvas" class="shadow-2xl border-x border-white/5"></canvas>
+
+    <div id="gameOver" class="hidden absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
+        <h2 class="text-5xl font-black text-enemy mb-2 tracking-tighter">GÖREV BAŞARISIZ</h2>
+        <p class="text-gray-400 mb-8 font-mono">TOPLAM SKOR: <span id="final-score" class="text-white">0</span></p>
+        
+        <button onclick="location.reload()" class="group relative px-8 py-3 bg-laser text-black font-black text-lg rounded-full overflow-hidden transition-transform hover:scale-105">
+            <span class="relative z-10">SİSTEMİ YENİDEN BAŞLAT</span>
+            <div class="absolute inset-0 bg-white/50 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        </button>
+        
+        <a href="index.html" class="mt-6 text-sm text-gray-500 hover:text-white transition uppercase tracking-widest border-b border-transparent hover:border-white">Ana Menü</a>
+    </div>
+
+    <div id="start-hint" class="absolute bottom-10 text-center animate-pulse pointer-events-none text-white/50 text-sm">
+        Mouse ile hareket et • Otomatik ateş açılır
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Canvas Boyutlandırma (Tam ekran ama yanlardan boşluklu dikey oyun hissi için)
+        function resize() {
+            canvas.width = Math.min(window.innerWidth, 600); // Max genişlik 600px
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // --- OYUN DEĞİŞKENLERİ ---
+        let player = { x: canvas.width / 2, y: canvas.height - 100, w: 30, h: 40, speed: 0 };
+        let bullets = [];
+        let enemies = [];
+        let particles = [];
+        let stars = []; // Arka plan yıldızları
+        let powerups = []; // Drone güçlendirmesi için
+        
+        let score = 0;
+        let gameActive = true;
+        let frame = 0;
+        
+        // Drone Sistemi
+        let droneActive = false;
+        let droneTimer = 0;
+        const droneMaxTime = 600; // 10 saniye (60fps * 10)
+
+        // Mouse takibi
+        canvas.addEventListener('mousemove', (e) => {
+            if (!gameActive) return;
+            const rect = canvas.getBoundingClientRect();
+            let targetX = e.clientX - rect.left;
+            // Gemiyi mouse'a yumuşakça götür (Lerp efekti yok, direkt atama daha net kontrol sağlar shooter'da)
+            player.x = targetX;
+            
+            // Sınır kontrolü
+            if(player.x < player.w) player.x = player.w;
+            if(player.x > canvas.width - player.w) player.x = canvas.width - player.w;
+        });
+
+        // Yıldızları oluştur
+        for(let i=0; i<50; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2,
+                speed: Math.random() * 3 + 1
+            });
+        }
+
+        function createExplosion(x, y, color) {
+            for (let i = 0; i < 10; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 1.0,
+                    color: color
+                });
+            }
+        }
+
+        // --- UPDATE DÖNGÜSÜ ---
+        function update() {
+            if (!gameActive) return;
+
+            // Arka planı temizle
+            ctx.fillStyle = "#050505";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Yıldızları Çiz (Arka plan)
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            stars.forEach(star => {
+                star.y += star.speed;
+                if(star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = Math.random() * canvas.width;
+                }
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+
+            // 2. Oyuncuyu Çiz
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(player.x - 15, player.y + 30);
+            ctx.lineTo(player.x, player.y + 20); // Motor kısmı
+            ctx.lineTo(player.x + 15, player.y + 30);
+            ctx.closePath();
+            ctx.fill();
+
+            // Motor Ateşi Efekti
+            ctx.fillStyle = `rgba(0, 255, 255, ${Math.random()})`;
+            ctx.beginPath();
+            ctx.moveTo(player.x - 5, player.y + 25);
+            ctx.lineTo(player.x + 5, player.y + 25);
+            ctx.lineTo(player.x, player.y + 35 + Math.random() * 10);
+            ctx.fill();
+
+            // 3. Drone Mantığı
+            if (droneActive) {
+                droneTimer--;
+                
+                // Drone Çizimi (Sol ve Sağ)
+                ctx.fillStyle = "#39ff14";
+                [ -40, 40 ].forEach(offset => {
+                    let dx = player.x + offset;
+                    let dy = player.y + 10;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(dx, dy);
+                    ctx.lineTo(dx - 5, dy + 10);
+                    ctx.lineTo(dx + 5, dy + 10);
+                    ctx.fill();
+                    
+                    // Drone Ateşi (Otomatik) - Ana gemiden daha yavaş ateş etsin
+                    if (frame % 15 === 0) {
+                        bullets.push({ x: dx, y: dy, w: 2, h: 8, color: '#39ff14', speed: 10 });
+                    }
+                });
+
+                // UI Güncelleme
+                let percent = (droneTimer / droneMaxTime) * 100;
+                document.getElementById('drone-bar').style.width = percent + "%";
+                
+                if (droneTimer <= 0) {
+                    droneActive = false;
+                    document.getElementById('drone-bar-container').classList.add('hidden');
+                    document.getElementById('drone-text').classList.add('hidden');
+                }
+            }
+
+            // 4. Otomatik Ateş
+            if (frame % 8 === 0) { // Her 8 karede bir ateş
+                bullets.push({ x: player.x, y: player.y, w: 4, h: 12, color: '#00ffff', speed: 12 });
+            }
+
+            // 5. Mermileri Güncelle
+            for (let i = 0; i < bullets.length; i++) {
+                let b = bullets[i];
+                b.y -= b.speed;
+                ctx.fillStyle = b.color;
+                ctx.shadowBlur = 10; ctx.shadowColor = b.color;
+                ctx.fillRect(b.x - b.w/2, b.y, b.w, b.h);
+                ctx.shadowBlur = 0;
+
+                if (b.y < 0) {
+                    bullets.splice(i, 1);
+                    i--;
+                }
+            }
+
+            // 6. Düşman Spawn (Zorluk skora göre artar)
+            let spawnRate = Math.max(20, 60 - Math.floor(score / 50)); 
+            if (frame % spawnRate === 0) {
+                enemies.push({
+                    x: Math.random() * (canvas.width - 40) + 20,
+                    y: -40,
+                    w: 30,
+                    h: 30,
+                    hp: 2, // Can puanı
+                    speed: Math.random() * 2 + 2 + (score * 0.01)
+                });
+            }
+
+            // 7. Powerup Spawn (Bazen) - %1 şansla
+            if (Math.random() < 0.005 && !droneActive) {
+                powerups.push({
+                    x: Math.random() * (canvas.width - 30) + 15,
+                    y: -30,
+                    size: 15,
+                    angle: 0
+                });
+            }
+
+            // 8. Düşmanları Güncelle
+            for (let i = 0; i < enemies.length; i++) {
+                let e = enemies[i];
+                e.y += e.speed;
+
+                // Düşman Çizimi (Kırmızı Üçgenler)
+                ctx.fillStyle = "#ff0055";
+                ctx.shadowBlur = 10; ctx.shadowColor = "#ff0055";
+                ctx.beginPath();
+                ctx.moveTo(e.x, e.y + e.h);
+                ctx.lineTo(e.x + e.w/2, e.y);
+                ctx.lineTo(e.x + e.w, e.y + e.h);
+                ctx.lineTo(e.x + e.w/2, e.y + e.h - 10); // İçbükey detay
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Çarpışma: Gemi vs Düşman
+                if (Math.abs(player.x - (e.x + e.w/2)) < 20 && Math.abs(player.y - (e.y + e.h/2)) < 20) {
+                    endGame();
+                }
+
+                // Çarpışma: Mermi vs Düşman
+                for (let j = 0; j < bullets.length; j++) {
+                    let b = bullets[j];
+                    if (b.x > e.x && b.x < e.x + e.w && b.y > e.y && b.y < e.y + e.h) {
+                        // Vuruldu
+                        e.hp--;
+                        bullets.splice(j, 1); // Mermiyi sil
+                        j--;
+                        
+                        // Efekt: Vurulunca beyazla
+                        createExplosion(e.x + e.w/2, e.y + e.h/2, '#ffffff');
+
+                        if (e.hp <= 0) {
+                            enemies.splice(i, 1); // Düşmanı sil
+                            i--;
+                            score += 10;
+                            document.getElementById('score').innerText = score;
+                            createExplosion(e.x + e.w/2, e.y + e.h/2, '#ff0055');
+                        }
+                        break;
+                    }
+                }
+
+                if (e.y > canvas.height) {
+                    enemies.splice(i, 1);
+                    i--;
+                }
+            }
+
+            // 9. Powerup Güncelleme
+            for(let i=0; i < powerups.length; i++) {
+                let p = powerups[i];
+                p.y += 3;
+                p.angle += 0.1;
+
+                // Powerup Çizimi (Dönen Sarı Kare)
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.angle);
+                ctx.fillStyle = "#facc15";
+                ctx.shadowBlur = 15; ctx.shadowColor = "#facc15";
+                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                ctx.restore();
+
+                // Toplama Kontrolü
+                let dist = Math.hypot(player.x - p.x, player.y - p.y);
+                if (dist < 30) {
+                    activateDrones();
+                    powerups.splice(i, 1);
+                    i--;
+                }
+
+                if (p.y > canvas.height) {
+                    powerups.splice(i, 1);
+                    i--;
+                }
+            }
+
+            // 10. Parçacık Efektleri
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.05;
+                ctx.globalAlpha = p.life;
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, 3, 3);
+                ctx.globalAlpha = 1.0;
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+
+            frame++;
+            requestAnimationFrame(update);
+        }
+
+        function activateDrones() {
+            droneActive = true;
+            droneTimer = droneMaxTime;
+            
+            // UI Göster
+            const barContainer = document.getElementById('drone-bar-container');
+            const droneText = document.getElementById('drone-text');
+            
+            barContainer.classList.remove('hidden');
+            droneText.classList.remove('hidden');
+            
+            // Parlama efekti
+            droneText.classList.add('animate-pulse');
+        }
+
+        function endGame() {
+            gameActive = false;
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('gameOver').classList.remove('hidden');
+            document.getElementById('gameOver').classList.add('flex');
+            document.body.style.cursor = 'default';
+        }
+
+        update();
+    </script>
+</body>
+</html>

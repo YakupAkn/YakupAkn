@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Injection | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', core: '#ef4444' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center overflow-hidden" onmousedown="shootPin()">
+    
+    <div class="absolute top-10 pointer-events-none text-center">
+        <h1 class="text-3xl font-bold tracking-widest text-core">DATA <span class="text-white">INJECTION</span></h1>
+        <p class="text-sm text-gray-400">Tıklayarak veriyi merkeze gönder</p>
+        <div class="mt-2 text-xl font-mono" id="level-display">Level: 1</div>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+    <div id="status" class="hidden absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-20">
+        <h2 id="status-title" class="text-4xl font-black mb-4">HATA!</h2>
+        <button onclick="resetLevel()" class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200">TEKRAR DENE</button>
+        <a href="index.html" class="mt-6 text-gray-500 hover:text-white">ÇIKIŞ</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let level = 1;
+        let pins = [];
+        let rotation = 0;
+        let speed = 0.02;
+        let pinsLeft = 6;
+        let gameRunning = true;
+        
+        // Merkez daire
+        const centerX = canvas.width / 2;
+        const centerY = 200;
+        const radius = 50;
+
+        function initLevel() {
+            pins = [];
+            rotation = 0;
+            // Zorluk ayarı
+            speed = 0.02 + (level * 0.005);
+            pinsLeft = 5 + level;
+            gameRunning = true;
+            document.getElementById('level-display').innerText = 'Level: ' + level;
+            document.getElementById('status').classList.add('hidden');
+            
+            // Başlangıçta saplı olan iğneler (zorluk için)
+            let existingPins = Math.min(level + 2, 8);
+            for(let i=0; i<existingPins; i++) {
+                pins.push((Math.PI * 2 / existingPins) * i);
+            }
+        }
+
+        function update() {
+            if(!gameRunning) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rotation += speed;
+
+            // Merkez Daire
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(rotation);
+            
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#ef4444';
+            ctx.shadowBlur = 20; ctx.shadowColor = '#ef4444';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Saplanmış İğneler
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            for (let angle of pins) {
+                ctx.beginPath();
+                ctx.moveTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+                ctx.lineTo(Math.cos(angle) * (radius + 60), Math.sin(angle) * (radius + 60));
+                ctx.stroke();
+                
+                // İğne ucu topu
+                ctx.beginPath();
+                ctx.arc(Math.cos(angle) * (radius + 60), Math.sin(angle) * (radius + 60), 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+            }
+            ctx.restore();
+
+            // Atılacak İğne (Oyuncu)
+            if(pinsLeft > 0) {
+                ctx.beginPath();
+                ctx.moveTo(centerX, 500);
+                ctx.lineTo(centerX, 500 - 40);
+                ctx.strokeStyle = '#ef4444';
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.arc(centerX, 500, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#ef4444';
+                ctx.fill();
+
+                // Kalan iğne sayısı
+                ctx.fillStyle = '#fff';
+                ctx.font = '20px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(pinsLeft, centerX, 550);
+            } else {
+                // Seviye bitti
+                level++;
+                initLevel();
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        function shootPin() {
+            if(!gameRunning || pinsLeft <= 0) return;
+
+            // İğneyi sapla (Mevcut rotasyonun tersini hesapla)
+            // Normalde 90 derece (PI/2) aşağıdadır, rotasyonu çıkararak göreceli açıyı buluruz
+            let angle = (Math.PI / 2) - rotation; 
+            
+            // Normalize et (0 - 2PI arası)
+            angle = angle % (Math.PI * 2);
+            if (angle < 0) angle += Math.PI * 2;
+
+            // Çarpışma Kontrolü
+            for (let p of pins) {
+                let diff = Math.abs(p - angle);
+                // Daire etrafında sarma kontrolü (0 ve 360 derece birleşimi)
+                if (diff > Math.PI) diff = (Math.PI * 2) - diff;
+                
+                if (diff < 0.15) { // Çok yakın!
+                    gameOver();
+                    return;
+                }
+            }
+
+            pins.push(angle);
+            pinsLeft--;
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            document.getElementById('status-title').innerText = "ÇARPIŞMA!";
+            document.getElementById('status-title').className = "text-4xl font-black mb-4 text-red-500";
+            document.getElementById('status').classList.remove('hidden');
+        }
+
+        function resetLevel() {
+            level = 1;
+            initLevel();
+            update();
+        }
+
+        initLevel();
+        update();
+    </script>
+</body>
+</html>

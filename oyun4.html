@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Refleks Avcısı | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#00d4ff' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center overflow-hidden select-none">
+    
+    <div id="ui" class="text-center z-10 pointer-events-none">
+        <h1 class="text-3xl font-black mb-2">REFLEKS <span class="text-primary">AVCISI</span></h1>
+        <p class="text-gray-400 text-sm">Hedeflere olabildiğince hızlı tıkla!</p>
+        <div class="mt-4 text-2xl font-mono">Skor: <span id="score" class="text-primary">0</span></div>
+        <div class="text-xl font-mono">Süre: <span id="time">30</span></div>
+    </div>
+
+    <div id="game-area" class="absolute inset-0 top-32 m-8 border border-white/10 rounded-xl bg-white/5">
+        <button id="start-btn" onclick="startGame()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 bg-primary text-black font-black text-xl rounded-full hover:scale-110 transition shadow-[0_0_20px_rgba(0,212,255,0.4)] pointer-events-auto">BAŞLA</button>
+    </div>
+
+    <div class="absolute bottom-5 z-20">
+         <a href="index.html" class="text-xs text-gray-500 hover:text-white uppercase tracking-widest">Çıkış</a>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
+        const gameArea = document.getElementById('game-area');
+        const scoreEl = document.getElementById('score');
+        const timeEl = document.getElementById('time');
+        const startBtn = document.getElementById('start-btn');
+
+        function startGame() {
+            score = 0;
+            timeLeft = 30;
+            scoreEl.innerText = '0';
+            timeEl.innerText = '30';
+            startBtn.style.display = 'none';
+            
+            spawnTarget();
+            timer = setInterval(() => {
+                timeLeft--;
+                timeEl.innerText = timeLeft;
+                if(timeLeft <= 0) endGame();
+            }, 1000);
+        }
+
+        function spawnTarget() {
+            const target = document.createElement('div');
+            target.className = 'absolute w-12 h-12 bg-primary rounded-full cursor-crosshair active:scale-90 transition-transform shadow-[0_0_15px_rgba(0,212,255,0.8)] flex items-center justify-center';
+            
+            // İçine halka efekti
+            target.innerHTML = '<div class="w-full h-full rounded-full border-2 border-white animate-ping opacity-75"></div>';
+
+            // Rastgele konum
+            const maxX = gameArea.clientWidth - 60;
+            const maxY = gameArea.clientHeight - 60;
+            target.style.left = Math.random() * maxX + 'px';
+            target.style.top = Math.random() * maxY + 'px';
+
+            target.onmousedown = () => {
+                score++;
+                scoreEl.innerText = score;
+                target.remove();
+                spawnTarget();
+            };
+
+            gameArea.appendChild(target);
+        }
+
+        function endGame() {
+            clearInterval(timer);
+            gameArea.innerHTML = ''; 
+            gameArea.appendChild(startBtn);
+            startBtn.style.display = 'block';
+            startBtn.innerText = `TEKRAR (Skor: ${score})`;
+        }
+    </script>
+</body>
+</html>

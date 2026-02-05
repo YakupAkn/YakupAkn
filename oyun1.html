@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Snake | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#00d4ff' } } }
+        }
+    </script>
+    <style>
+        body { touch-action: none; }
+        canvas { box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+    </style>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden">
+    
+    <div class="mb-4 text-center">
+        <h1 class="text-3xl font-black tracking-tighter mb-2">NEON <span class="text-primary">SNAKE</span></h1>
+        <p class="text-xs text-gray-400">Yön Tuşları ile Oyna</p>
+        <div class="text-xl mt-2">Skor: <span id="score" class="text-primary font-bold">0</span></div>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="400" class="bg-white/5 border border-white/10 rounded-lg"></canvas>
+
+    <div class="mt-6 flex gap-4">
+        <button onclick="location.reload()" class="px-6 py-2 bg-primary/20 hover:bg-primary/40 text-primary rounded-full transition text-sm font-bold uppercase">Yeniden Başlat</button>
+        <a href="index.html" class="px-6 py-2 border border-white/20 hover:bg-white/10 rounded-full transition text-sm font-bold uppercase">Ana Menü</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const box = 20;
+        let snake = [{ x: 10 * box, y: 10 * box }];
+        let food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box };
+        let score = 0;
+        let d;
+
+        document.addEventListener('keydown', direction);
+
+        function direction(event) {
+            if (event.keyCode == 37 && d != 'RIGHT') d = 'LEFT';
+            else if (event.keyCode == 38 && d != 'DOWN') d = 'UP';
+            else if (event.keyCode == 39 && d != 'LEFT') d = 'RIGHT';
+            else if (event.keyCode == 40 && d != 'UP') d = 'DOWN';
+        }
+
+        function draw() {
+            ctx.fillStyle = '#111';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i == 0) ? '#00d4ff' : '#008ba3';
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = '#0a0a0a';
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            ctx.fillStyle = '#ff0055';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#ff0055";
+            ctx.fillRect(food.x, food.y, box, box);
+            ctx.shadowBlur = 0;
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (d == 'LEFT') snakeX -= box;
+            if (d == 'UP') snakeY -= box;
+            if (d == 'RIGHT') snakeX += box;
+            if (d == 'DOWN') snakeY += box;
+
+            if (snakeX == food.x && snakeY == food.y) {
+                score++;
+                document.getElementById('score').innerText = score;
+                food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                alert('Oyun Bitti! Skorun: ' + score);
+            }
+
+            snake.unshift(newHead);
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x == array[i].x && head.y == array[i].y) return true;
+            }
+            return false;
+        }
+
+        let game = setInterval(draw, 100);
+    </script>
+</body>
+</html>

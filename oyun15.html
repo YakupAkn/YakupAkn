@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Grid Runner | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#050505', neon: '#d946ef' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden" onmousedown="jump()" onkeydown="jump()">
+    
+    <div class="absolute top-10 text-center pointer-events-none z-10">
+        <h1 class="text-4xl font-black italic transform -skew-x-12">GRID <span class="text-neon">RUNNER</span></h1>
+        <p class="text-xs text-gray-500">Zıplamak için tıkla</p>
+        <div class="text-3xl font-bold mt-2" id="score">0m</div>
+    </div>
+
+    <canvas id="gameCanvas" width="800" height="400" class="border-y border-neon/30 bg-[linear-gradient(to_bottom,#050505,transparent_1px),linear-gradient(to_right,#111_1px,transparent_1px)] bg-[size:40px_40px]"></canvas>
+
+    <div id="gameOver" class="hidden absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-20">
+        <h2 class="text-4xl font-black text-neon mb-4">CRASHED!</h2>
+        <button onclick="location.reload()" class="px-8 py-3 bg-white text-black font-bold rounded hover:scale-105 transition">TEKRAR KOŞ</button>
+        <a href="index.html" class="mt-6 text-gray-500 hover:text-white">ÇIKIŞ</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let player = { x: 50, y: 300, w: 30, h: 30, dy: 0, jumpPower: -12, grounded: true };
+        let obstacles = [];
+        let gameSpeed = 5;
+        let score = 0;
+        let gameRunning = true;
+        const gravity = 0.6;
+        const groundHeight = 350;
+
+        function jump() {
+            if(gameRunning && player.grounded) {
+                player.dy = player.jumpPower;
+                player.grounded = false;
+            }
+        }
+
+        function update() {
+            if(!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Zemin Çizgisi
+            ctx.beginPath();
+            ctx.moveTo(0, groundHeight);
+            ctx.lineTo(canvas.width, groundHeight);
+            ctx.strokeStyle = '#d946ef';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 10; ctx.shadowColor = '#d946ef';
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Oyuncu Fiziği
+            player.dy += gravity;
+            player.y += player.dy;
+
+            if (player.y + player.h > groundHeight) {
+                player.y = groundHeight - player.h;
+                player.dy = 0;
+                player.grounded = true;
+            }
+
+            // Oyuncu Çizimi (Neon Küp)
+            ctx.fillStyle = '#fff';
+            ctx.shadowBlur = 15; ctx.shadowColor = '#fff';
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            ctx.shadowBlur = 0;
+
+            // Engel Spawn
+            if (Math.random() < 0.01 + (score * 0.0001)) { // Skor arttıkça spawn ihtimali artar
+                if (obstacles.length === 0 || canvas.width - obstacles[obstacles.length-1].x > 200) {
+                    let type = Math.random();
+                    let h = type > 0.5 ? 40 : 25; // Farklı boylarda engeller
+                    let w = type > 0.5 ? 20 : 40;
+                    obstacles.push({ x: canvas.width, y: groundHeight - h, w: w, h: h });
+                }
+            }
+
+            // Engeller
+            ctx.fillStyle = '#d946ef';
+            for (let i = 0; i < obstacles.length; i++) {
+                let o = obstacles[i];
+                o.x -= gameSpeed;
+                ctx.fillRect(o.x, o.y, o.w, o.h);
+
+                // Çarpışma
+                if (
+                    player.x < o.x + o.w &&
+                    player.x + player.w > o.x &&
+                    player.y < o.y + o.h &&
+                    player.y + player.h > o.y
+                ) {
+                    gameRunning = false;
+                    document.getElementById('gameOver').classList.remove('hidden');
+                    document.getElementById('gameOver').classList.add('flex');
+                }
+
+                // Skor ve Temizlik
+                if (o.x + o.w < 0) {
+                    obstacles.splice(i, 1);
+                    i--;
+                }
+            }
+
+            // Skor Artışı
+            score++;
+            gameSpeed += 0.001; // Yavaşça hızlan
+            document.getElementById('score').innerText = Math.floor(score/10) + "m";
+
+            requestAnimationFrame(update);
+        }
+
+        update();
+    </script>
+</body>
+</html>

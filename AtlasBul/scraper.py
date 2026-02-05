@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # --- AYARLAR ---
 HEDEF_SAYI = 10  # Kaç işletme çekilecek? (Test için az tut)
-ARAMA_TERIMI = "Oto Yıkama Siirt" # Burayı değiştir
+ARAMA_TERIMI = "Oto Yıkama" # Burayı değiştir
 
 def random_sleep(min_s=1, max_s=3):
     time.sleep(random.uniform(min_s, max_s))

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix Typer | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', matrix: '#00ff41' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden">
+    <div class="absolute top-5 text-center z-10">
+        <h1 class="text-3xl font-black text-matrix tracking-widest">MATRIX <span class="text-white">TYPER</span></h1>
+        <p class="text-xs text-gray-500">Kelimeleri yere düşmeden yaz!</p>
+        <div class="mt-2 text-xl">Skor: <span id="score">0</span></div>
+    </div>
+
+    <canvas id="gameCanvas" width="600" height="500" class="bg-black/50 border border-matrix/30 rounded shadow-[0_0_20px_rgba(0,255,65,0.1)]"></canvas>
+    
+    <div id="gameOverScreen" class="hidden absolute inset-0 bg-black/90 flex-col items-center justify-center z-20">
+        <h2 class="text-4xl font-bold text-red-500 mb-4">SİSTEM ÇÖKTÜ</h2>
+        <button onclick="location.reload()" class="px-6 py-2 bg-matrix text-black font-bold rounded hover:scale-110 transition">YENİDEN BAŞLAT</button>
+        <a href="index.html" class="mt-4 text-gray-400 text-sm hover:text-white">ÇIKIŞ</a>
+    </div>
+
+    <div class="mt-4">
+        <input type="text" id="inputField" class="bg-transparent border-b-2 border-matrix text-center text-2xl outline-none text-white w-64 uppercase" autofocus placeholder="BURAYA YAZ..." onblur="this.focus()">
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const wordsList = ["CODE", "HTML", "CSS", "JAVA", "PYTHON", "REACT", "NODE", "LINUX", "BUG", "DATA", "API", "GIT", "SERVER", "CLOUD", "AI", "NEXTJS", "DESIGN", "PIXEL", "LOGIC", "LOOP", "ARRAY"];
+        
+        let fallingWords = [];
+        let score = 0;
+        let gameActive = true;
+        let spawnRate = 2000;
+        let lastSpawn = 0;
+
+        function spawnWord() {
+            const text = wordsList[Math.floor(Math.random() * wordsList.length)];
+            const x = Math.random() * (canvas.width - 100) + 20;
+            fallingWords.push({ text: text, x: x, y: -20, speed: 1 + (score * 0.05) });
+        }
+
+        const input = document.getElementById('inputField');
+        input.addEventListener('input', (e) => {
+            const val = e.target.value.toUpperCase();
+            
+            // Eşleşme kontrolü
+            const matchIndex = fallingWords.findIndex(w => w.text === val);
+            if (matchIndex !== -1) {
+                fallingWords.splice(matchIndex, 1); // Kelimeyi sil
+                score++;
+                document.getElementById('score').innerText = score;
+                input.value = ''; // Inputu temizle
+                
+                // Görsel efekt (basit flash)
+                canvas.style.borderColor = '#fff';
+                setTimeout(() => canvas.style.borderColor = 'rgba(0,255,65,0.3)', 100);
+            }
+        });
+
+        function update(timestamp) {
+            if (!gameActive) return;
+
+            if (timestamp - lastSpawn > spawnRate) {
+                spawnWord();
+                lastSpawn = timestamp;
+                if(spawnRate > 500) spawnRate -= 20; // Zamanla hızlan
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00ff41";
+            ctx.font = "20px Courier New";
+
+            for (let i = 0; i < fallingWords.length; i++) {
+                let word = fallingWords[i];
+                word.y += word.speed;
+                ctx.fillText(word.text, word.x, word.y);
+
+                if (word.y > canvas.height) {
+                    gameOver();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function gameOver() {
+            gameActive = false;
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+            document.getElementById('gameOverScreen').classList.add('flex');
+        }
+
+        requestAnimationFrame(update);
+    </script>
+</body>
+</html>

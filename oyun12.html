@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>2048 Cyber | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a' } } } }
+    </script>
+    <style>
+        .tile { transition: all 0.15s ease-in-out; }
+    </style>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono">
+    
+    <div class="w-full max-w-md p-4">
+        <div class="flex justify-between items-end mb-4">
+            <h1 class="text-4xl font-black text-blue-500">2048</h1>
+            <div class="text-right">
+                <div class="text-xs text-gray-400">SKOR</div>
+                <div id="score" class="text-2xl font-bold">0</div>
+            </div>
+        </div>
+
+        <div id="grid-container" class="grid grid-cols-4 gap-3 bg-gray-900 p-3 rounded-xl border border-white/10 relative">
+            </div>
+
+        <div class="mt-6 flex justify-between items-center">
+            <a href="index.html" class="text-gray-500 hover:text-white text-sm uppercase">Çıkış</a>
+            <button onclick="initGame()" class="px-6 py-2 bg-blue-600 rounded text-sm font-bold hover:bg-blue-500">SIFIRLA</button>
+        </div>
+        <p class="text-center text-xs text-gray-600 mt-4">Yön Tuşları veya WASD ile oyna</p>
+    </div>
+
+    <script>
+        const gridContainer = document.getElementById('grid-container');
+        let board = [];
+        let score = 0;
+        const size = 4;
+
+        // Renkler (Cyberpunk paleti)
+        const colors = {
+            0: 'bg-gray-800',
+            2: 'bg-cyan-900 text-white shadow-[0_0_10px_#164e63]',
+            4: 'bg-cyan-700 text-white shadow-[0_0_10px_#0e7490]',
+            8: 'bg-blue-600 text-white shadow-[0_0_10px_#2563eb]',
+            16: 'bg-blue-500 text-white shadow-[0_0_15px_#3b82f6]',
+            32: 'bg-indigo-600 text-white shadow-[0_0_15px_#4f46e5]',
+            64: 'bg-purple-600 text-white shadow-[0_0_20px_#9333ea]',
+            128: 'bg-purple-500 text-white shadow-[0_0_25px_#a855f7]',
+            256: 'bg-pink-600 text-white shadow-[0_0_30px_#db2777]',
+            512: 'bg-pink-500 text-white shadow-[0_0_35px_#ec4899]',
+            1024: 'bg-rose-600 text-white shadow-[0_0_40px_#e11d48]',
+            2048: 'bg-yellow-500 text-black font-black shadow-[0_0_50px_#eab308]'
+        };
+
+        function initGame() {
+            board = Array(size).fill().map(() => Array(size).fill(0));
+            score = 0;
+            updateScore();
+            spawnTile();
+            spawnTile();
+            drawBoard();
+        }
+
+        function drawBoard() {
+            gridContainer.innerHTML = '';
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    const val = board[r][c];
+                    const tile = document.createElement('div');
+                    tile.className = `w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-2xl font-bold rounded-lg tile ${colors[val] || 'bg-yellow-600'}`;
+                    tile.innerText = val === 0 ? '' : val;
+                    gridContainer.appendChild(tile);
+                }
+            }
+        }
+
+        function spawnTile() {
+            let emptyCells = [];
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    if (board[r][c] === 0) emptyCells.push({r, c});
+                }
+            }
+            if (emptyCells.length > 0) {
+                let {r, c} = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                board[r][c] = Math.random() < 0.9 ? 2 : 4;
+            }
+        }
+
+        function move(direction) {
+            let moved = false;
+            
+            // Basit matris döndürme ve birleştirme mantığı
+            // (Kod karmaşasını azaltmak için basitleştirilmiş mantık)
+            const rotateLeft = (b) => {
+                let newB = Array(size).fill().map(() => Array(size).fill(0));
+                for(let r=0; r<size; r++) for(let c=0; c<size; c++) newB[r][c] = b[c][size-1-r];
+                return newB;
+            };
+
+            let tempBoard = JSON.parse(JSON.stringify(board)); // Clone
+            
+            // Her şeyi sola hareket ettirecek şekilde döndür
+            let rotations = 0;
+            if (direction === 'Up') rotations = 1; 
+            if (direction === 'Right') rotations = 2; 
+            if (direction === 'Down') rotations = 3;
+
+            for(let i=0; i<rotations; i++) tempBoard = rotateLeft(tempBoard);
+
+            // Sola kaydır ve birleştir
+            for (let r = 0; r < size; r++) {
+                let row = tempBoard[r].filter(val => val !== 0);
+                for (let c = 0; c < row.length - 1; c++) {
+                    if (row[c] === row[c+1]) {
+                        row[c] *= 2;
+                        score += row[c];
+                        row.splice(c+1, 1);
+                    }
+                }
+                while (row.length < size) row.push(0);
+                tempBoard[r] = row;
+            }
+
+            // Geri döndür
+            for(let i=0; i<(4-rotations)%4; i++) tempBoard = rotateLeft(tempBoard);
+
+            // Değişiklik var mı?
+            if (JSON.stringify(board) !== JSON.stringify(tempBoard)) {
+                board = tempBoard;
+                spawnTile();
+                updateScore();
+                drawBoard();
+            }
+        }
+
+        function updateScore() { document.getElementById('score').innerText = score; }
+
+        document.addEventListener('keydown', (e) => {
+            if(['ArrowUp','w','W'].includes(e.key)) move('Up');
+            else if(['ArrowDown','s','S'].includes(e.key)) move('Down');
+            else if(['ArrowLeft','a','A'].includes(e.key)) move('Left');
+            else if(['ArrowRight','d','D'].includes(e.key)) move('Right');
+        });
+
+        initGame();
+    </script>
+</body>
+</html>

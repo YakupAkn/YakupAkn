@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Neon Stack | YDA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { bgDark: '#050505' } } } }
+    </script>
+</head>
+<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden select-none" onmousedown="placeBlock()">
+    
+    <div class="absolute top-10 text-center pointer-events-none z-10">
+        <h1 class="text-4xl font-black mb-2 tracking-tighter">NEON <span class="text-purple-500">STACK</span></h1>
+        <p class="text-gray-400 text-sm">Blokları üst üste dizmek için tıkla</p>
+        <div class="text-2xl mt-2 font-bold" id="score">0</div>
+    </div>
+
+    <canvas id="canvas" width="400" height="600" class="border-b border-white/10"></canvas>
+
+    <div id="gameOver" class="hidden absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20">
+        <h2 class="text-4xl font-bold text-red-500 mb-4">KULE YIKILDI</h2>
+        <button onclick="location.reload()" class="px-8 py-3 bg-purple-600 rounded-full font-bold hover:scale-105 transition">TEKRAR DENE</button>
+        <a href="index.html" class="mt-6 text-gray-500 hover:text-white">ÇIKIŞ</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let score = 0;
+        let gameRunning = true;
+        let speed = 2;
+        let direction = 1; // 1: sağa, -1: sola
+        
+        // Blok ayarları
+        const baseWidth = 200;
+        const baseHeight = 30;
+        let currentWidth = baseWidth;
+        let currentX = (canvas.width - baseWidth) / 2;
+        
+        // Kule dizisi
+        let stack = [];
+        // Başlangıç tabanı
+        stack.push({ x: (canvas.width - baseWidth) / 2, y: canvas.height - 50, w: baseWidth, h: baseHeight, color: 'hsl(280, 100%, 50%)' });
+
+        // Hareketli blok
+        let activeBlock = {
+            x: 0,
+            y: canvas.height - 50 - baseHeight,
+            w: baseWidth,
+            h: baseHeight,
+            hue: 280
+        };
+
+        function draw() {
+            if(!gameRunning) return;
+
+            // Arkaplan temizle (hafif iz bırakarak motion blur efekti)
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Hareket mantığı
+            activeBlock.x += speed * direction;
+            if (activeBlock.x + activeBlock.w > canvas.width || activeBlock.x < 0) {
+                direction *= -1;
+            }
+
+            // Sabit blokları çiz
+            for(let block of stack) {
+                ctx.fillStyle = block.color;
+                ctx.shadowBlur = 15; ctx.shadowColor = block.color;
+                ctx.fillRect(block.x, block.y, block.w, block.h);
+                ctx.shadowBlur = 0;
+            }
+
+            // Aktif bloğu çiz
+            ctx.fillStyle = `hsl(${activeBlock.hue}, 100%, 50%)`;
+            ctx.shadowBlur = 15; 
+            ctx.shadowColor = `hsl(${activeBlock.hue}, 100%, 50%)`;
+            ctx.fillRect(activeBlock.x, activeBlock.y, activeBlock.w, activeBlock.h);
+            ctx.shadowBlur = 0;
+
+            requestAnimationFrame(draw);
+        }
+
+        function placeBlock() {
+            if(!gameRunning) return;
+
+            const prevBlock = stack[stack.length - 1];
+            let diff = activeBlock.x - prevBlock.x;
+            
+            // Tam üstüne mi geldi? (Tolerans payı)
+            if (Math.abs(diff) <= 3) {
+                activeBlock.x = prevBlock.x; // Mükemmel yerleşim
+                diff = 0;
+                // Perfect bonus efekti eklenebilir
+            }
+
+            // Taşma kontrolü
+            if (Math.abs(diff) >= currentWidth) {
+                endGame();
+                return;
+            }
+
+            // Yeni genişlik hesapla
+            currentWidth -= Math.abs(diff);
+            let nextX = activeBlock.x;
+            if (diff > 0) { // Sağa taştı
+                nextX = activeBlock.x;
+            } else { // Sola taştı
+                nextX = prevBlock.x; 
+            }
+
+            // Kuleye ekle
+            stack.push({
+                x: diff > 0 ? activeBlock.x : activeBlock.x + Math.abs(diff), // Kesilmiş hali
+                y: activeBlock.y,
+                w: currentWidth,
+                h: baseHeight,
+                color: `hsl(${activeBlock.hue}, 100%, 50%)`
+            });
+
+            // Ekranı aşağı kaydır (Kule yükselince)
+            if (stack.length > 8) {
+                stack.forEach(b => b.y += baseHeight);
+            } else {
+                activeBlock.y -= baseHeight;
+            }
+
+            // Yeni blok hazırla
+            score++;
+            document.getElementById('score').innerText = score;
+            speed += 0.2; // Hızlandır
+            
+            activeBlock.hue += 10; // Renk değiştir
+            activeBlock.w = currentWidth;
+            activeBlock.x = direction === 1 ? 0 : canvas.width - currentWidth; // Kenardan başlat
+        }
+
+        function endGame() {
+            gameRunning = false;
+            document.getElementById('gameOver').classList.remove('hidden');
+            document.getElementById('gameOver').classList.add('flex');
+        }
+
+        draw();
+    </script>
+</body>
+</html>
