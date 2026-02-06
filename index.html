@@ -67,13 +67,11 @@
                     transform: translateX(-50%);
                 }
             }
-
             .animate-scroll {
                 animation: scroll 20s linear infinite;
             }
         </style>
     </head>
-
     <body class="antialiased">
         <div id="preloader">
             <div class="mb-4 overflow-hidden">
@@ -95,41 +93,34 @@
             id="main-header">
             <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
             </div>
-
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <a href="index.html"
                     class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
                     YDA<span class="text-primary animate-pulse">_</span>
                 </a>
-
                 <nav
                     class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
                     <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
                         Projeler
-                        <span
-                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
 
                     <a href="urunler.html" class="nav-link relative group py-2" data-i18n="nav-about">
                         Ürünler
-                        <span
-                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
                         İletişim
-                        <span
-                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 </nav>
-
                 <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
                     <div class="relative group">
                         <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
                             class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
                             aria-label="Dil seç">
                             <span id="current-lang-display" class="font-bold">TR</span>
-                            <i
-                                class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
                         </button>
                         <div id="lang-dropdown-menu"
                             class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
@@ -139,7 +130,6 @@
                                 <span>Türkçe</span>
                                 <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
                             </button>
-
                             <button onclick="changeLanguage('en')"
                                 class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
                                 <span class="text-lg">🇬🇧</span>
@@ -364,8 +354,6 @@
                 </div>
             </div>
         </section>
-
-
         <section id="contact" class="py-40 px-6 md:px-12 lg:px-24 text-center">
             <div class="max-w-5xl mx-auto">
                 <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-10"
@@ -375,7 +363,6 @@
                     <a href="mailto:yakupdelilakin@gmail.com" class="hover:text-primary transition-colors"
                         data-i18n="contact-heading">Kahve İçelim</a>
                 </h2>
-
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                     <a href="https://www.instagram.com/ykp._.56/"
                         class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
@@ -397,7 +384,6 @@
                 </div>
             </div>
         </section>
-
         <script>
             window.addEventListener('load', () => {
                 const preloader = document.getElementById('preloader');
@@ -549,10 +535,7 @@
         </script>
         <script src="js/i18n.js"></script>
         <script src="js/main.js"></script>
-
-        <!-- Service Worker Kaydı -->
         <script>
-            // Service Worker Kaydı
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js')
@@ -575,8 +558,6 @@
                         });
                 });
             }
-
-            // Çevrimdışı durumu kontrolü
             function updateOnlineStatus() {
                 const statusEl = document.getElementById('offline-indicator');
                 if (!navigator.onLine) {
@@ -615,12 +596,9 @@
                     }
                 }
             }
-
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus();
-
-            // Güncelleme bildirimi
             function showUpdateNotification() {
                 const notification = document.createElement('div');
                 notification.innerHTML = `
