@@ -1,430 +1,489 @@
 <DOCUMENT filename="index.html">
-<!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="siteTitle">Yakup Delil Akın | Software Developer & Designer</title>
-    <title>Yakup Delil Akın - Yazılım / Frontend / Full-Stack Portföy</title>
-    <meta name="description" content="Yakup Delil Akın'ın kişisel portföy sitesi. Projeler, deneyimler, teknolojiler ve iletişim bilgileri. Yazılım geliştirici / web developer portföyü.">
-    <meta name="keywords" content="Yakup Delil Akın, Yakup Delil, yazılım geliştirici, frontend developer, yazılımcı, portföy">
-    <meta name="author" content="Yakup Delil Akın">
-    <meta property="og:title" content="Yakup Delil Akın - Portföy">
-    <meta property="og:description" content="Yakup Delil Akın'ın portföy sitesi">
-    <meta property="og:url" content="https://yakupakn.github.io/yakupakn/">
-    <link rel="alternate" hreflang="tr" href="https://yakupkn.github.io/YakupAkn/">
-    <link rel="alternate" hreflang="en" href="https://yakupkn.github.io/YakupAkn/en">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="js/footer.js"></script>
-    <link rel="stylesheet" href="css/index.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
-                        display: ['Syne', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#FF3D00',
-                        bgDark: '#0A0A0A',
-                        cardDark: '#141414',
-                        offWhite: '#F5F5F5',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+    <!DOCTYPE html>
+    <html lang="tr" class="scroll-smooth">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#FF3D00">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="images/icon-192.svg">
+        <title data-i18n="siteTitle">Yakup Delil Akın | Software Developer & Designer</title>
+        <title>Yakup Delil Akın - Yazılım / Frontend / Full-Stack Portföy</title>
+        <meta name="description"
+            content="Yakup Delil Akın'ın kişisel portföy sitesi. Projeler, deneyimler, teknolojiler ve iletişim bilgileri. Yazılım geliştirici / web developer portföyü.">
+        <meta name="keywords"
+            content="Yakup Delil Akın, Yakup Delil, yazılım geliştirici, frontend developer, yazılımcı, portföy">
+        <meta name="author" content="Yakup Delil Akın">
+        <meta property="og:title" content="Yakup Delil Akın - Portföy">
+        <meta property="og:description" content="Yakup Delil Akın'ın portföy sitesi">
+        <meta property="og:url" content="https://yakupakn.github.io/yakupakn/">
+        <link rel="alternate" hreflang="tr" href="https://yakupkn.github.io/YakupAkn/">
+        <link rel="alternate" hreflang="en" href="https://yakupkn.github.io/YakupAkn/en">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="js/footer.js"></script>
+        <link rel="stylesheet" href="css/index.css">
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Space Grotesk', 'sans-serif'],
+                            display: ['Syne', 'sans-serif'],
+                        },
+                        colors: {
+                            primary: '#FF3D00',
+                            bgDark: '#0A0A0A',
+                            cardDark: '#141414',
+                            offWhite: '#F5F5F5',
+                        },
+                        animation: {
+                            'spin-slow': 'spin 12s linear infinite',
+                            'float': 'float 3s ease-in-out infinite',
+                        },
+                        keyframes: {
+                            float: {
+                                '0%, 100%': { transform: 'translateY(0)' },
+                                '50%': { transform: 'translateY(-10px)' },
+                            }
                         }
                     }
                 }
             }
-        }
-    </script>
-    <style>
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-            animation: scroll 20s linear infinite;
-        }
-    </style>
-</head>
-<body class="antialiased">
-    <div id="preloader">
-        <div class="mb-4 overflow-hidden">
-            <h2 id="loader-name" class="text-2xl font-display font-bold tracking-tighter transform translate-y-full transition-transform duration-700">
-                YAKUP DELİL AKIN<span class="text-primary">.</span>
-            </h2>
+        </script>
+        <style>
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .animate-scroll {
+                animation: scroll 20s linear infinite;
+            }
+        </style>
+    </head>
+
+    <body class="antialiased">
+        <div id="preloader">
+            <div class="mb-4 overflow-hidden">
+                <h2 id="loader-name"
+                    class="text-2xl font-display font-bold tracking-tighter transform translate-y-full transition-transform duration-700">
+                    YAKUP DELİL AKIN<span class="text-primary">.</span>
+                </h2>
+            </div>
+            <div class="w-48 h-[2px] bg-white/10 relative">
+                <div id="loader-progress" class="absolute top-0 left-0 h-full bg-primary transition-all duration-300"
+                    style="width: 0%"></div>
+            </div>
         </div>
-        <div class="w-48 h-[2px] bg-white/10 relative">
-            <div id="loader-progress" class="absolute top-0 left-0 h-full bg-primary transition-all duration-300" style="width: 0%"></div>
-        </div>
-    </div>
-    <div class="noise"></div>
-    <div id="cursor"></div>
-    <div id="cursor-outline"></div>
-    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group" id="main-header">
-        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100"></div>
+        <div class="noise"></div>
+        <div id="cursor"></div>
+        <div id="cursor-outline"></div>
+        <header
+            class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
+            id="main-header">
+            <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
+            </div>
 
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
-                YDA<span class="text-primary animate-pulse">_</span>
-            </a>
-
-            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
-                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
-                    Projeler
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html"
+                    class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                    YDA<span class="text-primary animate-pulse">_</span>
                 </a>
-                
-                <a href="urunler.html" class="nav-link relative group py-2" data-i18n="nav-about">
-                    Ürünler
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
-                    İletişim
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
 
-            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-                <div class="relative group">
-                    <button
-                    id="lang-toggle-btn"
-                    onclick="toggleLangDropdown()"
-                    class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
-                    aria-label="Dil seç"
-                    >
-                    <span id="current-lang-display" class="font-bold">TR</span>
-                    <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
-                    </button>
-                    <div id="lang-dropdown-menu"
-                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-                    <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇹🇷</span>
-                        <span>Türkçe</span>
-                        <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                <nav
+                    class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                    <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
+                        Projeler
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
 
-                    <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇬🇧</span>
-                        <span>English</span>
-                        <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                    <a href="urunler.html" class="nav-link relative group py-2" data-i18n="nav-about">
+                        Ürünler
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
+                        İletişim
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
 
-                    <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇪🇸</span>
-                        <span>Español</span>
-                        <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                    <div class="relative group">
+                        <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
+                            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                            aria-label="Dil seç">
+                            <span id="current-lang-display" class="font-bold">TR</span>
+                            <i
+                                class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                        </button>
+                        <div id="lang-dropdown-menu"
+                            class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                            <button onclick="changeLanguage('tr')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇹🇷</span>
+                                <span>Türkçe</span>
+                                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇩🇪</span>
-                        <span>Deutsch</span>
-                        <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('en')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇬🇧</span>
+                                <span>English</span>
+                                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('fr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇫🇷</span>
-                        <span>Français</span>
-                        <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('es')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇪🇸</span>
+                                <span>Español</span>
+                                <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('it')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇮🇹</span>
-                        <span>Italiano</span>
-                        <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('de')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇩🇪</span>
+                                <span>Deutsch</span>
+                                <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇵🇹</span>
-                        <span>Português</span>
-                        <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('fr')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇫🇷</span>
+                                <span>Français</span>
+                                <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('ru')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇷🇺</span>
-                        <span>Русский</span>
-                        <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('it')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇮🇹</span>
+                                <span>Italiano</span>
+                                <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
 
-                    <button onclick="changeLanguage('jp')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇯🇵</span>
-                        <span>日本語</span>
-                        <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+                            <button onclick="changeLanguage('pt')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇵🇹</span>
+                                <span>Português</span>
+                                <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('ru')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇷🇺</span>
+                                <span>Русский</span>
+                                <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('jp')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇯🇵</span>
+                                <span>日本語</span>
+                                <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+                        </div>
+
                     </div>
-
+                    <a href="mailto:yakupdelilakin@gmail.com"
+                        class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                        data-i18n="coffee">
+                        Let's Talk
+                    </a>
                 </div>
-                <a href="mailto:yakupdelilakin@gmail.com" 
-                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40" data-i18n="coffee">   
-                    Let's Talk
-                </a>
             </div>
-        </div>
-    </header>
-    <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 relative">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="inline-block px-4 py-2 border border-primary/30 rounded-full mb-8 animate-float">
-                <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold" data-i18n="hero-badge">Kreatif Web Developer</span>
-            </div>
-            <button onclick="rastgeleOyunAc()"
-                class="group relative inline-flex items-center justify-center
+        </header>
+        <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-24 relative">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="inline-block px-4 py-2 border border-primary/30 rounded-full mb-8 animate-float">
+                    <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold"
+                        data-i18n="hero-badge">Kreatif Web Developer</span>
+                </div>
+                <button onclick="rastgeleOyunAc()" class="group relative inline-flex items-center justify-center
                     w-10 h-10
                     bg-white/5 border border-white/10
                     rounded-full
                     hover:bg-primary/20 hover:border-primary/50
                     transition-all duration-300
                     active:scale-95 overflow-hidden">
-                <span class="text-lg group-hover:rotate-12 transition-transform duration-300">
-                    🎲
-                </span>
-                <div class="absolute inset-0 bg-primary/10 blur-lg opacity-0
+                    <span class="text-lg group-hover:rotate-12 transition-transform duration-300">
+                        🎲
+                    </span>
+                    <div class="absolute inset-0 bg-primary/10 blur-lg opacity-0
                             group-hover:opacity-100 transition-opacity duration-500"></div>
-            </button>
+                </button>
 
-            <h1 class="text-[12vw] md:text-[9vw] leading-[0.85] font-display font-extrabold uppercase mb-12">
-                <span data-i18n="hero-titlePart1">Design</span> <br> 
-                <span class="text-outline" data-i18n="hero-titlePart2">That</span> <br> 
-                <span data-i18n="hero-titlePart3">Impacts</span><span class="text-primary">.</span>
-            </h1>
-            <div class="grid md:grid-cols-2 gap-12 items-end">
-                <p class="text-zinc-400 text-lg md:text-xl font-light leading-relaxed max-w-xl" data-i18n="hero-description">
-                    Ben <span class="text-white font-medium">Yakup Delil Akın</span>. Estetiği yüksek performanslı kodlarla birleştirerek markalar için unutulmaz dijital deneyimler inşa ediyorum.
-                </p>
-                <div class="flex justify-end">
-                    <div class="relative group cursor-pointer hover-magnetic" data-strength="30">
-                        <div class="w-32 h-32 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary transition-colors duration-500">
-                            <i class="fas fa-arrow-down text-2xl group-hover:text-primary transition-colors"></i>
+                <h1 class="text-[12vw] md:text-[9vw] leading-[0.85] font-display font-extrabold uppercase mb-12">
+                    <span data-i18n="hero-titlePart1">Design</span> <br>
+                    <span class="text-outline" data-i18n="hero-titlePart2">That</span> <br>
+                    <span data-i18n="hero-titlePart3">Impacts</span><span class="text-primary">.</span>
+                </h1>
+                <div class="grid md:grid-cols-2 gap-12 items-end">
+                    <p class="text-zinc-400 text-lg md:text-xl font-light leading-relaxed max-w-xl"
+                        data-i18n="hero-description">
+                        Ben <span class="text-white font-medium">Yakup Delil Akın</span>. Estetiği yüksek performanslı
+                        kodlarla birleştirerek markalar için unutulmaz dijital deneyimler inşa ediyorum.
+                    </p>
+                    <div class="flex justify-end">
+                        <div class="relative group cursor-pointer hover-magnetic" data-strength="30">
+                            <div
+                                class="w-32 h-32 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary transition-colors duration-500">
+                                <i class="fas fa-arrow-down text-2xl group-hover:text-primary transition-colors"></i>
+                            </div>
+                            <svg class="absolute inset-0 w-full h-full animate-spin-slow pointer-events-none"
+                                viewBox="0 0 100 100">
+                                <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                                    fill="transparent" />
+                                <text class="text-[10px] uppercase tracking-[2px] fill-zinc-500">
+                                    <textPath xlink:href="#circlePath" data-i18n="scroll-text">Aşağı Kaydır • Aşağı
+                                        Kaydır • Aşağı Kaydır •</textPath>
+                                </text>
+                            </svg>
                         </div>
-                        <svg class="absolute inset-0 w-full h-full animate-spin-slow pointer-events-none" viewBox="0 0 100 100">
-                            <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
-                            <text class="text-[10px] uppercase tracking-[2px] fill-zinc-500">
-                                <textPath xlink:href="#circlePath" data-i18n="scroll-text">Aşağı Kaydır • Aşağı Kaydır • Aşağı Kaydır •</textPath>
-                            </text>
-                        </svg>
                     </div>
                 </div>
             </div>
+        </section>
+        <div class="marquee mt-20 rotate-[-1deg] scale-[1.02] z-10">
+            <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
+                <span data-i18n="marquee-item1">Creative Development</span>
+                <span>•</span>
+                <span data-i18n="marquee-item2">UI/UX Strategy</span>
+                <span>•</span>
+                <span data-i18n="marquee-item3">3D Immersive Web</span>
+                <span>•</span>
+                <span data-i18n="marquee-item4">Web Development</span>
+                <span>•</span>
+            </div>
+            <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
+                <span data-i18n="marquee-item1">Creative Development</span>
+                <span>•</span>
+                <span data-i18n="marquee-item2">UI/UX Strategy</span>
+                <span>•</span>
+                <span data-i18n="marquee-item3">3D Immersive Web</span>
+                <span>•</span>
+                <span data-i18n="marquee-item4">Web Development</span>
+                <span>•</span>
+            </div>
         </div>
-    </section>
-    <div class="marquee mt-20 rotate-[-1deg] scale-[1.02] z-10">
-        <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
-            <span data-i18n="marquee-item1">Creative Development</span>
-            <span>•</span>
-            <span data-i18n="marquee-item2">UI/UX Strategy</span>
-            <span>•</span>
-            <span data-i18n="marquee-item3">3D Immersive Web</span>
-            <span>•</span>
-            <span data-i18n="marquee-item4">Web Development</span>
-            <span>•</span>
-        </div>
-        <div class="marquee-content font-display font-black text-3xl md:text-5xl text-black uppercase">
-            <span data-i18n="marquee-item1">Creative Development</span>
-            <span>•</span>
-            <span data-i18n="marquee-item2">UI/UX Strategy</span>
-            <span>•</span>
-            <span data-i18n="marquee-item3">3D Immersive Web</span>
-            <span>•</span>
-            <span data-i18n="marquee-item4">Web Development</span>
-            <span>•</span>
-        </div>
-    </div>
-    <section id="work" class="py-32 px-6 md:px-12 lg:px-24">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+        <section id="work" class="py-32 px-6 md:px-12 lg:px-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+                    <div>
+                        <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-4"
+                            data-i18n="portfolio-sectionTitle">Portfolyo</h2>
+                        <h3 class="text-5xl md:text-7xl font-display font-bold uppercase"
+                            data-i18n="portfolio-selectedProjects">Seçili Projeler</h3>
+                    </div>
+                    <p class="text-zinc-500 font-mono text-sm max-w-xs" data-i18n="portfolio-description">
+                        Her proje, teknoloji ve sanatın kesiştiği noktada özel bir hikaye anlatır.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="project-grid">
+                    <!-- JSON'dan buraya kartlar eklenecek -->
+                </div>
+                <div class="mt-20 text-center">
+                    <a href="projeler.html"
+                        class="inline-block text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-primary pb-2 hover:text-primary transition-all"
+                        data-i18n="portfolio-viewAll">Tüm Projeleri Gör</a>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="py-32 bg-offWhite text-bgDark px-6 md:px-12 lg:px-24">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
                 <div>
-                    <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-4" data-i18n="portfolio-sectionTitle">Portfolyo</h2>
-                    <h3 class="text-5xl md:text-7xl font-display font-bold uppercase" data-i18n="portfolio-selectedProjects">Seçili Projeler</h3>
-                </div>
-                <p class="text-zinc-500 font-mono text-sm max-w-xs" data-i18n="portfolio-description">
-                    Her proje, teknoloji ve sanatın kesiştiği noktada özel bir hikaye anlatır.
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="project-grid">
-                <!-- JSON'dan buraya kartlar eklenecek -->
-            </div>
-            <div class="mt-20 text-center">
-                <a href="projeler.html" class="inline-block text-sm font-bold uppercase tracking-[0.3em] border-b-2 border-primary pb-2 hover:text-primary transition-all" data-i18n="portfolio-viewAll">Tüm Projeleri Gör</a>
-            </div>
-        </div>
-    </section>
-    <section id="about" class="py-32 bg-offWhite text-bgDark px-6 md:px-12 lg:px-24">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
-            <div>
-                <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8" data-i18n="about-sectionTitle">Hakkımda</h2>
-                <h3 class="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-12" data-i18n="about-heading">
-                    Kodun Estetiği, <br>
-                    Tasarımın <span class="italic text-primary">Zekası</span>.
-                </h3>
-                <div class="space-y-6 text-zinc-600 text-lg font-light leading-relaxed">
-                    <p data-i18n="about-p1">
-                        Ben Yakup Delil Akın, dijital dünyada sadece var olan değil, fark yaratan ürünler geliştirmeye odaklanmış bir Software Developer'ım.
-                    </p>
-                    <p data-i18n="about-p2">
-                        Teknik becerilerimi tasarım vizyonumla harmanlayarak, kullanıcıların içinde kaybolmak isteyeceği akıcı ve anlamlı web siteleri tasarlıyorum. Modern teknolojileri kullanarak sınırları zorlamayı seviyorum.
-                    </p>
-                    <p data-i18n="about-p3">
-                        Ayrıca Python, C++ gibi programlama dillerinde de yetkinim. Bu dillerde çeşitli projeler geliştirerek yazılım dünyasındaki becerilerimi genişlettim.
-                    </p>
-                </div>
-            </div>
-            <div class="flex flex-col justify-end">
-                <div class="grid grid-cols-2 gap-8 border-t border-zinc-200 pt-12">
-                    <div>
-                        <h4 class="font-bold text-xl mb-4" data-i18n="about-expertiseTitle">Uzmanlık</h4>
-                        <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
-                            <li data-i18n="about-expertise1">Frontend Architecture</li>
-                            <li data-i18n="about-expertise2">Interactive 3D Web</li>
-                            <li data-i18n="about-expertise3">Motion Graphics</li>
-                            <li data-i18n="about-expertise4">Product Design</li>
-                        </ul>
+                    <h2 class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8"
+                        data-i18n="about-sectionTitle">Hakkımda</h2>
+                    <h3 class="text-4xl md:text-6xl font-display font-extrabold leading-[1.1] mb-12"
+                        data-i18n="about-heading">
+                        Kodun Estetiği, <br>
+                        Tasarımın <span class="italic text-primary">Zekası</span>.
+                    </h3>
+                    <div class="space-y-6 text-zinc-600 text-lg font-light leading-relaxed">
+                        <p data-i18n="about-p1">
+                            Ben Yakup Delil Akın, dijital dünyada sadece var olan değil, fark yaratan ürünler
+                            geliştirmeye odaklanmış bir Software Developer'ım.
+                        </p>
+                        <p data-i18n="about-p2">
+                            Teknik becerilerimi tasarım vizyonumla harmanlayarak, kullanıcıların içinde kaybolmak
+                            isteyeceği akıcı ve anlamlı web siteleri tasarlıyorum. Modern teknolojileri kullanarak
+                            sınırları zorlamayı seviyorum.
+                        </p>
+                        <p data-i18n="about-p3">
+                            Ayrıca Python, C++ gibi programlama dillerinde de yetkinim. Bu dillerde çeşitli projeler
+                            geliştirerek yazılım dünyasındaki becerilerimi genişlettim.
+                        </p>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-4" data-i18n="about-toolsTitle">Araçlar</h4>
-                        <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
-                            <li data-i18n="about-tool1">Next.js / React</li>
-                            <li data-i18n="about-tool2">Git / GitHub</li>
-                            <li data-i18n="about-tool3">Figma / tailwind</li>
-                            <li data-i18n="about-tool4">VS Code</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="flex flex-col justify-end">
+                    <div class="grid grid-cols-2 gap-8 border-t border-zinc-200 pt-12">
+                        <div>
+                            <h4 class="font-bold text-xl mb-4" data-i18n="about-expertiseTitle">Uzmanlık</h4>
+                            <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
+                                <li data-i18n="about-expertise1">Frontend Architecture</li>
+                                <li data-i18n="about-expertise2">Interactive 3D Web</li>
+                                <li data-i18n="about-expertise3">Motion Graphics</li>
+                                <li data-i18n="about-expertise4">Product Design</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl mb-4" data-i18n="about-toolsTitle">Araçlar</h4>
+                            <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
+                                <li data-i18n="about-tool1">Next.js / React</li>
+                                <li data-i18n="about-tool2">Git / GitHub</li>
+                                <li data-i18n="about-tool3">Figma / tailwind</li>
+                                <li data-i18n="about-tool4">VS Code</li>
+                            </ul>
+                        </div>
 
-                    <div>
-                        <h4 class="font-bold text-xl mb-4" data-i18n="about-dilTitle">Proramlama Dilleri</h4>
-                        <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
-                            <li data-i18n="about-dil1">JavaScript</li>
-                            <li data-i18n="about-dil2">Python</li>
-                            <li data-i18n="about-dil3">C++</li>
-                            <li data-i18n="about-dil4">Java</li>
-                            <li data-i18n="about-dil5">HTML5</li>
-                            <li data-i18n="about-dil6">CSS3</li>
-                        </ul>
+                        <div>
+                            <h4 class="font-bold text-xl mb-4" data-i18n="about-dilTitle">Proramlama Dilleri</h4>
+                            <ul class="text-zinc-500 text-sm space-y-2 uppercase tracking-tighter">
+                                <li data-i18n="about-dil1">JavaScript</li>
+                                <li data-i18n="about-dil2">Python</li>
+                                <li data-i18n="about-dil3">C++</li>
+                                <li data-i18n="about-dil4">Java</li>
+                                <li data-i18n="about-dil5">HTML5</li>
+                                <li data-i18n="about-dil6">CSS3</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        
-    </section>
-    <section id="contact" class="py-40 px-6 md:px-12 lg:px-24 text-center">
-        <div class="max-w-5xl mx-auto">
-            <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-10" data-i18n="contact-sectionTitle">Birlikte Çalışalım</p>
-            <h2 class="text-[8vw] leading-none font-display font-black uppercase mb-20 hover-magnetic" data-strength="40">
-                <a href="mailto:yakupdelilakin@gmail.com" class="hover:text-primary transition-colors" data-i18n="contact-heading">Kahve İçelim</a>
-            </h2>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <a href="https://www.instagram.com/ykp._.56/" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
-                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-instagram">Instagram</span>
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/yakupdelilakin/" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
-                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-linkedin">LinkedIn</span>
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://github.com/YakupAkn" class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
-                    <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-github">GitHub</span>
-                    <i class="fab fa-github"></i>
-                </a>
+        <section id="contact" class="py-40 px-6 md:px-12 lg:px-24 text-center">
+            <div class="max-w-5xl mx-auto">
+                <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-10"
+                    data-i18n="contact-sectionTitle">Birlikte Çalışalım</p>
+                <h2 class="text-[8vw] leading-none font-display font-black uppercase mb-20 hover-magnetic"
+                    data-strength="40">
+                    <a href="mailto:yakupdelilakin@gmail.com" class="hover:text-primary transition-colors"
+                        data-i18n="contact-heading">Kahve İçelim</a>
+                </h2>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <a href="https://www.instagram.com/ykp._.56/"
+                        class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                        <span class="mb-2 opacity-50 group-hover:opacity-100"
+                            data-i18n="social-instagram">Instagram</span>
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yakupdelilakin/"
+                        class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                        <span class="mb-2 opacity-50 group-hover:opacity-100"
+                            data-i18n="social-linkedin">LinkedIn</span>
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/YakupAkn"
+                        class="group text-sm font-bold uppercase tracking-widest hover:text-primary transition flex flex-col items-center">
+                        <span class="mb-2 opacity-50 group-hover:opacity-100" data-i18n="social-github">GitHub</span>
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const bar = document.getElementById('loader-progress');
-            const name = document.getElementById('loader-name');
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 20;
-                if(progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    name.style.transform = 'translateY(0)';
-                    setTimeout(() => {
-                        preloader.style.opacity = '0';
-                        setTimeout(() => preloader.remove(), 800);
-                    }, 800);
-                }
-                bar.style.width = progress + '%';
-            }, 100);
-        });
-        const cursor = document.getElementById('cursor');
-        const outline = document.getElementById('cursor-outline');
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
-
-        function animateOutline() {
-            let dt = 0.15;
-            outlineX += (mouseX - outlineX) * dt;
-            outlineY += (mouseY - outlineY) * dt;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateOutline);
-        }
-        animateOutline();
-        const hoverables = document.querySelectorAll('a, button, .project-card-v2, .hover-magnetic');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-        const magnets = document.querySelectorAll('.hover-magnetic');
-        magnets.forEach(m => {
-            m.addEventListener('mousemove', (e) => {
-                const rect = m.getBoundingClientRect();
-                const strength = m.getAttribute('data-strength') || 40;
-                const x = (e.clientX - rect.left - rect.width/2) / strength;
-                const y = (e.clientY - rect.top - rect.height/2) / strength;
-                m.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+        <script>
+            window.addEventListener('load', () => {
+                const preloader = document.getElementById('preloader');
+                const bar = document.getElementById('loader-progress');
+                const name = document.getElementById('loader-name');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 20;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        name.style.transform = 'translateY(0)';
+                        setTimeout(() => {
+                            preloader.style.opacity = '0';
+                            setTimeout(() => preloader.remove(), 800);
+                        }, 800);
+                    }
+                    bar.style.width = progress + '%';
+                }, 100);
             });
-            m.addEventListener('mouseleave', () => {
-                m.style.transform = 'translate(0, 0)';
+            const cursor = document.getElementById('cursor');
+            const outline = document.getElementById('cursor-outline');
+            let mouseX = 0, mouseY = 0;
+            let outlineX = 0, outlineY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
             });
-        });
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if(window.scrollY > 50) {
-                header.classList.add('nav-blur', 'py-4');
-                header.classList.remove('py-6');
-            } else {
-                header.classList.remove('nav-blur', 'py-4');
-                header.classList.add('py-6');
+
+            function animateOutline() {
+                let dt = 0.15;
+                outlineX += (mouseX - outlineX) * dt;
+                outlineY += (mouseY - outlineY) * dt;
+                outline.style.left = outlineX + 'px';
+                outline.style.top = outlineY + 'px';
+                requestAnimationFrame(animateOutline);
             }
-        });
-        setInterval(() => {
-            document.getElementById('local-time').innerText = new Date().toLocaleTimeString('tr-TR');
-        }, 1000);
-        async function loadSelectedProjects() {
-            const grid = document.getElementById('project-grid');
-            try {
-                const response = await fetch('projeler.json');
-                if (!response.ok) throw new Error('Projeler Yüklenemedi. Sayfayı Yenileyin.');
-                const projects = await response.json();
-                const selected = projects
-                    .filter(p => p.featured)
-                    .sort((a, b) => a.order - b.order)
-                    .slice(0, 4);
-                selected.forEach(project => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card-v2 group';
-                    card.innerHTML = `
+            animateOutline();
+            const hoverables = document.querySelectorAll('a, button, .project-card-v2, .hover-magnetic');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+            const magnets = document.querySelectorAll('.hover-magnetic');
+            magnets.forEach(m => {
+                m.addEventListener('mousemove', (e) => {
+                    const rect = m.getBoundingClientRect();
+                    const strength = m.getAttribute('data-strength') || 40;
+                    const x = (e.clientX - rect.left - rect.width / 2) / strength;
+                    const y = (e.clientY - rect.top - rect.height / 2) / strength;
+                    m.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+                });
+                m.addEventListener('mouseleave', () => {
+                    m.style.transform = 'translate(0, 0)';
+                });
+            });
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('nav-blur', 'py-4');
+                    header.classList.remove('py-6');
+                } else {
+                    header.classList.remove('nav-blur', 'py-4');
+                    header.classList.add('py-6');
+                }
+            });
+            setInterval(() => {
+                document.getElementById('local-time').innerText = new Date().toLocaleTimeString('tr-TR');
+            }, 1000);
+            async function loadSelectedProjects() {
+                const grid = document.getElementById('project-grid');
+                try {
+                    const response = await fetch('projeler.json');
+                    if (!response.ok) throw new Error('Projeler Yüklenemedi. Sayfayı Yenileyin.');
+                    const projects = await response.json();
+                    const selected = projects
+                        .filter(p => p.featured)
+                        .sort((a, b) => a.order - b.order)
+                        .slice(0, 4);
+                    selected.forEach(project => {
+                        const card = document.createElement('div');
+                        card.className = 'project-card-v2 group';
+                        card.innerHTML = `
                         <a href="${project.id}.html">
                             <div class="project-image-wrapper">
                                 <img src="${project.image || 'https://via.placeholder.com/1200x750?text=' + encodeURIComponent(project.title)}" alt="${project.title}" class="w-full h-full object-cover">
@@ -448,48 +507,159 @@
                             </div>
                         </a>
                     `;
-                    grid.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Hata:', error);
-                grid.innerHTML = '<p class="text-center text-zinc-500">Projeler yüklenemedi. Lütfen daha sonra deneyin.</p>';
+                        grid.appendChild(card);
+                    });
+                } catch (error) {
+                    console.error('Hata:', error);
+                    grid.innerHTML = '<p class="text-center text-zinc-500">Projeler yüklenemedi. Lütfen daha sonra deneyin.</p>';
+                }
             }
-        }
-        window.addEventListener('load', loadSelectedProjects);
-    </script>
-    <script>
-    function rastgeleOyunAc() {
-        const oyunlar = [
-            "oyun.html",
-            "oyun1.html",
-            "oyun2.html",
-            "oyun3.html",
-            "oyun4.html",
-            "oyun5.html",
-            "oyun6.html",
-            "oyun7.html",
-            "oyun8.html",
-            "oyun9.html",
-            "oyun10.html",
-            "oyun11.html",
-            "oyun12.html",
-            "oyun13.html",
-            "oyun14.html",
-            "oyun15.html"
-        ];
-        let rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
-        let secilenOyun = oyunlar[rastgeleIndex];
-        const mevcutSayfa = window.location.pathname.split("/").pop();
-            while (secilenOyun === mevcutSayfa) {
-            rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
-            secilenOyun = oyunlar[rastgeleIndex];
-        }
-        window.location.href = secilenOyun;
-    }
+            window.addEventListener('load', loadSelectedProjects);
+        </script>
+        <script>
+            function rastgeleOyunAc() {
+                const oyunlar = [
+                    "oyun.html",
+                    "oyun1.html",
+                    "oyun2.html",
+                    "oyun3.html",
+                    "oyun4.html",
+                    "oyun5.html",
+                    "oyun6.html",
+                    "oyun7.html",
+                    "oyun8.html",
+                    "oyun9.html",
+                    "oyun10.html",
+                    "oyun11.html",
+                    "oyun12.html",
+                    "oyun13.html",
+                    "oyun14.html",
+                    "oyun15.html"
+                ];
+                let rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
+                let secilenOyun = oyunlar[rastgeleIndex];
+                const mevcutSayfa = window.location.pathname.split("/").pop();
+                while (secilenOyun === mevcutSayfa) {
+                    rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
+                    secilenOyun = oyunlar[rastgeleIndex];
+                }
+                window.location.href = secilenOyun;
+            }
 
-    </script>
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
-</DOCUMENT>
+        </script>
+        <script src="js/i18n.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Service Worker Kaydı -->
+        <script>
+            // Service Worker Kaydı
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then((registration) => {
+                            console.log('✅ Service Worker kayıtlı:', registration.scope);
+
+                            // Güncelleme kontrolü
+                            registration.addEventListener('updatefound', () => {
+                                const newWorker = registration.installing;
+                                newWorker.addEventListener('statechange', () => {
+                                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                        // Yeni versiyon mevcut
+                                        showUpdateNotification();
+                                    }
+                                });
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('❌ Service Worker hatası:', error);
+                        });
+                });
+            }
+
+            // Çevrimdışı durumu kontrolü
+            function updateOnlineStatus() {
+                const statusEl = document.getElementById('offline-indicator');
+                if (!navigator.onLine) {
+                    if (!statusEl) {
+                        const indicator = document.createElement('div');
+                        indicator.id = 'offline-indicator';
+                        indicator.innerHTML = `
+                        <div style="
+                            position: fixed;
+                            bottom: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+                            color: #fff;
+                            padding: 12px 24px;
+                            border-radius: 50px;
+                            font-size: 14px;
+                            font-weight: 500;
+                            z-index: 9999;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                            border: 1px solid rgba(255,255,255,0.1);
+                            animation: slideUp 0.3s ease-out;
+                        ">
+                            <span style="font-size: 16px;">📡</span>
+                            Çevrimdışı moddasınız
+                        </div>
+                    `;
+                        document.body.appendChild(indicator);
+                    }
+                } else {
+                    if (statusEl) {
+                        statusEl.remove();
+                    }
+                }
+            }
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
+            // Güncelleme bildirimi
+            function showUpdateNotification() {
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                <div style="
+                    position: fixed;
+                    bottom: 80px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: linear-gradient(135deg, #FF3D00 0%, #ff6a00 100%);
+                    color: #fff;
+                    padding: 12px 24px;
+                    border-radius: 50px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    z-index: 9999;
+                    cursor: pointer;
+                    box-shadow: 0 4px 20px rgba(255,61,0,0.4);
+                ">
+                    🔄 Yeni versiyon mevcut - Yenilemek için tıklayın
+                </div>
+            `;
+                notification.onclick = () => window.location.reload();
+                document.body.appendChild(notification);
+            }
+        </script>
+
+        <style>
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        </style>
+    </body>
+
+    </html>

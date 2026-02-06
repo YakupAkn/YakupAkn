@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A0A"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+  <text x="256" y="300" font-family="Arial Black, sans-serif" font-size="150" font-weight="900" fill="#fff" text-anchor="middle">YDA</text>
+  <rect x="366" y="230" width="20" height="65" fill="#FF3D00"/>
+</svg>

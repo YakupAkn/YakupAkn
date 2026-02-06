@@ -1,11 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urunler | YDA.</title>
+    <meta name="theme-color" content="#FF3D00">
+    <title>Ürünler | Yakup Delil Akın - Digital Products</title>
+    <meta name="description"
+        content="Yakup Delil Akın'ın tasarladığı ve geliştirdiği dijital ürünler vitrini. PWA, Web App ve Mobile uygulamalar.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/footer.js"></script>
     <script>
@@ -27,269 +33,995 @@
         }
     </script>
     <style>
-        body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: none; font-family: 'Space Grotesk', sans-serif; }
-        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
-        #cursor { width: 12px; height: 12px; background: #FF3D00; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; }
-        #cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 61, 0, 0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease-out; }
-        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
-        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0A0A0A;
+            color: #F5F5F5;
+            overflow-x: hidden;
+            cursor: none;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Noise Overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0.03;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: #FF3D00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        #cursor-outline {
+            width: 45px;
+            height: 45px;
+            border: 1.5px solid rgba(255, 61, 0, 0.6);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+
+        .cursor-hover #cursor {
+            width: 70px;
+            height: 70px;
+            opacity: 0.15;
+        }
+
+        .cursor-hover #cursor-outline {
+            width: 90px;
+            height: 90px;
+            border-color: #FF3D00;
+        }
+
         @media (hover: none) {
-            body { cursor: auto; }
-            #cursor, #cursor-outline { display: none; }
+            body {
+                cursor: auto;
+            }
+
+            #cursor,
+            #cursor-outline {
+                display: none;
+            }
         }
-        .nav-blur { backdrop-filter: blur(10px); background: rgba(10, 10, 10, 0.8); }
-        .hero-gradient {
-            background: radial-gradient(circle at 20% 20%, rgba(255, 61, 0, 0.2), transparent 45%),
-                        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.08), transparent 40%);
+
+        /* Header */
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.85);
         }
-        .vitrin-card {
-            background: linear-gradient(135deg, rgba(255, 61, 0, 0.08), rgba(20, 20, 20, 0.9));
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(255, 61, 0, 0.15) 0%, transparent 60%);
+            animation: pulse-glow 8s ease-in-out infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Floating Elements */
+        .floating-badge {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+        }
+
+        /* Marquee */
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            background: #FF3D00;
+            padding: 18px 0;
+            transform: rotate(-1.5deg) scale(1.03);
+            margin: -20px -20px 60px;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee 25s linear infinite;
+            gap: 60px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Product Cards */
+        .product-card {
+            position: relative;
+            background: linear-gradient(165deg, rgba(30, 30, 30, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(255, 61, 0, 0.08) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 61, 0, 0.4);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(255, 61, 0, 0.1);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+        }
+
+        .product-image-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(10, 10, 10, 1) 0%, transparent 50%);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            padding: 8px 16px;
+            background: rgba(255, 61, 0, 0.9);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .product-content {
+            position: relative;
+            padding: 32px;
+            z-index: 5;
+        }
+
+        .product-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 28px;
+            background: transparent;
+            border: 2px solid rgba(255, 61, 0, 0.5);
+            color: #FF3D00;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-radius: 60px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #FF3D00;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+
+        .product-link:hover {
+            color: #000;
+            border-color: #FF3D00;
+            transform: scale(1.05);
+        }
+
+        .product-link:hover::before {
+            transform: translateX(0);
+        }
+
+        /* Stats Section */
+        .stat-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(255, 61, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF3D00 0%, #ff6a00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        /* Services Grid */
+        .service-card {
+            padding: 40px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #FF3D00 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover {
+            background: rgba(25, 25, 25, 0.8);
+            border-color: rgba(255, 61, 0, 0.2);
+            transform: translateX(8px);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 61, 0, 0.15) 0%, rgba(255, 61, 0, 0.05) 100%);
+            border-radius: 16px;
+            font-size: 24px;
+            color: #FF3D00;
+            margin-bottom: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            position: relative;
+            padding: 120px 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 300px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 61, 0, 0.1) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 50px;
+            background: #FF3D00;
+            color: #000;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 60px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 20px 40px rgba(255, 61, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.08) translateY(-4px);
+            box-shadow: 0 30px 60px rgba(255, 61, 0, 0.4);
+        }
+
+        /* Form Styles */
+        .form-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(15, 15, 15, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 15px;
+            transition: all 0.3s ease;
         }
-        .vitrin-card:hover {
-            transform: translateY(-6px);
+
+        .form-input:focus {
+            outline: none;
             border-color: rgba(255, 61, 0, 0.5);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 0 4px rgba(255, 61, 0, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Text Animations */
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: reveal 0.8s ease forwards;
+        }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-reveal:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .text-reveal:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .text-reveal:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF3D00 0%, #ff6a00 100%);
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(255, 61, 0, 0.3);
+        }
+
+        /* Tag Pills */
+        .tag-pill {
+            display: inline-block;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .tag-pill:hover {
+            border-color: rgba(255, 61, 0, 0.4);
+            color: #FF3D00;
         }
     </style>
 </head>
+
 <body class="antialiased">
+    <div id="scroll-progress" style="width: 0%"></div>
     <div class="noise"></div>
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
 
-    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5" id="main-header" role="banner">
+    <!-- Header -->
+    <header
+        class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5"
+        id="main-header">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300" aria-label="YDA ana sayfa">
+            <a href="index.html"
+                class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
                 YDA<span class="text-primary animate-pulse">_</span>
             </a>
 
-            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]" aria-label="Ana gezinme">
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
                 <a href="projeler.html" class="nav-link relative group py-2">
                     Projeler
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="urunler.html" class="nav-link relative group py-2 text-primary" aria-current="page">
-                    Urunler
-                    <span class="absolute bottom-0 left-0 w-full h-[2px] bg-primary" aria-hidden="true"></span>
+                <a href="urunler.html" class="nav-link relative group py-2 text-primary">
+                    Ürünler
+                    <span class="absolute bottom-0 left-0 w-full h-[2px] bg-primary"></span>
                 </a>
                 <a href="index.html#contact" class="nav-link relative group py-2">
-                    Iletisim
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" aria-hidden="true"></span>
+                    İletişim
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </nav>
 
             <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-                <!-- Language selector using details for accessibility (no inline JS required) -->
-                <details id="lang-dropdown" class="relative" role="menu" aria-label="Dil seçici">
-                    <summary
-                        class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95 cursor-pointer"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        <span id="current-lang-display" class="font-bold">TR</span>
-                        <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform duration-300"></i>
-                    </summary>
+                <a href="mailto:yakupdelilakin@gmail.com"
+                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40">
+                    Let's Talk
+                </a>
 
-                    <div class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 z-50" role="menu">
-                        <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3" data-lang="tr" role="menuitem">
-                            <span class="text-lg">🇹🇷</span>
-                            <span>Türkçe</span>
-                            <span class="ml-auto text-primary">✓</span>
-                        </button>
-
-                        <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3" data-lang="en" role="menuitem">
-                            <span class="text-lg">🇬🇧</span>
-                            <span>English</span>
-                            <span class="ml-auto text-primary opacity-0">✓</span>
-                        </button>
-
-                        <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3" data-lang="es" role="menuitem">
-                            <span class="text-lg">🇪🇸</span>
-                            <span>Español</span>
-                            <span class="ml-auto text-primary opacity-0">✓</span>
-                        </button>
-
-                        <button class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3" data-lang="de" role="menuitem">
-                            <span class="text-lg">🇩🇪</span>
-                            <span>Deutsch</span>
-                            <span class="ml-auto text-primary opacity-0">✓</span>
-                        </button>
-                    </div>
-                </details>
-
-                <a href="mailto:yakupdelilakin@gmail.com" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40" aria-label="Let's Talk e-posta bağlantısı">Let's Talk</a>
-
-                <!-- Mobile menu toggle (visible on small screens) -->
-                <details class="md:hidden" aria-label="Mobil menü">
-                    <summary class="flex items-center justify-center w-10 h-10 rounded-full bg-bgDark/80 border border-white/10">
-                        <i class="fas fa-bars"></i>
-                    </summary>
-                    <nav class="mt-2 bg-bgDark/95 border border-white/10 rounded-xl p-4 space-y-3" aria-label="Mobil gezinme">
-                        <a href="projeler.html" class="block font-bold uppercase text-sm">Projeler</a>
-                        <a href="urunler.html" class="block font-bold uppercase text-sm text-primary" aria-current="page">Urunler</a>
-                        <a href="index.html#contact" class="block font-bold uppercase text-sm">Iletisim</a>
-                        <a href="mailto:yakupdelilakin@gmail.com" class="block font-bold uppercase text-sm">Let's Talk</a>
-                    </nav>
-                </details>
+                <!-- Mobile Menu -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-bgDark/80 border border-white/10">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="pt-44 pb-20 px-6 lg:px-24 max-w-7xl mx-auto">
-        <section class="mb-16 hero-gradient rounded-[32px] border border-white/5 p-10 md:p-16">
-            <div class="flex flex-col gap-6 max-w-3xl">
-                <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Vitrin</span>
-                <h1 class="text-[10vw] md:text-[6vw] font-display font-black uppercase leading-[0.95]">
-                    Yayindaki
-                    <span class="block text-zinc-800">Urunler</span><span class="text-primary">.</span>
-                </h1>
-                <p class="text-base md:text-lg text-zinc-300 leading-relaxed">
-                    Tasarladigim, gelistirdigim ve yayinladigim gercek uygulamalarin secili bir vitrinidir. Projeler sayfasindaki calismalarla karismasin diye sadece canli urunler burada.
-                </p>
-                <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
-                    <span class="px-4 py-2 rounded-full border border-white/10">PWA</span>
-                    <span class="px-4 py-2 rounded-full border border-white/10">Web App</span>
-                    <span class="px-4 py-2 rounded-full border border-white/10">Mobile</span>
+    <!-- Hero Section -->
+    <section class="hero-section px-6 md:px-12 lg:px-24 pt-32">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div
+                        class="floating-badge inline-flex items-center gap-3 px-5 py-2.5 bg-primary/10 border border-primary/30 rounded-full">
+                        <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                        <span class="text-xs font-bold uppercase tracking-[0.3em] text-primary">Canlı Ürünler</span>
+                    </div>
+
+                    <h1
+                        class="text-reveal text-[14vw] md:text-[8vw] lg:text-[6vw] font-display font-black uppercase leading-[0.9]">
+                        Dijital<br>
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">Ürünlerim</span>
+                        <span class="text-primary glow-text">.</span>
+                    </h1>
+
+                    <p class="text-reveal text-lg md:text-xl text-zinc-400 leading-relaxed max-w-lg">
+                        Fikirden ürüne, tasarımdan yayına. İşte <span class="text-white font-semibold">gerçek
+                            kullanıcılar</span> tarafından kullanılan, canlı yayındaki projelerim.
+                    </p>
+
+                    <div class="text-reveal flex flex-wrap gap-3">
+                        <span class="tag-pill">PWA</span>
+                        <span class="tag-pill">Web App</span>
+                        <span class="tag-pill">Mobile</span>
+                        <span class="tag-pill">SaaS</span>
+                    </div>
+                </div>
+
+                <div class="hidden lg:flex justify-end">
+                    <div class="relative">
+                        <!-- Decorative Elements -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 border border-primary/20 rounded-full animate-spin-slow"
+                            style="animation-duration: 20s;"></div>
+                        <div class="absolute -bottom-5 -left-5 w-24 h-24 bg-primary/10 rounded-2xl rotate-12"></div>
+
+                        <!-- Stats Preview -->
+                        <div
+                            class="relative bg-gradient-to-br from-cardDark to-bgDark p-10 rounded-3xl border border-white/10">
+                            <div class="grid grid-cols-2 gap-8">
+                                <div class="text-center">
+                                    <div class="text-5xl font-black text-primary">3+</div>
+                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Canlı Ürün</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-5xl font-black text-white">100%</div>
+                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Uptime</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mb-20">
-            <article class="vitrin-card rounded-3xl p-8 flex flex-col gap-6">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs uppercase tracking-[0.3em] text-primary">Yayinda</span>
-                    <span class="text-[10px] uppercase tracking-[0.3em] text-zinc-400">PWA</span>
-                </div>
-                <h2 class="text-3xl font-display font-bold uppercase tracking-tight">Athletico</h2>
-                <p class="text-sm text-zinc-400 leading-relaxed">Sporcular icin offline calisabilen antrenman takibi ve veri senkronizasyonu.</p>
-                <div class="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Supabase</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">IndexedDB</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Service Worker</span>
-                </div>
-                <a href="#" class="mt-auto inline-flex items-center gap-3 px-5 py-3 bg-primary/15 hover:bg-primary/25 border border-primary/40 rounded-full transition-all text-xs uppercase tracking-[0.3em]">
-                    Canliyi Ac
-                    <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
-            </article>
+    <!-- Marquee Banner -->
+    <div class="marquee-wrapper mt-20">
+        <div class="marquee-content font-display font-black text-2xl md:text-4xl text-black uppercase">
+            <span>Athletico</span>
+            <span>•</span>
+            <span>Pulseboard</span>
+            <span>•</span>
+            <span>Kahverengi</span>
+            <span>•</span>
+            <span>PWA Excellence</span>
+            <span>•</span>
+            <span>Real Products</span>
+            <span>•</span>
+            <span>Athletico</span>
+            <span>•</span>
+            <span>Pulseboard</span>
+            <span>•</span>
+            <span>Kahverengi</span>
+            <span>•</span>
+            <span>PWA Excellence</span>
+            <span>•</span>
+            <span>Real Products</span>
+            <span>•</span>
+        </div>
+    </div>
 
-            <article class="vitrin-card rounded-3xl p-8 flex flex-col gap-6">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs uppercase tracking-[0.3em] text-primary">Yayinda</span>
-                    <span class="text-[10px] uppercase tracking-[0.3em] text-zinc-400">Web App</span>
-                </div>
-                <h2 class="text-3xl font-display font-bold uppercase tracking-tight">Pulseboard</h2>
-                <p class="text-sm text-zinc-400 leading-relaxed">Gercek zamanli operasyon panosu ve ekip icin gorev akisi yonetimi.</p>
-                <div class="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Realtime</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Auth</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Dashboard</span>
-                </div>
-                <a href="#" class="mt-auto inline-flex items-center gap-3 px-5 py-3 bg-primary/15 hover:bg-primary/25 border border-primary/40 rounded-full transition-all text-xs uppercase tracking-[0.3em]">
-                    Canliyi Ac
-                    <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
-            </article>
+    <!-- Products Section -->
+    <section class="py-20 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Vitrin</span>
+                <h2 class="text-4xl md:text-6xl font-display font-black uppercase mt-4">
+                    Yayındaki Ürünler<span class="text-primary">.</span>
+                </h2>
+            </div>
 
-            <article class="vitrin-card rounded-3xl p-8 flex flex-col gap-6">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs uppercase tracking-[0.3em] text-primary">Yayinda</span>
-                    <span class="text-[10px] uppercase tracking-[0.3em] text-zinc-400">Mobile</span>
-                </div>
-                <h2 class="text-3xl font-display font-bold uppercase tracking-tight">Kahverengi</h2>
-                <p class="text-sm text-zinc-400 leading-relaxed">Kahve tutkunlari icin kisisel tarif ve deneyim kaydi uygulamasi.</p>
-                <div class="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-                    <span class="px-3 py-1 border border-white/10 rounded-full">iOS</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Android</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full">Offline</span>
-                </div>
-                <a href="#" class="mt-auto inline-flex items-center gap-3 px-5 py-3 bg-primary/15 hover:bg-primary/25 border border-primary/40 rounded-full transition-all text-xs uppercase tracking-[0.3em]">
-                    Canliyi Ac
-                    <i class="fas fa-arrow-up-right-from-square"></i>
-                </a>
-            </article>
-        </section>
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <!-- Product 1: Athletico -->
+                <article class="product-card group">
+                    <div class="product-image-wrapper">
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-orange-900/20 via-bgDark to-bgDark flex items-center justify-center">
+                            <div class="text-8xl opacity-20">🏋️</div>
+                        </div>
+                        <span class="product-badge">Yayında</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="tag-pill">PWA</span>
+                            <span class="tag-pill">Offline</span>
+                        </div>
+                        <h3 class="product-title font-display">Athletico</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                            Sporcular için tasarlanmış, offline çalışabilen antrenman takibi ve performans analizi
+                            uygulaması. IndexedDB ve Service Worker ile tam çevrimdışı deneyim.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Supabase</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">IndexedDB</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Service
+                                Worker</span>
+                        </div>
+                        <a href="athletico.html" class="product-link">
+                            <span>Detayları Gör</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
 
-        <section class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-start">
-            <div class="space-y-6">
+                <!-- Product 2: Pulseboard -->
+                <article class="product-card group">
+                    <div class="product-image-wrapper">
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-blue-900/20 via-bgDark to-bgDark flex items-center justify-center">
+                            <div class="text-8xl opacity-20">📊</div>
+                        </div>
+                        <span class="product-badge">Yayında</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="tag-pill">Web App</span>
+                            <span class="tag-pill">Realtime</span>
+                        </div>
+                        <h3 class="product-title font-display">Pulseboard</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                            Gerçek zamanlı operasyon panosu ve ekip iş akışı yönetimi. Canlı veri senkronizasyonu ve
+                            anlık bildirimlerle ekip verimliliğini artırın.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Realtime</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Auth</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Dashboard</span>
+                        </div>
+                        <a href="#" class="product-link">
+                            <span>Canlıyı Aç</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Product 3: Kahverengi -->
+                <article class="product-card group">
+                    <div class="product-image-wrapper">
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-amber-900/20 via-bgDark to-bgDark flex items-center justify-center">
+                            <div class="text-8xl opacity-20">☕</div>
+                        </div>
+                        <span class="product-badge">Yayında</span>
+                    </div>
+                    <div class="product-content">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="tag-pill">Mobile</span>
+                            <span class="tag-pill">Cross-Platform</span>
+                        </div>
+                        <h3 class="product-title font-display">Kahverengi</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                            Kahve tutkunları için kişisel tarif ve deneyim kayıt uygulaması. iOS ve Android'de
+                            çevrimdışı kullanım ile kahve yolculuğunuzu belgeleyin.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">iOS</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Android</span>
+                            <span
+                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Offline</span>
+                        </div>
+                        <a href="#" class="product-link">
+                            <span>Canlıyı Aç</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent via-cardDark/30 to-transparent">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card">
+                    <div class="stat-number">3+</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Canlı Ürün</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">PWA Uyumlu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Offline Destek</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Erişilebilir</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-32 px-6 md:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-20">
                 <div>
                     <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Hizmetlerim</span>
-                    <h2 class="text-4xl md:text-5xl font-display font-black uppercase mt-4">Urununuzu Birlikte Buyutelim<span class="text-primary">.</span></h2>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase mt-4 leading-[1.1]">
+                        Ürününüzü<br>
+                        <span class="text-zinc-600">Birlikte</span><br>
+                        Büyütelim<span class="text-primary">.</span>
+                    </h2>
+                    <p class="text-zinc-400 text-lg mt-8 max-w-md leading-relaxed">
+                        Fikrinizi hayata geçirmekten, mevcut ürününüzü optimize etmeye kadar her aşamada yanınızdayım.
+                    </p>
                 </div>
-                <div class="grid gap-4 sm:grid-cols-2">
-                    <div class="border border-white/10 rounded-2xl p-6 bg-cardDark">
-                        <h3 class="font-display font-bold uppercase tracking-wider text-lg">Urun Stratejisi</h3>
-                        <p class="text-sm text-zinc-400 mt-3">Fikir dogrulama, MVP kapsami ve yol haritasi kurgusu.</p>
+
+                <div class="grid gap-5">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Ürün Stratejisi</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Fikir doğrulama, MVP kapsamı belirleme ve yol haritası kurgusu. Pazara en hızlı şekilde
+                            ulaşmanızı sağlayacak strateji.
+                        </p>
                     </div>
-                    <div class="border border-white/10 rounded-2xl p-6 bg-cardDark">
-                        <h3 class="font-display font-bold uppercase tracking-wider text-lg">UI/UX Tasarim</h3>
-                        <p class="text-sm text-zinc-400 mt-3">Kullaniciyi merkeze alan arayuzler ve tasarim sistemleri.</p>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">UI/UX Tasarım</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Kullanıcıyı merkeze alan arayüzler ve tutarlı tasarım sistemleri. Markanızı yansıtan,
+                            kullanıcı dostu deneyimler.
+                        </p>
                     </div>
-                    <div class="border border-white/10 rounded-2xl p-6 bg-cardDark">
-                        <h3 class="font-display font-bold uppercase tracking-wider text-lg">Gelisim ve Yayina Alma</h3>
-                        <p class="text-sm text-zinc-400 mt-3">Web ve PWA uretimi, performans ve yayina alma destegi.</p>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Geliştirme & Yayına Alma
+                        </h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Modern web teknolojileri ile PWA üretimi, performans optimizasyonu ve sorunsuz yayına alma
+                            süreci.
+                        </p>
                     </div>
-                    <div class="border border-white/10 rounded-2xl p-6 bg-cardDark">
-                        <h3 class="font-display font-bold uppercase tracking-wider text-lg">Urun Optimizasyonu</h3>
-                        <p class="text-sm text-zinc-400 mt-3">Kullanici verisine gore iterasyon, iyilestirme ve bakim.</p>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Ürün Optimizasyonu</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            Kullanıcı verisine dayalı iterasyon, performans iyileştirmesi ve sürekli bakım desteği.
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <form action="mailto:yakupdelilakin@gmail.com" method="post" enctype="text/plain" class="bg-cardDark border border-white/10 rounded-3xl p-8 space-y-6">
-                <div>
-                    <h3 class="text-2xl font-display font-bold uppercase">Hizmet Talebi</h3>
-                    <p class="text-sm text-zinc-400 mt-2">Formu doldurun, mailto ile dogrudan mail hazirlansin.</p>
+    <!-- CTA Section -->
+    <section class="cta-section px-6 md:px-12 lg:px-24">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Hazır Mısınız?</span>
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-display font-black uppercase mt-4 leading-[0.95]">
+                Bir Sonraki<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Büyük
+                    Fikir</span><br>
+                Sizin Olabilir<span class="text-primary">.</span>
+            </h2>
+            <p class="text-zinc-400 text-lg md:text-xl mt-8 max-w-xl mx-auto">
+                Projenizi konuşmak, fiyat almak veya sadece merhaba demek için bana ulaşın.
+            </p>
+            <div class="mt-12">
+                <a href="mailto:yakupdelilakin@gmail.com" class="cta-button">
+                    <span>Hemen İletişime Geç</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-32 px-6 md:px-12 lg:px-24">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-gradient-to-br from-cardDark to-bgDark border border-white/10 rounded-[32px] p-10 md:p-16">
+                <div class="text-center mb-12">
+                    <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">İletişim</span>
+                    <h3 class="text-3xl md:text-4xl font-display font-black uppercase mt-4">
+                        Hizmet Talebi<span class="text-primary">.</span>
+                    </h3>
+                    <p class="text-zinc-400 mt-4">Formu doldurun, size en kısa sürede döneyim.</p>
                 </div>
-                <div class="space-y-4">
-                    <input name="isim" type="text" placeholder="Ad Soyad" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
-                    <input name="email" type="email" placeholder="E-posta" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
-                    <select name="hizmet" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
-                        <option value="Urun Stratejisi">Urun Stratejisi</option>
-                        <option value="UI/UX Tasarim">UI/UX Tasarim</option>
-                        <option value="Gelisim">Gelisim ve Yayina Alma</option>
-                        <option value="Optimizasyon">Urun Optimizasyonu</option>
+
+                <form action="mailto:yakupdelilakin@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <input type="text" name="isim" placeholder="Ad Soyad" class="form-input" required>
+                        <input type="email" name="email" placeholder="E-posta Adresi" class="form-input" required>
+                    </div>
+
+                    <select name="hizmet" class="form-input">
+                        <option value="">Hizmet Seçin</option>
+                        <option value="Ürün Stratejisi">Ürün Stratejisi</option>
+                        <option value="UI/UX Tasarım">UI/UX Tasarım</option>
+                        <option value="Geliştirme">Geliştirme & Yayına Alma</option>
+                        <option value="Optimizasyon">Ürün Optimizasyonu</option>
+                        <option value="Diğer">Diğer</option>
                     </select>
-                    <textarea name="mesaj" rows="5" placeholder="Kisaca ihtiyacinizi anlatin" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"></textarea>
-                </div>
-                <button type="submit" class="w-full inline-flex items-center justify-center gap-3 px-6 py-3 bg-primary text-black font-bold uppercase tracking-[0.3em] text-xs rounded-full hover:shadow-lg hover:shadow-primary/40 transition-all">
-                    Talep Gonder
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-        </section>
-    </main>
+
+                    <textarea name="mesaj" rows="5" placeholder="Projeniz hakkında kısaca bilgi verin..."
+                        class="form-input resize-none"></textarea>
+
+                    <button type="submit" class="w-full cta-button justify-center">
+                        <span>Talep Gönder</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 md:px-12 lg:px-24 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <a href="index.html" class="text-2xl font-black font-display">
+                YDA<span class="text-primary">_</span>
+            </a>
+            <p class="text-zinc-500 text-sm">
+                © 2025 Yakup Delil Akın. Tüm hakları saklıdır.
+            </p>
+            <div class="flex gap-6">
+                <a href="https://github.com/YakupAkn" class="text-zinc-400 hover:text-primary transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/yakupdelilakin/"
+                    class="text-zinc-400 hover:text-primary transition-colors">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+                <a href="https://www.instagram.com/ykp._.56/"
+                    class="text-zinc-400 hover:text-primary transition-colors">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // Custom Cursor
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
         let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
             cursor.style.left = mouseX + 'px';
             cursor.style.top = mouseY + 'px';
         });
+
         function animateCursor() {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
+            outlineX += (mouseX - outlineX) * 0.12;
+            outlineY += (mouseY - outlineY) * 0.12;
             outline.style.left = outlineX + 'px';
             outline.style.top = outlineY + 'px';
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
-        document.querySelectorAll('a, button').forEach(el => {
+
+        // Hover Effects
+        document.querySelectorAll('a, button, .product-card, .service-card, .stat-card').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
+
+        // Scroll Effects
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
-            if(window.scrollY > 50) header.classList.add('nav-blur', 'py-4');
-            else header.classList.remove('nav-blur', 'py-4');
+            const scrollProgress = document.getElementById('scroll-progress');
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+
+            scrollProgress.style.width = scrollPercent + '%';
+
+            if (window.scrollY > 50) {
+                header.classList.add('nav-blur', 'py-3');
+                header.classList.remove('py-5');
+            } else {
+                header.classList.remove('nav-blur', 'py-3');
+                header.classList.add('py-5');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .service-card, .stat-card').forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.1}s`;
+            observer.observe(el);
         });
     </script>
     <script src="js/i18n.js"></script>
 </body>
+
 </html>
