@@ -1,201 +1,342 @@
 <DOCUMENT filename="projeler.html">
-<!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="projeler-title">Projeler | YDA.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="js/footer.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
-                        display: ['Syne', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#FF3D00',
-                        bgDark: '#0A0A0A',
-                        offWhite: '#F5F5F5',
+    <!DOCTYPE html>
+    <html lang="tr" class="scroll-smooth">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title data-i18n="projeler-title">Projeler | YDA.</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="js/footer.js"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Space Grotesk', 'sans-serif'],
+                            display: ['Syne', 'sans-serif'],
+                        },
+                        colors: {
+                            primary: '#FF3D00',
+                            bgDark: '#0A0A0A',
+                            offWhite: '#F5F5F5',
+                        }
                     }
                 }
             }
-        }
-    </script>
-    <style>
-        body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: none; font-family: 'Space Grotesk', sans-serif; }
-        .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
-        #cursor { width: 12px; height: 12px; background: #FF3D00; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; }
-        #cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 61, 0, 0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease-out; }
-        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
-        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
-        @media (hover: none) {
-            body { cursor: auto; }
-            #cursor, #cursor-outline { display: none; }
-        }
-        .skeleton {
-            background: linear-gradient(90deg, #141414 25%, #1c1c1c 50%, #141414 75%);
-            background-size: 200% 100%;
-            animation: skeleton-loading 1.5s infinite;
-        }
-        @keyframes skeleton-loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .project-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; position: relative; }
-        .project-row:hover { background: rgba(255, 61, 0, 0.03); padding-left: 10px; border-bottom-color: #FF3D00; }
-        .nav-blur { backdrop-filter: blur(10px); background: rgba(10, 10, 10, 0.8); }
-        ::-webkit-scrollbar { width: 0px; }
-        .project-desc { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .project-row:hover .project-desc { max-height: 150px; opacity: 1; margin-top: 1rem; }
-    </style>
-</head>
-<body class="antialiased">
-    <div class="noise"></div>
-    <div id="cursor"></div>
-    <div id="cursor-outline"></div>
-    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group" id="main-header">
-        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100"></div>
+        </script>
+        <style>
+            body {
+                background-color: #0A0A0A;
+                color: #F5F5F5;
+                overflow-x: hidden;
+                cursor: none;
+                font-family: 'Space Grotesk', sans-serif;
+            }
 
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
-                YDA<span class="text-primary animate-pulse">_</span>
-            </a>
+            .noise {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 40;
+                opacity: 0.04;
+                background: url('https://grainy-gradients.vercel.app/noise.svg');
+            }
 
-            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
-                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
-                    Projeler
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                
+            #cursor {
+                width: 12px;
+                height: 12px;
+                background: #FF3D00;
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: width 0.3s, height 0.3s, background-color 0.3s;
+            }
 
+            #cursor-outline {
+                width: 40px;
+                height: 40px;
+                border: 1px solid rgba(255, 61, 0, 0.5);
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9998;
+                transform: translate(-50%, -50%);
+                transition: all 0.15s ease-out;
+            }
 
-                <a href="#about" class="nav-link relative group py-2" data-i18n="nav-about">
-                    Hakkımda
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
-                    İletişim
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
+            .cursor-hover #cursor {
+                width: 60px;
+                height: 60px;
+                opacity: 0.2;
+            }
 
-            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-                <div class="relative group">
-                    <button
-                    id="lang-toggle-btn"
-                    onclick="toggleLangDropdown()"
-                    class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
-                    aria-label="Dil seç"
-                    >
-                    <span id="current-lang-display" class="font-bold">TR</span>
-                    <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
-                    </button>
-                    <div id="lang-dropdown-menu"
-                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-                    <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                        <span class="text-lg">🇹🇷</span>
-                        <span>Türkçe</span>
-                        <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
-                    </button>
+            .cursor-hover #cursor-outline {
+                width: 80px;
+                height: 80px;
+                border-color: #FF3D00;
+            }
 
-                    <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+            @media (hover: none) {
+                body {
+                    cursor: auto;
+                }
 
-                        <span class="text-lg">🇬🇧</span>
+                #cursor,
+                #cursor-outline {
+                    display: none;
+                }
+            }
 
-                        <span>English</span>
+            .skeleton {
+                background: linear-gradient(90deg, #141414 25%, #1c1c1c 50%, #141414 75%);
+                background-size: 200% 100%;
+                animation: skeleton-loading 1.5s infinite;
+            }
 
-                        <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+            @keyframes skeleton-loading {
+                0% {
+                    background-position: 200% 0;
+                }
 
-                    </button>
+                100% {
+                    background-position: -200% 0;
+                }
+            }
 
-                    <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+            .project-row {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                transition: all 0.4s ease;
+                position: relative;
+            }
 
-                        <span class="text-lg">🇪🇸</span>
+            .project-row:hover {
+                background: rgba(255, 61, 0, 0.03);
+                padding-left: 10px;
+                border-bottom-color: #FF3D00;
+            }
 
-                        <span>Español</span>
+            .nav-blur {
+                backdrop-filter: blur(10px);
+                background: rgba(10, 10, 10, 0.8);
+            }
 
-                        <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+            ::-webkit-scrollbar {
+                width: 0px;
+            }
 
-                    </button>
+            .project-desc {
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
 
-                    <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+            .project-row:hover .project-desc {
+                max-height: 150px;
+                opacity: 1;
+                margin-top: 1rem;
+            }
+        </style>
+    </head>
 
-                        <span class="text-lg">🇩🇪</span>
-
-                        <span>Deutsch</span>
-
-                        <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
-
-                    </button>
-
-                    </div>
-
-                </div>
-                <a href="mailto:yakupdelilakin@gmail.com" 
-                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40" data-i18n="coffee">   
-                    Let's Talk
-                </a>
+    <body class="antialiased">
+        <div class="noise"></div>
+        <div id="cursor"></div>
+        <div id="cursor-outline"></div>
+        <header
+            class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
+            id="main-header">
+            <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
             </div>
-        </div>
-    </header>
-    <main class="pt-48 pb-20 px-6 lg:px-24 max-w-7xl mx-auto">
-        <div class="mb-24">
-            <h2 class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-6">Arşiv</h2>
-            <h1 class="text-[10vw] md:text-[7vw] font-display font-black uppercase leading-[0.9]">
-                Tüm <br> <span class="text-zinc-800">İşler</span><span class="text-primary">.</span>
-            </h1>
-        </div>
-        <div id="projects-list" class="flex flex-col border-t border-white/5">
-            <div id="skeleton-loader">
-                <div class="py-16 flex justify-between items-center border-b border-white/5">
-                    <div class="flex items-center gap-12 w-full">
-                        <div class="skeleton w-8 h-4"></div>
-                        <div class="flex flex-col gap-2 w-1/3">
-                            <div class="skeleton w-full h-10"></div>
-                            <div class="skeleton w-1/2 h-4"></div>
+
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html"
+                    class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                    YDA<span class="text-primary animate-pulse">_</span>
+                </a>
+
+                <nav
+                    class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                    <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
+                        Projeler
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+
+
+
+                    <a href="#about" class="nav-link relative group py-2" data-i18n="nav-about">
+                        Hakkımda
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
+                        İletişim
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                    <div class="relative group">
+                        <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
+                            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                            aria-label="Dil seç">
+                            <span id="current-lang-display" class="font-bold">TR</span>
+                            <i
+                                class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                        </button>
+                        <div id="lang-dropdown-menu"
+                            class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                            <button onclick="changeLanguage('tr')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇹🇷</span>
+                                <span>Türkçe</span>
+                                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('en')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                                <span class="text-lg">🇬🇧</span>
+
+                                <span>English</span>
+
+                                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                            </button>
+
+                            <button onclick="changeLanguage('es')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                                <span class="text-lg">🇪🇸</span>
+
+                                <span>Español</span>
+
+                                <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                            </button>
+
+                            <button onclick="changeLanguage('de')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+
+                                <span class="text-lg">🇩🇪</span>
+
+                                <span>Deutsch</span>
+
+                                <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+
+                            </button>
+
+                            <button onclick="changeLanguage('fr')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇫🇷</span>
+                                <span>Français</span>
+                                <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('it')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇮🇹</span>
+                                <span>Italiano</span>
+                                <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('pt')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇵🇹</span>
+                                <span>Português</span>
+                                <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('ru')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇷🇺</span>
+                                <span>Русский</span>
+                                <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
+                            <button onclick="changeLanguage('jp')"
+                                class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                                <span class="text-lg">🇯🇵</span>
+                                <span>日本語</span>
+                                <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                            </button>
+
                         </div>
+
                     </div>
-                    <div class="skeleton w-24 h-6 rounded-full hidden md:block"></div>
+                    <a href="mailto:yakupdelilakin@gmail.com"
+                        class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                        data-i18n="coffee">
+                        Let's Talk
+                    </a>
                 </div>
             </div>
-        </div>
-    </main>
-    <script>
-        const cursor = document.getElementById('cursor');
-        const outline = document.getElementById('cursor-outline');
-        let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
-        function animateCursor() {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-        async function loadProjects() {
-            const list = document.getElementById('projects-list');
-            const skeleton = document.getElementById('skeleton-loader');
-            try {
-                const response = await fetch('projeler.json');
-                const projects = await response.json();
-                await new Promise(resolve => setTimeout(resolve, 800));
-                skeleton.remove();
-                projects.forEach((proj, index) => {
-                    const row = document.createElement('a');
-                    row.href = `${proj.id}.html`;
-                    row.className = 'project-row group py-12 md:py-16 flex flex-col md:flex-row md:items-start justify-between transition-all duration-500';
-                    row.innerHTML = `
+        </header>
+        <main class="pt-48 pb-20 px-6 lg:px-24 max-w-7xl mx-auto">
+            <div class="mb-24">
+                <h2 class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-6">Arşiv</h2>
+                <h1 class="text-[10vw] md:text-[7vw] font-display font-black uppercase leading-[0.9]">
+                    Tüm <br> <span class="text-zinc-800">İşler</span><span class="text-primary">.</span>
+                </h1>
+            </div>
+            <div id="projects-list" class="flex flex-col border-t border-white/5">
+                <div id="skeleton-loader">
+                    <div class="py-16 flex justify-between items-center border-b border-white/5">
+                        <div class="flex items-center gap-12 w-full">
+                            <div class="skeleton w-8 h-4"></div>
+                            <div class="flex flex-col gap-2 w-1/3">
+                                <div class="skeleton w-full h-10"></div>
+                                <div class="skeleton w-1/2 h-4"></div>
+                            </div>
+                        </div>
+                        <div class="skeleton w-24 h-6 rounded-full hidden md:block"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script>
+            const cursor = document.getElementById('cursor');
+            const outline = document.getElementById('cursor-outline');
+            let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            });
+            function animateCursor() {
+                outlineX += (mouseX - outlineX) * 0.15;
+                outlineY += (mouseY - outlineY) * 0.15;
+                outline.style.left = outlineX + 'px';
+                outline.style.top = outlineY + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+            async function loadProjects() {
+                const list = document.getElementById('projects-list');
+                const skeleton = document.getElementById('skeleton-loader');
+                try {
+                    const response = await fetch('projeler.json');
+                    const projects = await response.json();
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    skeleton.remove();
+                    projects.forEach((proj, index) => {
+                        const row = document.createElement('a');
+                        row.href = `${proj.id}.html`;
+                        row.className = 'project-row group py-12 md:py-16 flex flex-col md:flex-row md:items-start justify-between transition-all duration-500';
+                        row.innerHTML = `
                         <div class="flex items-start gap-6 md:gap-16">
                             <span class="text-zinc-700 font-mono text-xs mt-4 group-hover:text-primary transition-colors">
                                 ${(index + 1).toString().padStart(2, '0')}
@@ -222,30 +363,31 @@
                             </div>
                         </div>
                     `;
-                    row.addEventListener('mouseenter', () => {
-                        document.body.classList.add('cursor-hover');
+                        row.addEventListener('mouseenter', () => {
+                            document.body.classList.add('cursor-hover');
+                        });
+
+                        row.addEventListener('mouseleave', () => {
+                            document.body.classList.remove('cursor-hover');
+                        });
+
+                        list.appendChild(row);
                     });
 
-                    row.addEventListener('mouseleave', () => {
-                        document.body.classList.remove('cursor-hover');
-                    });
-
-                    list.appendChild(row);
-                });
-
-            } catch (error) {
-                console.error("Hata:", error);
-                list.innerHTML = '<p class="text-primary py-20 font-mono text-center uppercase tracking-widest">VERİLER ÇEKİLEMEDİ</p>';
+                } catch (error) {
+                    console.error("Hata:", error);
+                    list.innerHTML = '<p class="text-primary py-20 font-mono text-center uppercase tracking-widest">VERİLER ÇEKİLEMEDİ</p>';
+                }
             }
-        }
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if(window.scrollY > 50) header.classList.add('nav-blur', 'py-4');
-            else header.classList.remove('nav-blur', 'py-4');
-        });
-        window.onload = loadProjects;
-    </script>
-    <script src="js/i18n.js"></script>
-</body>
-</html>
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) header.classList.add('nav-blur', 'py-4');
+                else header.classList.remove('nav-blur', 'py-4');
+            });
+            window.onload = loadProjects;
+        </script>
+        <script src="js/i18n.js"></script>
+    </body>
+
+    </html>
 </DOCUMENT>

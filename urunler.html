@@ -537,8 +537,10 @@
 
     <!-- Header -->
     <header
-        class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5"
+        class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
         id="main-header">
+        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
+        </div>
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="index.html"
                 class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
@@ -546,16 +548,16 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
-                <a href="projeler.html" class="nav-link relative group py-2">
+                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
                     Projeler
                     <span
                         class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="urunler.html" class="nav-link relative group py-2 text-primary">
+                <a href="urunler.html" class="nav-link relative group py-2 text-primary" data-i18n="nav-about">
                     Ürünler
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-primary"></span>
                 </a>
-                <a href="index.html#contact" class="nav-link relative group py-2">
+                <a href="index.html#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
                     İletişim
                     <span
                         class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
@@ -563,8 +565,83 @@
             </nav>
 
             <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                <div class="relative group">
+                    <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
+                        class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                        aria-label="Dil seç">
+                        <span id="current-lang-display" class="font-bold">TR</span>
+                        <i
+                            class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                    </button>
+                    <div id="lang-dropdown-menu"
+                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                        <button onclick="changeLanguage('tr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇹🇷</span>
+                            <span>Türkçe</span>
+                            <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇬🇧</span>
+                            <span>English</span>
+                            <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇪🇸</span>
+                            <span>Español</span>
+                            <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('de')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇩🇪</span>
+                            <span>Deutsch</span>
+                            <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('fr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇫🇷</span>
+                            <span>Français</span>
+                            <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('it')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇮🇹</span>
+                            <span>Italiano</span>
+                            <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('pt')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇵🇹</span>
+                            <span>Português</span>
+                            <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('ru')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇷🇺</span>
+                            <span>Русский</span>
+                            <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('jp')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇯🇵</span>
+                            <span>日本語</span>
+                            <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                    </div>
+
+                </div>
                 <a href="mailto:yakupdelilakin@gmail.com"
-                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40">
+                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                    data-i18n="coffee">
                     Let's Talk
                 </a>
 

@@ -1,14 +1,17 @@
 <!--  athleticocore.html  -->
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="siteTitle">AthleticoCore | Yakup Delil Akın</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -39,24 +42,28 @@
     </script>
 
     <style>
-        body { 
-            background-color: #0A0A0A; 
-            color: #F5F5F5; 
-            overflow-x: hidden; 
-            cursor: none; 
+        body {
+            background-color: #0A0A0A;
+            color: #F5F5F5;
+            overflow-x: hidden;
+            cursor: none;
         }
 
         .noise {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 100;
             opacity: 0.04;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
         }
-        
+
         #cursor {
-            width: 12px; height: 12px;
+            width: 12px;
+            height: 12px;
             background: #FF3D00;
             border-radius: 50%;
             position: fixed;
@@ -67,7 +74,8 @@
         }
 
         #cursor-outline {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: 1px solid rgba(255, 61, 0, 0.5);
             border-radius: 50%;
             position: fixed;
@@ -77,8 +85,17 @@
             transition: all 0.15s ease-out;
         }
 
-        .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
-        .cursor-hover #cursor-outline { width: 80px; height: 80px; border-color: #FF3D00; }
+        .cursor-hover #cursor {
+            width: 60px;
+            height: 60px;
+            opacity: 0.2;
+        }
+
+        .cursor-hover #cursor-outline {
+            width: 80px;
+            height: 80px;
+            border-color: #FF3D00;
+        }
 
         .nav-blur {
             backdrop-filter: blur(10px);
@@ -86,82 +103,148 @@
         }
 
         .project-hero {
-            background: linear-gradient(to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.9)), url('images/athleticocore-hero-bg.jpg') center/cover no-repeat;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.9)), url('images/athleticocore-hero-bg.jpg') center/cover no-repeat;
         }
 
         .gallery-img {
             transition: transform 0.6s ease;
         }
+
         .gallery-img:hover {
             transform: scale(1.04);
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <div class="noise"></div>
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
-    <header class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-500" id="main-header">
-        <a href="index.html" class="text-2xl font-bold font-display tracking-tighter hover-magnetic">YDA<span class="text-primary">.</span></a>
-        <nav class="hidden md:flex gap-10 font-medium uppercase text-[10px] tracking-[0.3em]">
-            <a href="index.html" class="hover:text-primary transition-colors">Ana Sayfa</a>
-            <a href="projeler.html" class="text-primary">Projeler</a>
-            <a href="index.html#contact" class="hover:text-primary transition-colors">İletişim</a>
-        </nav>
-        <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-        <div class="relative group">
-            <button 
-            id="lang-toggle-btn"
-            onclick="toggleLangDropdown()"
-            class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
-            aria-label="Dil seç"
-            >
-            <span id="current-lang-display" class="font-bold">TR</span>
-            <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
-            </button>
-            <div id="lang-dropdown-menu" 
-                class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-            
-            <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇹🇷</span>
-                <span>Türkçe</span>
-                <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇬🇧</span>
-                <span>English</span>
-                <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇪🇸</span>
-                <span>Español</span>
-                <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                <span class="text-lg">🇩🇪</span>
-                <span>Deutsch</span>
-                <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
-            </button>
-            </div>
+    <header
+        class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
+        id="main-header">
+        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
         </div>
-        <a href="mailto:yakupdelilakin@gmail.com" 
-            class="sm:flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-widest border border-white/20 px-5 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
-            data-i18n="coffee">
-            Let's Talk <i class="fas fa-coffee ml-1"></i>
-        </a>
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html"
+                class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                YDA<span class="text-primary animate-pulse">_</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
+                    Projeler
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <a href="urunler.html" class="nav-link relative group py-2" data-i18n="nav-about">
+                    Ürünler
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="index.html#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
+                    İletişim
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                <div class="relative group">
+                    <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
+                        class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                        aria-label="Dil seç">
+                        <span id="current-lang-display" class="font-bold">TR</span>
+                        <i
+                            class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                    </button>
+                    <div id="lang-dropdown-menu"
+                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                        <button onclick="changeLanguage('tr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇹🇷</span>
+                            <span>Türkçe</span>
+                            <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇬🇧</span>
+                            <span>English</span>
+                            <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇪🇸</span>
+                            <span>Español</span>
+                            <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('de')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇩🇪</span>
+                            <span>Deutsch</span>
+                            <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('fr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇫🇷</span>
+                            <span>Français</span>
+                            <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('it')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇮🇹</span>
+                            <span>Italiano</span>
+                            <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('pt')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇵🇹</span>
+                            <span>Português</span>
+                            <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('ru')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇷🇺</span>
+                            <span>Русский</span>
+                            <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('jp')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇯🇵</span>
+                            <span>日本語</span>
+                            <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                    </div>
+
+                </div>
+                <a href="mailto:yakupdelilakin@gmail.com"
+                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                    data-i18n="coffee">
+                    Let's Talk
+                </a>
+            </div>
         </div>
     </header>
     <section class="min-h-[70vh] flex items-end pb-24 px-6 md:px-12 lg:px-24 relative project-hero">
         <div class="max-w-7xl mx-auto w-full">
             <div class="inline-block px-5 py-2 bg-primary/20 backdrop-blur-sm rounded-full mb-6">
-                <span class="text-xs uppercase tracking-[0.3em] font-bold" data-i18n="athleticocore-badge">Sports Tech / AI</span>
+                <span class="text-xs uppercase tracking-[0.3em] font-bold" data-i18n="athleticocore-badge">Sports Tech /
+                    AI</span>
             </div>
             <h1 class="text-[11vw] md:text-[8vw] lg:text-[7vw] leading-none font-display font-black uppercase mb-8">
                 <span data-i18n="athleticocore-title">AthleticoCore</span><span class="text-primary">.</span>
             </h1>
-            <p class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-light leading-relaxed" data-i18n="athleticocore-description">
-                Kamera ile gerçek zamanlı şınav form analizi yapan, tekrar sayan ve performans metrikleri üreten AI destekli koçluk sistemi.
+            <p class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-light leading-relaxed"
+                data-i18n="athleticocore-description">
+                Kamera ile gerçek zamanlı şınav form analizi yapan, tekrar sayan ve performans metrikleri üreten AI
+                destekli koçluk sistemi.
             </p>
         </div>
     </section>
@@ -172,14 +255,18 @@
                     <img src="images/athleticocore-main.png" alt="AthleticoCore Ana Ekran" class="w-full h-auto">
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    <img src="images/athleticocore-analiz.png" alt="İstatistik Ekranı" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
-                    <img src="images/athleticocore-coach.png" alt="Kamera Analizi" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
-                    <img src="images/athleticocore-camera.png" alt="Kamera" class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                    <img src="images/athleticocore-analiz.png" alt="İstatistik Ekranı"
+                        class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                    <img src="images/athleticocore-coach.png" alt="Kamera Analizi"
+                        class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
+                    <img src="images/athleticocore-camera.png" alt="Kamera"
+                        class="gallery-img rounded-xl w-full h-auto object-cover aspect-video">
                 </div>
             </div>
             <div class="space-y-12 lg:sticky lg:top-24 lg:h-fit">
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-info-title">Proje Bilgileri</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="project-info-title">Proje Bilgileri</h3>
                     <dl class="space-y-4 text-sm text-zinc-400">
                         <div>
                             <dt class="font-medium text-white mb-1" data-i18n="project-year-label">Yıl</dt>
@@ -192,47 +279,60 @@
                         <div>
                             <dt class="font-medium text-white mb-1" data-i18n="project-tech-label">Teknolojiler</dt>
                             <dd class="flex flex-wrap gap-2 mt-2">
-                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">JavaScript</span>
-                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">TensorFlow.js</span>
-                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">MediaPipe</span>
-                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">Tailwind CSS</span>
-                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">WebRTC</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">JavaScript</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">TensorFlow.js</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">MediaPipe</span>
+                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">Tailwind
+                                    CSS</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">WebRTC</span>
                             </dd>
                         </div>
                     </dl>
                 </div>
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="project-links-title">Canlı Linkler</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="project-links-title">Canlı Linkler</h3>
                     <div class="flex flex-col gap-4">
-                        <a href="https://athleticocore.netlify.app" target="_blank" class="flex items-center gap-3 px-5 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all">
+                        <a href="https://athleticocore.netlify.app" target="_blank"
+                            class="flex items-center gap-3 px-5 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all">
                             <i class="fas fa-external-link-alt"></i>
                             <span data-i18n="link-demo">Canlı Demo</span>
                         </a>
-                        <a href="https://github.com/YakupAkn/athleticocore" target="_blank" class="flex items-center gap-3 px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
+                        <a href="https://github.com/YakupAkn/athleticocore" target="_blank"
+                            class="flex items-center gap-3 px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
                             <i class="fab fa-github"></i>
                             <span data-i18n="link-repo">GitHub Repository</span>
                         </a>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-challenges">Karşılaşılan Zorluklar</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="athleticocore-section-challenges">Karşılaşılan Zorluklar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
-                            <span data-i18n="athleticocore-challenge-1">Düşük-orta seviye cihazlarda gerçek zamanlı 25+ FPS koruma</span>
+                            <span data-i18n="athleticocore-challenge-1">Düşük-orta seviye cihazlarda gerçek zamanlı 25+
+                                FPS koruma</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
-                            <span data-i18n="athleticocore-challenge-2">Farklı vücut tipleri ve aydınlatma koşullarında doğru açı hesaplama</span>
+                            <span data-i18n="athleticocore-challenge-2">Farklı vücut tipleri ve aydınlatma koşullarında
+                                doğru açı hesaplama</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
-                            <span data-i18n="athleticocore-challenge-3">Tarayıcı kamera izinleri ve kullanıcı gizliliği uyumu</span>
+                            <span data-i18n="athleticocore-challenge-3">Tarayıcı kamera izinleri ve kullanıcı gizliliği
+                                uyumu</span>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-system">Sistem Nasıl Çalışıyor?</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="athleticocore-section-system">Sistem Nasıl Çalışıyor?</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">1.</span>
@@ -240,7 +340,8 @@
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">2.</span>
-                            <span data-i18n="athleticocore-system-2">MediaPipe Pose ile eklem noktaları çıkarılıyor.</span>
+                            <span data-i18n="athleticocore-system-2">MediaPipe Pose ile eklem noktaları
+                                çıkarılıyor.</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">3.</span>
@@ -248,24 +349,29 @@
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">4.</span>
-                            <span data-i18n="athleticocore-system-4">Form bozulduğunda anlık geri bildirim üretiliyor.</span>
+                            <span data-i18n="athleticocore-system-4">Form bozulduğunda anlık geri bildirim
+                                üretiliyor.</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">5.</span>
-                            <span data-i18n="athleticocore-system-5">FPS düşüşlerinde analiz yoğunluğu dinamik azaltılıyor.</span>
+                            <span data-i18n="athleticocore-system-5">FPS düşüşlerinde analiz yoğunluğu dinamik
+                                azaltılıyor.</span>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-tech">Teknik Kararlar</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="athleticocore-section-tech">Teknik Kararlar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
-                            <span data-i18n="athleticocore-tech-1">Model server-side değil, latency için tamamen client-side çalışıyor.</span>
+                            <span data-i18n="athleticocore-tech-1">Model server-side değil, latency için tamamen
+                                client-side çalışıyor.</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
-                            <span data-i18n="athleticocore-tech-2">Mobil cihazlar için çözünürlük otomatik düşürülüyor.</span>
+                            <span data-i18n="athleticocore-tech-2">Mobil cihazlar için çözünürlük otomatik
+                                düşürülüyor.</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
@@ -274,7 +380,8 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary" data-i18n="athleticocore-section-results">Elde Edilen Sonuçlar</h3>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="athleticocore-section-results">Elde Edilen Sonuçlar</h3>
                     <ul class="space-y-3 text-zinc-400 text-sm">
                         <li class="flex gap-3">
                             <span class="text-primary mt-1">•</span>
@@ -294,7 +401,8 @@
         </div>
     </section>
     <div class="py-16 text-center">
-        <a href="projeler.html" class="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 rounded-full transition-all group">
+        <a href="projeler.html"
+            class="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 rounded-full transition-all group">
             <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
             <span data-i18n="athleticocore-back">Tüm Projeleri Gör</span>
         </a>
@@ -334,4 +442,5 @@
     </script>
     <script src="js/i18n.js"></script>
 </body>
+
 </html>
