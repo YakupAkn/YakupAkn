@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="siteTitle">Zinciri Kır | Yakup Delil Akın</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        cardDark: '#141414',
+                        offWhite: '#F5F5F5',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A0A0A;
+            color: #F5F5F5;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.04;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: #FF3D00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        #cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 61, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+
+        .cursor-hover #cursor {
+            width: 60px;
+            height: 60px;
+            opacity: 0.2;
+        }
+
+        .cursor-hover #cursor-outline {
+            width: 80px;
+            height: 80px;
+            border-color: #FF3D00;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        .project-hero {
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.9)),
+                linear-gradient(135deg, rgba(255, 61, 0, 0.1) 0%, rgba(10, 10, 10, 0.9) 50%);
+        }
+
+        .gallery-img {
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+    <header
+        class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
+        id="main-header">
+        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
+        </div>
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html"
+                class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                YDA<span class="text-primary animate-pulse">_</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
+                    Projeler
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="urunler.html" class="nav-link relative group py-2" data-i18n="nav-about">
+                    Ürünler
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="index.html#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
+                    İletişim
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                <div class="relative group">
+                    <button id="lang-toggle-btn" onclick="toggleLangDropdown()"
+                        class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
+                        aria-label="Dil seç">
+                        <span id="current-lang-display" class="font-bold">TR</span>
+                        <i
+                            class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                    </button>
+                    <div id="lang-dropdown-menu"
+                        class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+                        <button onclick="changeLanguage('tr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇹🇷</span>
+                            <span>Türkçe</span>
+                            <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇬🇧</span>
+                            <span>English</span>
+                            <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇪🇸</span>
+                            <span>Español</span>
+                            <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('de')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇩🇪</span>
+                            <span>Deutsch</span>
+                            <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('fr')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇫🇷</span>
+                            <span>Français</span>
+                            <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('it')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇮🇹</span>
+                            <span>Italiano</span>
+                            <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('pt')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇵🇹</span>
+                            <span>Português</span>
+                            <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('ru')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇷🇺</span>
+                            <span>Русский</span>
+                            <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+
+                        <button onclick="changeLanguage('jp')"
+                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇯🇵</span>
+                            <span>日本語</span>
+                            <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                        </button>
+                    </div>
+
+                </div>
+                <a href="mailto:yakupdelilakin@gmail.com"
+                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                    data-i18n="coffee">
+                    Let's Talk
+                </a>
+            </div>
+        </div>
+    </header>
+    <section class="min-h-[70vh] flex items-end pb-24 px-6 md:px-12 lg:px-24 relative project-hero">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="inline-block px-5 py-2 bg-primary/20 backdrop-blur-sm rounded-full mb-6">
+                <span class="text-xs uppercase tracking-[0.3em] font-bold" data-i18n="zincirikir-badge">Health Tech /
+                    Behavioral Change</span>
+            </div>
+            <h1 class="text-[11vw] md:text-[8vw] lg:text-[7vw] leading-none font-display font-black uppercase mb-8">
+                <span data-i18n="zincirikir-title">Zinciri Kır</span><span class="text-primary">.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-light leading-relaxed"
+                data-i18n="zincirikir-description">
+                Kötü alışkanlıkları bırakmak için günlük takip, motivasyon ve topluluk desteği sunan davranış
+                değişikliği platformu.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12 lg:px-24 bg-bgDark">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-3 gap-12 lg:gap-16">
+            <div class="lg:col-span-2 space-y-12">
+                <div class="rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
+                    <img src="images/zincirikir-main.png" alt="Zinciri Kır Ana Ekran" class="w-full h-auto"
+                        onerror="this.style.display='none'">
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <div
+                        class="gallery-img rounded-xl w-full h-48 bg-gradient-to-br from-primary/20 to-primary/5 border border-white/10 flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-6xl text-primary/40"></i>
+                    </div>
+                    <div
+                        class="gallery-img rounded-xl w-full h-48 bg-gradient-to-br from-primary/20 to-primary/5 border border-white/10 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-primary/40"></i>
+                    </div>
+                    <div
+                        class="gallery-img rounded-xl w-full h-48 bg-gradient-to-br from-primary/20 to-primary/5 border border-white/10 flex items-center justify-center">
+                        <i class="fas fa-users text-6xl text-primary/40"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-12 lg:sticky lg:top-24 lg:h-fit">
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="project-info-title">Proje Bilgileri</h3>
+                    <dl class="space-y-4 text-sm text-zinc-400">
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-year-label">Yıl</dt>
+                            <dd>2025</dd>
+                        </div>
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-role-label">Rolüm</dt>
+                            <dd data-i18n="project-role-value">Tasarım & Tam Geliştirme (Solo)</dd>
+                        </div>
+                        <div>
+                            <dt class="font-medium text-white mb-1" data-i18n="project-tech-label">Teknolojiler</dt>
+                            <dd class="flex flex-wrap gap-2 mt-2">
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">HTML5</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">Tailwind CSS</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">Firebase</span>
+                                <span class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">JavaScript</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">PWA</span>
+                                <span
+                                    class="px-3 py-1 bg-cardDark border border-white/10 rounded-full text-xs">no-Backend</span>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="project-links-title">Canlı Linkler</h3>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://yakupakn.github.io/zinciri-kir/"
+                            class="flex items-center gap-3 px-5 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span data-i18n="link-demo">Canlı Demo</span>
+                        </a>
+                        <a href="https://github.com/YakupAkn/zinciri-kir"
+                            class="flex items-center gap-3 px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
+                            <i class="fab fa-github"></i>
+                            <span data-i18n="link-repo">GitHub Repository</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="zincirikir-section-features">Ana Özellikler</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-feature-1">Günlük alışkanlık takibi ve hatırlatıcılar</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-feature-2">Motivasyon artırıcı görselleştirmeler ve
+                                istatistikler</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-feature-3">Topluluk desteği ve başarı hikayeleri</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-feature-4">Offline mod ile her yerde kullanım</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="zincirikir-section-challenges">Karşılaşılan Zorluklar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-challenge-1">Kullanıcıları uzun vadede motive tutmak</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-challenge-2">Gizlilik odaklı veri saklama tasarımı</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-challenge-3">Relapse (tekrar başlama) senaryolarını
+                                destekleme</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="zincirikir-section-approach">Yaklaşım</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">1.</span>
+                            <span data-i18n="zincirikir-approach-1">Kullanıcı araştırması ve davranış psikolojisi
+                                analizi</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">2.</span>
+                            <span data-i18n="zincirikir-approach-2">Gamification ile motivasyon tasarımı</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">3.</span>
+                            <span data-i18n="zincirikir-approach-3">Progressive Web App ile platform bağımsızlık</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">4.</span>
+                            <span data-i18n="zincirikir-approach-4">Topluluk özelliklerinin sonradan entegrasyonu</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-4 text-primary"
+                        data-i18n="zincirikir-section-results">Elde Edilen Sonuçlar</h3>
+                    <ul class="space-y-3 text-zinc-400 text-sm">
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-result-1">İlk 3 ayda %65 kullanıcı retention oranı</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-result-2">Ortalama 21 günlük alışkanlık zinciri</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-primary mt-1">•</span>
+                            <span data-i18n="zincirikir-result-3">Kullanıcılardan pozitif geri bildirimler</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="py-16 text-center">
+        <a href="projeler.html"
+            class="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 rounded-full transition-all group">
+            <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            <span data-i18n="zincirikir-back">Tüm Projeleri Gör</span>
+        </a>
+    </div>
+    <script>
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+        let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+        function animateCursor() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            outline.style.left = outlineX + 'px';
+            outline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            const scrollProgress = document.getElementById('scroll-progress');
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+
+            if (window.scrollY > 50) {
+                header.classList.add('nav-blur');
+            } else {
+                header.classList.remove('nav-blur');
+            }
+        });
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>
