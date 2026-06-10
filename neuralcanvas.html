@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0A">
+    <title>NeuralCanvas | Araştırma Günlüğü</title>
+    <meta name="description" content="NeuralCanvas için blog benzeri araştırma günlüğü, zaman çizelgesi ve basit veri akış diyagramı.">
+    <meta name="keywords" content="NeuralCanvas, araştırma günlüğü, zaman çizelgesi, blog, BCI, EEG, AI">
+    <meta name="author" content="Yakup Delil Akın">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/neuralcanvas.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3D00',
+                        bgDark: '#0A0A0A',
+                        cardDark: '#141414',
+                        offWhite: '#F5F5F5',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    </script>
+</head>
+<body class="antialiased">
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group" id="main-header">
+        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100"></div>
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
+                YDA<span class="text-primary animate-pulse">_</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
+                <a href="projeler.html" class="nav-link relative group py-2">
+                    Projeler
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="hakkimda.html" class="nav-link relative group py-2">
+                    Hakkında
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="index.html#contact" class="nav-link relative group py-2">
+                    İletişim
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="blog.html" class="nav-link relative group py-2">
+                    Blog
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
+                <button id="menu-toggle" class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-4 py-3 text-white md:hidden hover:bg-white/15 transition-all duration-300" aria-label="Menüyü aç">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                <a href="projeler.html" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40">
+                    Tüm Projeler
+                </a>
+            </div>
+        </div>
+    </header>
+    <div id="mobile-nav" class="fixed inset-x-0 top-0 z-[90] hidden min-h-screen bg-bgDark/95 p-6 backdrop-blur-xl md:hidden">
+        <div class="flex items-center justify-between mb-8">
+            <a href="index.html" class="text-2xl font-black font-display tracking-tightest">YDA<span class="text-primary">_</span></a>
+            <button id="mobile-nav-close" aria-label="Menüyü kapat" class="text-white text-2xl hover:text-primary transition-colors"><i class="fas fa-times" aria-hidden="true"></i></button>
+        </div>
+        <nav class="flex flex-col gap-4 uppercase tracking-[0.22em] text-sm font-bold text-white">
+            <a href="projeler.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Projeler</a>
+            <a href="hakkimda.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Hakkında</a>
+            <a href="index.html#contact" class="py-3 border-b border-white/10 hover:text-primary transition-colors">İletişim</a>
+            <a href="blog.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Blog</a>
+        </nav>
+        <div class="mt-8">
+            <a href="projeler.html" class="inline-flex w-full items-center justify-center gap-3 px-6 py-4 rounded-full bg-primary text-black font-black uppercase tracking-[0.2em] hover:bg-white transition-all duration-300">
+                Tüm Projeler
+            </a>
+        </div>
+    </div>
+    <main class="relative">
+        <section id="overview" class="min-h-[92vh] flex items-end pt-24 pb-16 px-6 md:px-12 lg:px-24 project-hero">
+            <div class="max-w-7xl mx-auto w-full">
+                <div class="flex flex-wrap items-center gap-3 mb-6">
+                    <span class="px-4 py-2 rounded-full glass text-[10px] uppercase tracking-[0.3em] text-primary font-bold">
+                        BCI / AI Research Journal
+                    </span>
+                </div>
+                <div class="grid lg:grid-cols-[1.35fr_0.65fr] gap-12 items-end">
+                    <div>
+                        <h1 class="text-[13vw] md:text-[8vw] leading-[0.88] font-display font-black uppercase mb-8">
+                            NeU<span class="text-primary">C</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl text-zinc-300 max-w-3xl font-light leading-relaxed">
+                            Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI araştırma platformu — motor imagery'den görsel decode'a, düşünceden ekrana.
+                        </p>
+                    </div>
+                    <div class="glass rounded-3xl p-6 md:p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs uppercase tracking-[0.35em] text-zinc-400">Özet</span>
+                            <i class="fas fa-wave-square text-primary"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="stat-card rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 card-hover">
+                                <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] mb-2">Amaç</p>
+                                <p class="text-lg font-medium">BCI araştırması takip, araştırma ve geliştirme</p>
+                            </div>
+                            <div class="stat-card rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 card-hover">
+                                <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] mb-2">Açıklama</p>
+                                <p class="text-lg font-medium">Beyin sinyallerini görsel çıktıya dönüştüren BCI araştırma platformu</p>
+                            </div>
+                            <div class="stat-card rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 card-hover">
+                                <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] mb-2">Durum</p>
+                                <p class="text-lg font-medium">Araştırma aşaması</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="flow" class="py-24 px-6 md:px-12 lg:px-24 bg-bgDark">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-8 space-y-8">
+                    <div class="rounded-3xl overflow-hidden border border-white/8 bg-gradient-to-br from-cardDark via-bgDark to-cardDark shadow-2xl soft-grid min-h-[320px] p-8 md:p-12">
+                        <div class="flex items-center justify-between mb-10">
+                            <div>
+                                <p class="text-primary text-[10px] uppercase tracking-[0.4em] font-bold mb-3">Veri Akış Diyagramı</p>
+                                <h2 class="text-3xl md:text-5xl font-display font-bold uppercase leading-tight">Veriyi Nasıl İşliyorum?</h2>
+                            </div>
+                            <div class="w-16 h-16 rounded-full border border-primary/30 flex items-center justify-center bg-primary/10">
+                                <i class="fas fa-brain text-2xl text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <svg id="flow-graph" viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet" class="w-full"></svg>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="glass rounded-3xl p-8 card-hover">
+                            <p class="text-primary text-[10px] uppercase tracking-[0.4em] font-bold mb-4">Araştırma Mantığı</p>
+                            <h3 class="text-3xl font-display font-bold uppercase mb-6">Nasıl ilerliyorum?</h3>
+                            <ul class="space-y-4 text-zinc-300 text-sm leading-relaxed">
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Meditasyon ile Temiz veri elde etme amacı</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Eş zamanlı olarak elde edilen verilerle model eğitimi</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Ardından, elde edilen sonuçları ile görsel decode doğruluk oranının artırılması</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="glass rounded-3xl p-8 card-hover">
+                            <p class="text-primary text-[10px] uppercase tracking-[0.4em] font-bold mb-4">Projenin Karakteri</p>
+                            <h3 class="text-3xl font-display font-bold uppercase mb-6">Ne olmamalı?</h3>
+                            <ul class="space-y-4 text-zinc-300 text-sm leading-relaxed">
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Sadece veri fazlalığı olsun diye kirli veri projeye alınmamalı<div class="text-xs text-zinc-500 mt-1">* Kirli veri, modelin doğruluğunu etkileyebilir.</div></span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Görünüşte estetik ama işlevsiz bir yapı olmamalı.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-primary mt-1">•</span>
+                                    <span>Maliyetli olmamalı<div class="text-xs text-zinc-500 mt-1">* Yüksek maliyet, projenin sürdürülebilirliğini etkileyebilir.</div></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <aside class="lg:col-span-4 space-y-8 lg:sticky lg:top-24 lg:h-fit">
+                    <div class="glass rounded-3xl p-8">
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-6 text-primary">Proje Bilgileri</h3>
+                        <dl class="space-y-5 text-sm text-zinc-400">
+                            <div>
+                                <dt class="font-medium text-white mb-1">Başlık</dt>
+                                <dd>NeuralCanvas</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-white mb-1">Açıklama</dt>
+                                <dd>Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI araştırma platformu.</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-white mb-1">Odak</dt>
+                                <dd>BCI, görsel decode, deneysel arayüz</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-white mb-1">Durum</dt>
+                                <dd>Araştırma aşamasında</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="glass rounded-3xl p-8">
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wider mb-6 text-primary">Teknoloji Yığını</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs">Proje Araştırma Sürecindedir. Teknoloji Yığını belirlenmemiştir.</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+        <section id="timeline" class="py-24 px-6 md:px-12 lg:px-24 bg-offWhite text-bgDark">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-14">
+                    <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-5">Zaman Çizelgesi</p>
+                    <h2 class="text-4xl md:text-6xl font-display font-black uppercase leading-[1.02]">
+                        Proje Gelişim Süreci
+                    </h2>
+                    <p class="text-zinc-600 text-lg leading-relaxed max-w-3xl mt-5">
+                        NeuralCanvas'ın gelişim sürecini belgeleyen zaman çizelgesi, projenin başlangıcından itibaren kaydedilen önemli kilometre taşlarını ve deneyimleri içerir. Her aşama, yapılan çalışmalar, karşılaşılan zorluklar ve elde edilen sonuçlarla birlikte kronolojik olarak sunulur. Bu yapı, projenin nasıl evrildiğini ve hangi yönlerde ilerlediğini anlamak için şeffaf bir bakış sağlar.
+                    </p>
+                </div>
+                <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-12">
+                    <div class="glass rounded-3xl p-8 bg-white/60 text-bgDark border-black/5">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-display font-bold uppercase">Timeline</h3>
+                            <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold">Sabit Yapı</span>
+                        </div>
+                        <div class="relative timeline-track pl-10 space-y-8">
+                            <article class="relative">
+                                <span class="timeline-dot absolute -left-4 top-1 w-4 h-4 rounded-full bg-primary border-4 border-offWhite"></span>
+                                <div class="rounded-2xl border border-black/10 bg-white/80 p-5">
+                                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                                        <span class="px-3 py-1 rounded-full bg-bgDark text-offWhite text-[10px] uppercase tracking-[0.25em] font-bold">10.06.2026</span>
+                                        <span class="text-xs uppercase tracking-[0.25em] text-zinc-500">Başlangıç</span>
+                                    </div>
+                                    <h4 class="text-xl font-bold mb-2">NeuralCanvas'ın ilk iskeleti kuruldu.</h4>
+                                    <p class="text-zinc-600 text-sm leading-relaxed">
+                                        Proje araştırma günlüğü olarak kurgulandı. Amaç; çalışma ilerledikçe tarihleri ve notları düzenli biçimde eklemek.
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div id="blog" class="glass rounded-3xl p-8 bg-white/60 text-bgDark border-black/5">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-display font-bold uppercase">Blog Yazıları</h3>
+                            <span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold">Dinamik Yükleme</span>
+                        </div>
+                        <div id="blog-list" class="space-y-6"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 px-6 md:px-12 lg:px-24 bg-bgDark">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8">
+                <div class="glass rounded-3xl p-8 md:p-10">
+                    <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-5">Gelecek Hedefleri</p>
+                    <h2 class="text-4xl md:text-5xl font-display font-black uppercase leading-[1.02] mb-6">
+                        Zamanla neye dönüşebilir?
+                    </h2>
+                    <p class="text-zinc-300 text-lg leading-relaxed">
+                        NeuralCanvas, yalnızca deneme notlarıyla kalan bir dosya olmamalı. İlerledikçe veri toplama, model testleri, görsel deneyler ve sonuç karşılaştırmalarını taşıyan ciddi bir araştırma arşivine dönüşebilir.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 px-6 md:px-12 lg:px-24 border-t border-white/5 bg-offWhite text-bgDark">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
+                <div>
+                    <p class="text-primary uppercase tracking-[0.5em] text-xs font-bold mb-5">İletişim</p>
+                    <h2 class="text-4xl md:text-6xl font-display font-black uppercase leading-[1.05] mb-6">
+                        Benimle İletişime Geçmek İster misin?
+                    </h2>
+                    <p class="text-zinc-600 text-lg leading-relaxed max-w-2xl">
+                        NeuralCanvas, beyin-bilgisayar arayüzleri ve görsel decode alanında bir araştırma günlüğü olarak tasarlandı. Proje ilerledikçe, elde edilen sonuçları ve deneyimleri paylaşarak bu alandaki gelişmelere katkıda bulunmayı hedefliyorum. Eğer bu konular ilginizi çekiyorsa veya projeye katkıda bulunmak istiyorsanız, benimle iletişime geçmekten çekinmeyin.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <a href="projeler.html" class="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-bgDark text-offWhite font-bold uppercase tracking-[0.2em] hover:bg-primary hover:text-black transition-all duration-300">
+                        <i class="fas fa-arrow-left"></i>
+                        Projelere Dön
+                    </a>
+                    <a href="mailto:yakupdelilakin@gmail.com" class="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full border border-bgDark/15 text-bgDark font-bold uppercase tracking-[0.2em] hover:bg-bgDark hover:text-offWhite transition-all duration-300">
+                        İletişim Kur
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/neuralcanvas.js"></script>
+</body>
+</html>

@@ -1,5 +1,4 @@
 body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: none; }
-.noise { position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.04; background: url('https://grainy-gradients.vercel.app/noise.svg'); }
 #cursor { width: 12px; height: 12px; background: #FF3D00; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; }
 #cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(255, 61, 0, 0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.15s ease-out; }
 .cursor-hover #cursor { width: 60px; height: 60px; opacity: 0.2; }
@@ -17,7 +16,7 @@ body { background-color: #0A0A0A; color: #F5F5F5; overflow-x: hidden; cursor: no
 .nav-blur { backdrop-filter: blur(10px); background: rgba(10, 10, 10, 0.8); }
 @media (max-width: 1024px) {
     body { cursor: auto !important; }
-    #cursor, #cursor-outline, .noise, .magnetic-area { display: none !important; pointer-events: none !important; }
+    #cursor, #cursor-outline, .magnetic-area { display: none !important; pointer-events: none !important; }
     .project-card-v2:hover { transform: none !important; }
     .project-card-v2:hover img { transform: none !important; }
 }
