@@ -96,14 +96,16 @@ function renderBlogArticles() {
     blogList.innerHTML = blogData.map(item => `
         <article class="rounded-3xl border border-black/10 bg-white p-6 card-hover">
             <div class="flex items-center justify-between gap-4 mb-4">
-                <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-primary">${item.date}</span>
-                <span class="text-xs text-zinc-500 uppercase tracking-[0.2em]">${item.tag}</span>
+                <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-primary-700">${item.date}</span>
+                <span class="text-xs text-zinc-400 uppercase tracking-[0.2em]">${item.tag}</span>
             </div>
             <h4 class="text-2xl font-display font-bold uppercase mb-3">${item.title}</h4>
             <p class="text-zinc-600 text-sm leading-relaxed">${item.content}</p>
         </article>
     `).join('');
 }
+
+
 function initCursor() {
     const cursor = document.getElementById('cursor');
     const outline = document.getElementById('cursor-outline');
