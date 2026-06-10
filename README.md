@@ -45,6 +45,6 @@ Yapay zeka destekli, gerçek zamanlı form analizi aracı.
 ## 3. Zinciri Kır
 İnsanların bağımlılıklarından kurtulmasını sağlayan açık kaynak kodlu kar amacı gütmeyen bir PWA Web uygulaması.
 
-## 4. NeuralCanvas(https://yakupakn.github.io/YakupAkn/neuracanvas)
+## 4. [NeuralCanvas](https://yakupakn.github.io/YakupAkn/neuracanvas)
 Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI araştırma platformu — motor imagery'den görsel decode'a, düşünceden ekrana.
 
