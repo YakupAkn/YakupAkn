@@ -149,42 +149,41 @@
     "github": null,
     "featured": true,
     "order": 4
-  }
-
+  },
   {
     "id": "neuralcanvas",
     "title": "NeuralCanvas",
-    "subtitle": "",
-    "shortDescription": "İnsanların bağımlılıklarını bırakabilmelerini ve yeni alışkanlıklar kazanmalarını sağlayan, backend bulunmayan bir PWA Web uygulaması.",
-    "fullDescription": "Zinciri Kır, kullanıcıların hedeflerine ulaşırken süreklilik sağlamaları için 'Zinciri Kırma' (Don't Break the Chain) metodolojisini dijitalleştiren minimalist bir takip uygulamasıdır. Tamamen istemci taraflı (client-side) çalışan bu proje, herhangi bir sunucuya ihtiyaç duymadan verileri kullanıcının tarayıcısında (LocalStorage/IndexedDB) şifreli olarak saklar. Progressive Web App (PWA) mimarisi sayesinde internet bağlantısı olmadan çalışabilir ve mobil cihazlara yerel bir uygulama gibi kurulabilir. Kullanıcı gizliliğini ön planda tutan yapısı, kişisel verilerin cihazdan dışarı çıkmamasını garanti eder.",
+    "subtitle": "Açık Kaynak BCI Araştırma Platformu — Düşünceden Ekrana",
+    "shortDescription": "Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI platformu; motor imagery'den gerçek zamanlı görsel decode'a, düşünceden ekrana.",
+    "fullDescription": "NeuralCanvas, beyin-bilgisayar arayüzü (BCI) araştırmaları için geliştirilmiş açık kaynaklı bir platformdur. Motor imagery ve diğer EEG tabanlı sinyallerden gerçek zamanlı özellik çıkarımı ve derin öğrenme tabanlı görsel decode mekanizmalarıyla çalışır. Kullanıcı düşüncelerini veya zihinsel imgelemeyi kaydederek bunları sentezlenmiş görsellere ve dinamik grafik çıktılarına çevirir. Modüler mimarisi sayesinde sinyal ön işleme, kanal seçimi, model eğitimi ve tarayıcı/yerel görüntü oluşturma bileşenleri ayrı ayrı kullanılabilir veya değiştirilebilir. Araştırmacılar için yeniden üretilebilir deney akışları, veri anotasyonu araçları ve GPU hızlandırmalı eğitim desteği sunar.",
     "year": 2026,
     "tags": [
-      "HTML5",
-      "Tailwind CSS",
-      "JavaScript",
-      "No-Backend",
-      "PWA",
-      "Offline-First"
+      "BCI",
+      "Neuroscience",
+      "EEG",
+      "Machine Learning",
+      "Open Source",
+      "Research"
     ],
     "technologies": [
-      "HTML5",
-      "Tailwind CSS",
-      "Vanilla JavaScript (ES6+)",
-      "Service Workers (Workbox)",
-      "LocalStorage API",
-      "Web App Manifest"
+      "Python (MNE, NumPy, SciPy)",
+      "PyTorch / TensorFlow",
+      "Real-time Signal Processing",
+      "EEG Acquisition & Preprocessing",
+      "WebRTC / WebSocket (real-time streaming)",
+      "WebGL / Canvas for visualization"
     ],
-    "role": "UI/UX Tasarımı, Frontend Geliştirme ve PWA Entegrasyonu (Solo)",
+    "role": "Araştırma, mimari tasarım, model entegrasyonu ve platform geliştirme (Açık kaynak)",
     "challenges": [
-      "Herhangi bir veritabanı olmadan tarayıcı önbelleğinde veri bütünlüğünün sağlanması",
-      "Farklı cihaz ve tarayıcılarda tutarlı bir 'Native App' hissi yaratılması",
-      "Offline durumlarda veri kaybını önleyecek senkronizasyon mantığının kurulması",
-      "Kullanıcıyı motive edecek, oyunlaştırılmış (gamified) ama sade bir arayüz tasarımı"
+      "EEG gürültüsü ve düşük SNR ile güvenilir görsel decode sağlama",
+      "Gerçek zamanlı düşük gecikmeli pipeline kurma",
+      "Farklı denek ve cihazlar arasında model genelleştirmesi",
+      "Veri anonimleştirme ve etik/gizlilik uyumu"
     ],
     "results": [
-      "Sunucu maliyeti sıfır olan, %100 gizlilik odaklı bir alışkanlık takip aracı",
-      "İnternet bağlantısından bağımsız, anlık açılan yüksek performanslı arayüz",
-      "Kullanıcıların ilerlemelerini takvim üzerinde görselleştirerek motivasyon artışı sağlaması"
+      "Motor imagery'den görüntüsel temsil üretme prototipleri",
+      "Gerçek zamanlı düşünceden-ekrana demo akışı",
+      "Araştırma odaklı, modüler ve yeniden üretilebilir açık kaynak kod tabanı"
     ],
     "image": "images/zincirikir-hero.jpg",
     "gallery": [
