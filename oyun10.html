@@ -2,362 +2,704 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Space Defender v2 | YDA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Defender v3 | Gelişmiş Sürüm</title>
+    <!-- Mobil cihazlarda doğru ölçekleme ve zoom engelleme için meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        bgDark: '#050505',
+                        bgDark: '#0a0a12',
                         laser: '#00ffff',
                         enemy: '#ff0055',
-                        drone: '#39ff14',
-                        powerup: '#facc15'
+                        powerDrone: '#39ff14',
+                        powerShield: '#00aaff',
+                        powerSpread: '#ff8800'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
                     }
                 }
             }
         }
     </script>
     <style>
-        body { overflow: hidden; user-select: none; }
-        canvas { cursor: none; } /* Canvas üzerinde mouse görünmesin */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body { 
+            overflow: hidden; 
+            user-select: none; 
+            -webkit-user-select: none;
+            touch-action: none; /* Mobilde kaydırmayı engeller */
+            background-color: #0a0a12;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a12 100%);
+        }
+        
+        /* Oyun alanı mouse gizleme */
+        #gameCanvas { 
+            cursor: none; 
+            touch-action: none; 
+        }
+
+        /* Güçlendirici bildirimleri için animasyon */
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .powerup-toast {
+            animation: slideIn 0.3s ease-out forwards;
+        }
     </style>
 </head>
-<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center relative">
+
+<body class="text-white h-screen flex flex-col items-center justify-center relative font-sans">
     
-    <div class="absolute top-6 left-6 z-10 pointer-events-none">
-        <h1 class="font-black text-2xl tracking-tighter italic">SPACE <span class="text-laser">DEFENDER</span> <span class="text-xs not-italic bg-white/10 px-2 py-0.5 rounded text-gray-300">v2.0</span></h1>
-        <div class="mt-2 text-lg font-mono">SKOR: <span id="score" class="text-laser font-bold">0</span></div>
-        <div id="drone-bar-container" class="mt-2 w-32 h-2 bg-white/10 rounded-full overflow-hidden hidden">
-            <div id="drone-bar" class="h-full bg-drone w-full transition-all duration-100 ease-linear"></div>
+    <!-- Üst Bilgi (HUD) -->
+    <div class="absolute top-4 left-4 md:top-6 md:left-6 z-10 pointer-events-none w-full pr-8">
+        <h1 class="font-black text-xl md:text-3xl tracking-tighter italic drop-shadow-lg">
+            SPACE <span class="text-laser">DEFENDER</span> 
+            <span class="text-[10px] md:text-xs not-italic bg-white/20 px-2 py-1 rounded-md text-gray-100 ml-1 shadow-inner">v3.0</span>
+        </h1>
+        
+        <div class="mt-2 text-base md:text-xl font-mono bg-black/40 inline-block px-4 py-1.5 rounded-lg border border-white/10 backdrop-blur-md">
+            SKOR: <span id="score" class="text-laser font-bold drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]">0</span>
         </div>
-        <div id="drone-text" class="text-xs text-drone font-bold mt-1 hidden">DRONE DESTEĞİ AKTİF!</div>
+
+        <!-- Aktif Güçlendiriciler Alanı -->
+        <div id="active-powerups" class="mt-4 flex flex-col gap-2">
+            <!-- Dinamik olarak JS ile eklenecek -->
+        </div>
     </div>
 
-    <canvas id="gameCanvas" class="shadow-2xl border-x border-white/5"></canvas>
-
-    <div id="gameOver" class="hidden absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
-        <h2 class="text-5xl font-black text-enemy mb-2 tracking-tighter">GÖREV BAŞARISIZ</h2>
-        <p class="text-gray-400 mb-8 font-mono">TOPLAM SKOR: <span id="final-score" class="text-white">0</span></p>
-        
-        <button onclick="location.reload()" class="group relative px-8 py-3 bg-laser text-black font-black text-lg rounded-full overflow-hidden transition-transform hover:scale-105">
-            <span class="relative z-10">SİSTEMİ YENİDEN BAŞLAT</span>
-            <div class="absolute inset-0 bg-white/50 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-        </button>
-        
-        <a href="index.html" class="mt-6 text-sm text-gray-500 hover:text-white transition uppercase tracking-widest border-b border-transparent hover:border-white">Ana Menü</a>
+    <!-- Mobil/Masaüstü Oyun Alanı (Canvas) -->
+    <div class="relative w-full max-w-[800px] h-full flex items-center justify-center shadow-[0_0_50px_rgba(0,255,255,0.1)] border-x border-white/10">
+        <canvas id="gameCanvas" class="w-full h-full block"></canvas>
     </div>
 
-    <div id="start-hint" class="absolute bottom-10 text-center animate-pulse pointer-events-none text-white/50 text-sm">
-        Mouse ile hareket et • Otomatik ateş açılır
+    <!-- Başlangıç / İpucu Yazısı -->
+    <div id="start-hint" class="absolute bottom-16 text-center animate-pulse pointer-events-none bg-black/50 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-opacity duration-500">
+        <span class="hidden md:inline">Mouse ile hareket et</span>
+        <span class="md:hidden">Ekrana dokun ve sürükle</span>
+        <span class="mx-2 text-laser">•</span> 
+        Otomatik ateş
+    </div>
+
+    <div id="gameOver" class="hidden absolute inset-0 bg-bgDark/90 flex-col items-center justify-center z-50 backdrop-blur-md">
+        <div class="bg-black/60 p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl flex flex-col items-center transform scale-95 transition-transform duration-300" id="gameOverModal">
+            <h2 class="text-4xl md:text-6xl font-black text-enemy mb-2 tracking-tighter drop-shadow-[0_0_15px_rgba(255,0,85,0.6)]">SİSTEM ÇÖKTÜ</h2>
+            <div class="w-16 h-1 bg-enemy/50 rounded-full mb-6"></div>
+            
+            <p class="text-gray-400 mb-2 font-mono text-sm md:text-base uppercase tracking-widest">Nihai Skor</p>
+            <p class="text-5xl md:text-7xl font-mono text-white mb-10 font-bold drop-shadow-lg" id="final-score">0</p>
+            
+            <button onclick="restartGame()" class="group relative px-8 py-4 bg-laser text-black font-black text-lg md:text-xl rounded-2xl overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] active:scale-95">
+                <span class="relative z-10 flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    YENİDEN BAŞLAT
+                </span>
+                <div class="absolute inset-0 bg-white/40 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+            </button>
+        </div>
     </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        const hintEl = document.getElementById('start-hint');
 
-        // Canvas Boyutlandırma (Tam ekran ama yanlardan boşluklu dikey oyun hissi için)
+        // Responsive Canvas Boyutlandırma
         function resize() {
-            canvas.width = Math.min(window.innerWidth, 600); // Max genişlik 600px
-            canvas.height = window.innerHeight;
+            // Konteynerın boyutlarını al
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
         }
         window.addEventListener('resize', resize);
-        resize();
+        resize(); // İlk yüklemede boyutlandır
 
-        // --- OYUN DEĞİŞKENLERİ ---
-        let player = { x: canvas.width / 2, y: canvas.height - 100, w: 30, h: 40, speed: 0 };
-        let bullets = [];
-        let enemies = [];
-        let particles = [];
-        let stars = []; // Arka plan yıldızları
-        let powerups = []; // Drone güçlendirmesi için
-        
-        let score = 0;
-        let gameActive = true;
-        let frame = 0;
-        
-        // Drone Sistemi
-        let droneActive = false;
-        let droneTimer = 0;
-        const droneMaxTime = 600; // 10 saniye (60fps * 10)
+        // Güçlendirici Tipleri
+        const POWERUP_TYPES = {
+            DRONE: { id: 'DRONE', color: '#39ff14', icon: 'D', name: 'DRONE DESTEĞİ' },
+            SHIELD: { id: 'SHIELD', color: '#00aaff', icon: 'S', name: 'KALKAN AKTİF' },
+            SPREAD: { id: 'SPREAD', color: '#ff8800', icon: 'M', name: 'ÇOKLU ATIŞ' }
+        };
 
-        // Mouse takibi
-        canvas.addEventListener('mousemove', (e) => {
-            if (!gameActive) return;
-            const rect = canvas.getBoundingClientRect();
-            let targetX = e.clientX - rect.left;
-            // Gemiyi mouse'a yumuşakça götür (Lerp efekti yok, direkt atama daha net kontrol sağlar shooter'da)
-            player.x = targetX;
+        // Oyun Durumu Değişkenleri
+        let player, bullets, enemies, particles, stars, powerups, floatingTexts;
+        let score, gameActive, frame;
+        
+        // Güçlendirici Süreleri
+        let activeEffects = {
+            DRONE: { active: false, timer: 0, max: 600 }, // 10 sn (60fps)
+            SHIELD: { active: false }, // Süresiz, vurulana kadar
+            SPREAD: { active: false, timer: 0, max: 480 } // 8 sn
+        };
+
+        let hasInteracted = false; // İpucu yazısını gizlemek için
+
+        // Oyunu Başlatma/Sıfırlama Fonksiyonu
+        function initGame() {
+            player = { x: canvas.width / 2, y: canvas.height - 120, radius: 15 };
+            bullets = [];
+            enemies = [];
+            particles = [];
+            powerups = [];
+            floatingTexts = []; // Vurulan hedeflerden çıkan yazılar
             
-            // Sınır kontrolü
-            if(player.x < player.w) player.x = player.w;
-            if(player.x > canvas.width - player.w) player.x = canvas.width - player.w;
-        });
-
-        // Yıldızları oluştur
-        for(let i=0; i<50; i++) {
-            stars.push({
+            // Yıldızları oluştur (Arka plan)
+            stars = Array.from({length: 100}, () => ({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random() * 2,
-                speed: Math.random() * 3 + 1
-            });
+                size: Math.random() * 1.5 + 0.5,
+                speed: Math.random() * 2 + 0.5,
+                alpha: Math.random()
+            }));
+
+            score = 0;
+            frame = 0;
+            gameActive = true;
+            
+            activeEffects.DRONE.active = false;
+            activeEffects.SHIELD.active = false;
+            activeEffects.SPREAD.active = false;
+            
+            document.getElementById('score').innerText = score;
+            document.getElementById('gameOver').classList.add('hidden');
+            document.getElementById('gameOver').classList.remove('flex');
+            document.getElementById('active-powerups').innerHTML = '';
+            canvas.style.cursor = 'none';
         }
 
-        function createExplosion(x, y, color) {
-            for (let i = 0; i < 10; i++) {
+        function handleInput(e) {
+            if (!gameActive) return;
+            
+            if (!hasInteracted) {
+                hasInteracted = true;
+                hintEl.style.opacity = '0';
+            }
+
+            e.preventDefault(); // Dokunmatik kaydırmayı engeller
+            
+            const rect = canvas.getBoundingClientRect();
+            let clientX, clientY;
+
+            // Dokunmatik ve Mouse ayrımı
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            // Gemi pozisyonunu güncelle (Yumuşak geçiş için offset kullanılabilir ama direkt atama aksiyon oyunlarında daha tepkiseldir)
+            player.x = clientX - rect.left;
+            player.y = clientY - rect.top - 30; // Parmağın biraz üstünde görünsün diye offset
+
+            // Sınır Kontrolleri
+            player.x = Math.max(player.radius, Math.min(canvas.width - player.radius, player.x));
+            player.y = Math.max(player.radius, Math.min(canvas.height - player.radius, player.y));
+        }
+
+        canvas.addEventListener('mousemove', handleInput);
+        canvas.addEventListener('touchmove', handleInput, { passive: false });
+        canvas.addEventListener('touchstart', handleInput, { passive: false });
+
+        function createExplosion(x, y, color, size = 1) {
+            let count = Math.floor(15 * size);
+            for (let i = 0; i < count; i++) {
                 particles.push({
                     x: x,
                     y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
+                    vx: (Math.random() - 0.5) * 12 * size,
+                    vy: (Math.random() - 0.5) * 12 * size,
                     life: 1.0,
-                    color: color
+                    decay: Math.random() * 0.03 + 0.02,
+                    color: color,
+                    size: Math.random() * 3 * size + 1
                 });
             }
         }
 
-        // --- UPDATE DÖNGÜSÜ ---
+        function createFloatingText(x, y, text, color) {
+            floatingTexts.push({
+                x: x,
+                y: y,
+                text: text,
+                color: color,
+                life: 1.0,
+                vy: -1
+            });
+        }
+
+        function updateUI() {
+            const container = document.getElementById('active-powerups');
+            container.innerHTML = ''; // Temizle ve yeniden oluştur
+
+            // SHIELD (Süresiz, aktifse göster)
+            if (activeEffects.SHIELD.active) {
+                container.innerHTML += `
+                    <div class="powerup-toast bg-black/60 border border-[${POWERUP_TYPES.SHIELD.color}]/50 rounded pl-2 pr-4 py-1 flex items-center gap-2 backdrop-blur-md w-max">
+                        <div class="w-3 h-3 rounded-full bg-[${POWERUP_TYPES.SHIELD.color}] shadow-[0_0_8px_${POWERUP_TYPES.SHIELD.color}]"></div>
+                        <span class="text-xs font-bold text-[${POWERUP_TYPES.SHIELD.color}] tracking-wider">${POWERUP_TYPES.SHIELD.name}</span>
+                    </div>`;
+            }
+
+            // DRONE (Süreli)
+            if (activeEffects.DRONE.active) {
+                let p = (activeEffects.DRONE.timer / activeEffects.DRONE.max) * 100;
+                container.innerHTML += `
+                    <div class="powerup-toast bg-black/60 border border-[${POWERUP_TYPES.DRONE.color}]/30 rounded p-1.5 flex flex-col gap-1 backdrop-blur-md w-32">
+                        <span class="text-[10px] font-bold text-[${POWERUP_TYPES.DRONE.color}]">${POWERUP_TYPES.DRONE.name}</span>
+                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-[${POWERUP_TYPES.DRONE.color}]" style="width: ${p}%"></div>
+                        </div>
+                    </div>`;
+            }
+
+            // SPREAD (Süreli)
+            if (activeEffects.SPREAD.active) {
+                let p = (activeEffects.SPREAD.timer / activeEffects.SPREAD.max) * 100;
+                container.innerHTML += `
+                    <div class="powerup-toast bg-black/60 border border-[${POWERUP_TYPES.SPREAD.color}]/30 rounded p-1.5 flex flex-col gap-1 backdrop-blur-md w-32">
+                        <span class="text-[10px] font-bold text-[${POWERUP_TYPES.SPREAD.color}]">${POWERUP_TYPES.SPREAD.name}</span>
+                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-[${POWERUP_TYPES.SPREAD.color}]" style="width: ${p}%"></div>
+                        </div>
+                    </div>`;
+            }
+        }
+
         function update() {
             if (!gameActive) return;
 
-            // Arka planı temizle
-            ctx.fillStyle = "#050505";
+            // 1. Arka Planı Temizle (Hafif saydamlık iz bırakma efekti için)
+            ctx.fillStyle = "rgba(10, 10, 18, 0.4)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 1. Yıldızları Çiz (Arka plan)
-            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            // 2. Yıldızları Çiz ve Güncelle
             stars.forEach(star => {
                 star.y += star.speed;
                 if(star.y > canvas.height) {
                     star.y = 0;
                     star.x = Math.random() * canvas.width;
                 }
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
                 ctx.fill();
             });
 
-            // 2. Oyuncuyu Çiz
-            ctx.fillStyle = "#fff";
+            // 3. Oyuncu (Gemi) Çizimi
+            ctx.save();
+            ctx.translate(player.x, player.y);
+
+            // Kalkan Aktifse Hale Çiz
+            if (activeEffects.SHIELD.active) {
+                ctx.beginPath();
+                ctx.arc(0, 0, 35, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(0, 170, 255, 0.15)";
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(0, 170, 255, 0.8)";
+                ctx.stroke();
+                
+                // Kalkan enerji dalgalanması
+                let pulse = Math.sin(frame * 0.1) * 3 + 38;
+                ctx.beginPath();
+                ctx.arc(0, 0, pulse, 0, Math.PI * 2);
+                ctx.strokeStyle = "rgba(0, 170, 255, 0.3)";
+                ctx.stroke();
+            }
+
+            // Geminin Kendisi
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#00ffff";
+            ctx.fillStyle = "#ffffff";
             ctx.beginPath();
-            ctx.moveTo(player.x, player.y);
-            ctx.lineTo(player.x - 15, player.y + 30);
-            ctx.lineTo(player.x, player.y + 20); // Motor kısmı
-            ctx.lineTo(player.x + 15, player.y + 30);
+            ctx.moveTo(0, -20); // Burun
+            ctx.lineTo(15, 15);  // Sağ kanat
+            ctx.lineTo(0, 5);    // Gövde altı
+            ctx.lineTo(-15, 15); // Sol kanat
             ctx.closePath();
             ctx.fill();
 
-            // Motor Ateşi Efekti
-            ctx.fillStyle = `rgba(0, 255, 255, ${Math.random()})`;
+            // Motor Ateşi
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = (frame % 4 < 2) ? "#00ffff" : "#0055ff";
             ctx.beginPath();
-            ctx.moveTo(player.x - 5, player.y + 25);
-            ctx.lineTo(player.x + 5, player.y + 25);
-            ctx.lineTo(player.x, player.y + 35 + Math.random() * 10);
+            ctx.moveTo(-6, 10);
+            ctx.lineTo(6, 10);
+            ctx.lineTo(0, 25 + Math.random() * 15);
             ctx.fill();
+            
+            ctx.restore();
 
-            // 3. Drone Mantığı
-            if (droneActive) {
-                droneTimer--;
+            // 4. Drone Çizimi ve Mantığı
+            if (activeEffects.DRONE.active) {
+                activeEffects.DRONE.timer--;
+                if (activeEffects.DRONE.timer <= 0) activeEffects.DRONE.active = false;
                 
-                // Drone Çizimi (Sol ve Sağ)
-                ctx.fillStyle = "#39ff14";
-                [ -40, 40 ].forEach(offset => {
+                const droneColor = POWERUP_TYPES.DRONE.color;
+                [ -45, 45 ].forEach(offset => {
                     let dx = player.x + offset;
-                    let dy = player.y + 10;
+                    // Dronelar hafif yukarı aşağı süzülsün
+                    let dy = player.y + 10 + Math.sin(frame * 0.1 + offset) * 5;
                     
+                    ctx.save();
+                    ctx.translate(dx, dy);
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = droneColor;
+                    ctx.fillStyle = droneColor;
+                    
+                    // Drone Gövdesi
                     ctx.beginPath();
-                    ctx.moveTo(dx, dy);
-                    ctx.lineTo(dx - 5, dy + 10);
-                    ctx.lineTo(dx + 5, dy + 10);
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(8, 5);
+                    ctx.lineTo(-8, 5);
+                    ctx.closePath();
                     ctx.fill();
+                    ctx.restore();
                     
-                    // Drone Ateşi (Otomatik) - Ana gemiden daha yavaş ateş etsin
-                    if (frame % 15 === 0) {
-                        bullets.push({ x: dx, y: dy, w: 2, h: 8, color: '#39ff14', speed: 10 });
+                    // Drone Ateşi (Otomatik, Ana gemiden yavaş)
+                    if (frame % 20 === 0) {
+                        bullets.push({ x: dx, y: dy - 10, vx: 0, vy: -12, color: droneColor, size: 3 });
                     }
                 });
+            }
 
-                // UI Güncelleme
-                let percent = (droneTimer / droneMaxTime) * 100;
-                document.getElementById('drone-bar').style.width = percent + "%";
-                
-                if (droneTimer <= 0) {
-                    droneActive = false;
-                    document.getElementById('drone-bar-container').classList.add('hidden');
-                    document.getElementById('drone-text').classList.add('hidden');
+            if (activeEffects.SPREAD.active) {
+                activeEffects.SPREAD.timer--;
+                if (activeEffects.SPREAD.timer <= 0) activeEffects.SPREAD.active = false;
+            }
+
+            if (frame % 8 === 0) {
+                if (activeEffects.SPREAD.active) {
+                    // 3'lü atış
+                    bullets.push({ x: player.x, y: player.y - 20, vx: 0, vy: -15, color: '#ff8800', size: 4 });
+                    bullets.push({ x: player.x, y: player.y - 20, vx: -3, vy: -14, color: '#ff8800', size: 4 });
+                    bullets.push({ x: player.x, y: player.y - 20, vx: 3, vy: -14, color: '#ff8800', size: 4 });
+                } else {
+                    // Tekli atış
+                    bullets.push({ x: player.x, y: player.y - 20, vx: 0, vy: -16, color: '#00ffff', size: 4 });
                 }
             }
 
-            // 4. Otomatik Ateş
-            if (frame % 8 === 0) { // Her 8 karede bir ateş
-                bullets.push({ x: player.x, y: player.y, w: 4, h: 12, color: '#00ffff', speed: 12 });
-            }
-
-            // 5. Mermileri Güncelle
+            // Mermileri Güncelle
             for (let i = 0; i < bullets.length; i++) {
                 let b = bullets[i];
-                b.y -= b.speed;
+                b.x += b.vx;
+                b.y += b.vy;
+                
                 ctx.fillStyle = b.color;
-                ctx.shadowBlur = 10; ctx.shadowColor = b.color;
-                ctx.fillRect(b.x - b.w/2, b.y, b.w, b.h);
+                ctx.shadowBlur = 10; 
+                ctx.shadowColor = b.color;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.size, 0, Math.PI*2);
+                ctx.fill();
                 ctx.shadowBlur = 0;
 
-                if (b.y < 0) {
+                // Ekran dışına çıkan mermileri sil
+                if (b.y < -50 || b.x < -50 || b.x > canvas.width + 50) {
                     bullets.splice(i, 1);
                     i--;
                 }
             }
 
-            // 6. Düşman Spawn (Zorluk skora göre artar)
-            let spawnRate = Math.max(20, 60 - Math.floor(score / 50)); 
+            // Zorluk skora göre logaritmik artar
+            let diffMultiplier = 1 + (score / 1000); 
+            let spawnRate = Math.max(15, Math.floor(60 - (score / 30))); 
+            
             if (frame % spawnRate === 0) {
+                let size = Math.random() > 0.8 ? 25 : 15; // Ara sıra büyük düşman
                 enemies.push({
-                    x: Math.random() * (canvas.width - 40) + 20,
+                    x: Math.random() * (canvas.width - 60) + 30,
                     y: -40,
-                    w: 30,
-                    h: 30,
-                    hp: 2, // Can puanı
-                    speed: Math.random() * 2 + 2 + (score * 0.01)
+                    radius: size,
+                    hp: size > 15 ? 4 : 1, // Büyükler daha dayanıklı
+                    speed: (Math.random() * 2 + 2) * diffMultiplier
                 });
             }
 
-            // 7. Powerup Spawn (Bazen) - %1 şansla
-            if (Math.random() < 0.005 && !droneActive) {
+            // Güçlendirici Düşürme Şansı (%0.8)
+            if (Math.random() < 0.008) {
+                let keys = Object.keys(POWERUP_TYPES);
+                let randomKey = keys[Math.floor(Math.random() * keys.length)];
+                
+                // Eğer dron zaten varsa drone düşürme şansını düşür
+                if (randomKey === 'DRONE' && activeEffects.DRONE.active) randomKey = 'SHIELD';
+                // Kalkan varsa ve kalkan düşerse yayılan ateş ver
+                if (randomKey === 'SHIELD' && activeEffects.SHIELD.active) randomKey = 'SPREAD';
+
                 powerups.push({
-                    x: Math.random() * (canvas.width - 30) + 15,
+                    x: Math.random() * (canvas.width - 40) + 20,
                     y: -30,
-                    size: 15,
+                    type: POWERUP_TYPES[randomKey],
                     angle: 0
                 });
             }
 
-            // 8. Düşmanları Güncelle
+            
+            // Düşmanları Güncelle
             for (let i = 0; i < enemies.length; i++) {
                 let e = enemies[i];
                 e.y += e.speed;
 
-                // Düşman Çizimi (Kırmızı Üçgenler)
-                ctx.fillStyle = "#ff0055";
-                ctx.shadowBlur = 10; ctx.shadowColor = "#ff0055";
+                // Düşman Çizimi (Agresif Kırmızı Tasarım)
+                ctx.save();
+                ctx.translate(e.x, e.y);
+                // Kendi ekseninde hafif dönsün
+                ctx.rotate(frame * 0.05 * (e.radius > 15 ? 0.5 : 1));
+                
+                ctx.shadowBlur = 15; 
+                ctx.shadowColor = "#ff0055";
+                ctx.fillStyle = e.radius > 15 ? "#aa0033" : "#ff0055"; // Büyükler koyu
+                ctx.strokeStyle = "#ff4488";
+                ctx.lineWidth = 2;
+                
                 ctx.beginPath();
-                ctx.moveTo(e.x, e.y + e.h);
-                ctx.lineTo(e.x + e.w/2, e.y);
-                ctx.lineTo(e.x + e.w, e.y + e.h);
-                ctx.lineTo(e.x + e.w/2, e.y + e.h - 10); // İçbükey detay
-                ctx.fill();
-                ctx.shadowBlur = 0;
-
-                // Çarpışma: Gemi vs Düşman
-                if (Math.abs(player.x - (e.x + e.w/2)) < 20 && Math.abs(player.y - (e.y + e.h/2)) < 20) {
-                    endGame();
+                let sides = e.radius > 15 ? 5 : 3; // Büyükler beşgen, küçükler üçgen
+                for(let j=0; j<sides; j++) {
+                    let angle = (j * 2 * Math.PI / sides) - Math.PI/2;
+                    let px = Math.cos(angle) * e.radius;
+                    let py = Math.sin(angle) * e.radius;
+                    if(j===0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
                 }
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                
+                // HP biterse içerde bir çekirdek göster
+                if (e.hp > 1) {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    ctx.arc(0, 0, e.radius/3, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                ctx.restore();
 
-                // Çarpışma: Mermi vs Düşman
-                for (let j = 0; j < bullets.length; j++) {
-                    let b = bullets[j];
-                    if (b.x > e.x && b.x < e.x + e.w && b.y > e.y && b.y < e.y + e.h) {
-                        // Vuruldu
-                        e.hp--;
-                        bullets.splice(j, 1); // Mermiyi sil
-                        j--;
+                // Çarpışma: Gemi vs Düşman (Daire çarpışması daha hassastır)
+                let distToPlayer = Math.hypot(player.x - e.x, player.y - e.y);
+                if (distToPlayer < player.radius + e.radius - 5) { // -5 tolerans payı
+                    
+                    if (activeEffects.SHIELD.active) {
+                        // Kalkan Kırıldı!
+                        activeEffects.SHIELD.active = false;
+                        createExplosion(player.x, player.y, POWERUP_TYPES.SHIELD.color, 2);
+                        createFloatingText(player.x, player.y - 40, "KALKAN KIRILDI!", POWERUP_TYPES.SHIELD.color);
                         
-                        // Efekt: Vurulunca beyazla
-                        createExplosion(e.x + e.w/2, e.y + e.h/2, '#ffffff');
-
-                        if (e.hp <= 0) {
-                            enemies.splice(i, 1); // Düşmanı sil
-                            i--;
-                            score += 10;
-                            document.getElementById('score').innerText = score;
-                            createExplosion(e.x + e.w/2, e.y + e.h/2, '#ff0055');
-                        }
-                        break;
+                        // Düşmanı da yok et
+                        enemies.splice(i, 1);
+                        i--;
+                        // Saniyelik ekran sarsıntısı efekti yapılabilir ama canvas translation ile uzun sürer.
+                        continue;
+                    } else {
+                        // Oyun Bitti
+                        endGame();
+                        return; // Güncellemeyi durdur
                     }
                 }
 
-                if (e.y > canvas.height) {
+                // Çarpışma: Mermi vs Düşman
+                let enemyDestroyed = false;
+                for (let j = 0; j < bullets.length; j++) {
+                    let b = bullets[j];
+                    let dist = Math.hypot(b.x - e.x, b.y - e.y);
+                    
+                    if (dist < e.radius + b.size) {
+                        // Vuruldu
+                        e.hp--;
+                        createExplosion(b.x, b.y, b.color, 0.5); // Küçük kıvılcım
+                        bullets.splice(j, 1); 
+                        j--;
+                        
+                        if (e.hp <= 0) {
+                            enemyDestroyed = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (enemyDestroyed) {
+                    let pts = e.radius > 15 ? 25 : 10;
+                    score += pts;
+                    document.getElementById('score').innerText = score;
+                    
+                    createExplosion(e.x, e.y, "#ff0055", e.radius > 15 ? 1.5 : 1);
+                    createFloatingText(e.x, e.y, `+${pts}`, "#ffffff");
+                    
+                    enemies.splice(i, 1);
+                    i--;
+                    continue;
+                }
+
+                // Ekran dışı temizliği
+                if (e.y > canvas.height + 50) {
                     enemies.splice(i, 1);
                     i--;
                 }
             }
 
-            // 9. Powerup Güncelleme
             for(let i=0; i < powerups.length; i++) {
                 let p = powerups[i];
-                p.y += 3;
-                p.angle += 0.1;
+                p.y += 2.5; // Yavaşça düşer
+                p.angle += 0.05;
 
-                // Powerup Çizimi (Dönen Sarı Kare)
+                // Powerup Çizimi
                 ctx.save();
                 ctx.translate(p.x, p.y);
+                
+                ctx.shadowBlur = 20; 
+                ctx.shadowColor = p.type.color;
+                
+                // Dönen dış çember
                 ctx.rotate(p.angle);
-                ctx.fillStyle = "#facc15";
-                ctx.shadowBlur = 15; ctx.shadowColor = "#facc15";
-                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                ctx.strokeStyle = p.type.color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, 0, 16, 0, Math.PI*2);
+                ctx.stroke();
+                
+                // İç Kutu
+                ctx.rotate(-p.angle * 2); // Ters yöne dönsün
+                ctx.fillStyle = "rgba(0,0,0,0.8)";
+                ctx.fillRect(-10, -10, 20, 20);
+                ctx.strokeRect(-10, -10, 20, 20);
+                
+                // İkon Harfi (Rotasyonu sıfırla ki harf düz dursun)
+                ctx.rotate(p.angle);
+                ctx.fillStyle = p.type.color;
+                ctx.font = "bold 14px ui-monospace, SFMono-Regular, monospace";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.shadowBlur = 0;
+                ctx.fillText(p.type.icon, 0, 1);
+                
                 ctx.restore();
 
                 // Toplama Kontrolü
                 let dist = Math.hypot(player.x - p.x, player.y - p.y);
-                if (dist < 30) {
-                    activateDrones();
+                if (dist < player.radius + 16) {
+                    activatePowerup(p.type);
+                    createFloatingText(player.x, player.y - 30, p.type.name, p.type.color);
                     powerups.splice(i, 1);
                     i--;
+                    continue;
                 }
 
-                if (p.y > canvas.height) {
+                if (p.y > canvas.height + 30) {
                     powerups.splice(i, 1);
                     i--;
                 }
             }
 
-            // 10. Parçacık Efektleri
+            // Partikül Efektleri
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
-                p.life -= 0.05;
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, 3, 3);
-                ctx.globalAlpha = 1.0;
-
+                p.life -= p.decay;
+                
                 if (p.life <= 0) {
                     particles.splice(i, 1);
                     i--;
+                    continue;
                 }
+
+                ctx.globalAlpha = Math.max(0, p.life);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
             }
 
+            // Kayan Yazılar (Skor/Bilgi)
+            for (let i = 0; i < floatingTexts.length; i++) {
+                let ft = floatingTexts[i];
+                ft.y += ft.vy;
+                ft.life -= 0.02;
+                
+                if (ft.life <= 0) {
+                    floatingTexts.splice(i, 1);
+                    i--;
+                    continue;
+                }
+
+                ctx.globalAlpha = Math.max(0, ft.life);
+                ctx.fillStyle = ft.color;
+                ctx.font = "bold 16px Inter, sans-serif";
+                ctx.textAlign = "center";
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = "#000";
+                ctx.fillText(ft.text, ft.x, ft.y);
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1.0;
+            }
+
+            if(frame % 30 === 0) updateUI(); // UI'ı saniyede 2 kez güncelle (performans için)
+            
             frame++;
             requestAnimationFrame(update);
         }
 
-        function activateDrones() {
-            droneActive = true;
-            droneTimer = droneMaxTime;
-            
-            // UI Göster
-            const barContainer = document.getElementById('drone-bar-container');
-            const droneText = document.getElementById('drone-text');
-            
-            barContainer.classList.remove('hidden');
-            droneText.classList.remove('hidden');
-            
-            // Parlama efekti
-            droneText.classList.add('animate-pulse');
+        function activatePowerup(type) {
+            if (type.id === 'DRONE') {
+                activeEffects.DRONE.active = true;
+                activeEffects.DRONE.timer = activeEffects.DRONE.max;
+            } else if (type.id === 'SHIELD') {
+                activeEffects.SHIELD.active = true;
+            } else if (type.id === 'SPREAD') {
+                activeEffects.SPREAD.active = true;
+                activeEffects.SPREAD.timer = activeEffects.SPREAD.max;
+            }
+            updateUI();
         }
 
         function endGame() {
             gameActive = false;
+            
+            // Gemiyi patlat
+            createExplosion(player.x, player.y, "#ffffff", 3);
+            createExplosion(player.x, player.y, "#00ffff", 2);
+            
+            // UI Güncelle
             document.getElementById('final-score').innerText = score;
-            document.getElementById('gameOver').classList.remove('hidden');
-            document.getElementById('gameOver').classList.add('flex');
-            document.body.style.cursor = 'default';
+            const gameOverEl = document.getElementById('gameOver');
+            const modalEl = document.getElementById('gameOverModal');
+            
+            gameOverEl.classList.remove('hidden');
+            gameOverEl.classList.add('flex');
+            
+            // Animasyonla ekrana gelsin
+            setTimeout(() => {
+                modalEl.classList.remove('scale-95');
+                modalEl.classList.add('scale-100');
+            }, 50);
+            
+            canvas.style.cursor = 'default';
         }
 
-        update();
+        function restartGame() {
+            const modalEl = document.getElementById('gameOverModal');
+            modalEl.classList.remove('scale-100');
+            modalEl.classList.add('scale-95');
+            
+            setTimeout(() => {
+                initGame();
+                update();
+            }, 300); // Animasyon bitiminde başlat
+        }
+
+        // İlk Kurulum ve Başlatma
+        window.onload = function() {
+            initGame();
+            update();
+        };
     </script>
 </body>
 </html>
