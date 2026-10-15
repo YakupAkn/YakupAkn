@@ -1,13 +1,95 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#FF3D00">
-    <title>Ürünler | Yakup Delil Akın - Digital Products</title>
+    <title>Yakup Delil Akın | Dijital Ürünler</title>
     <meta name="description"
-        content="Yakup Delil Akın'ın tasarladığı ve geliştirdiği dijital ürünler vitrini. PWA, Web App ve Mobile uygulamalar.">
+        content="Yakup Delil Akın'ın tasarladığı ve geliştirdiği canlı dijital ürünler: PWA, computer vision ve siber güvenlik projeleri.">
+    <meta name="keywords"
+        content="Yakup Delil Akın, yazılım geliştirici, web developer, PWA geliştirici, frontend developer">
+    <meta name="author" content="Yakup Delil Akın">
+
+    <link rel="canonical" href="https://yakupakn.github.io/YakupAkn/urunler.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Yakup Delil Akın | Dijital Ürünler">
+    <meta property="og:description"
+        content="Yakup Delil Akın'ın canlı dijital ürünleri: PWA, computer vision ve siber güvenlik projeleri.">
+    <meta property="og:url" content="https://yakupakn.github.io/YakupAkn/urunler.html">
+    <meta property="og:locale" content="tr_TR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Yakup Delil Akın | Yazılım Geliştirici">
+    <meta name="twitter:description"
+        content="Yakup Delil Akın'ın canlı dijital ürünleri.">
+
+    <!-- JSON-LD: Makine tarafından okunabilir kişi ve hizmet bilgileri -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Yakup Delil Akın",
+      "url": "https://yakupakn.github.io/YakupAkn/",
+      "jobTitle": "Software Developer",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Siirt",
+        "addressCountry": "TR"
+      },
+      "knowsAbout": ["Web Development", "PWA", "Computer Vision", "Cybersecurity", "Brain-Computer Interface"],
+      "sameAs": [
+        "https://github.com/YakupAkn",
+        "https://www.linkedin.com/in/yakupdelilakin/",
+        "https://www.instagram.com/ykp._.56/"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Yakup Delil Akın - Yazılım Geliştirme",
+      "areaServed": {
+        "@type": "City",
+        "name": "Siirt"
+      },
+      "provider": {
+        "@type": "Person",
+        "name": "Yakup Delil Akın"
+      },
+      "serviceType": ["Web Development", "PWA Development", "UI/UX Design", "Product Strategy"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Yazılım geliştirme için kime ulaşabilirim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yakup Delil Akın; PWA, web uygulaması ve computer vision projeleri geliştiriyor. İletişim formu veya e-posta üzerinden ulaşılabilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Yakup Delil Akın hangi teknolojilerle çalışıyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JavaScript, Python, Tailwind CSS, Supabase, MediaPipe ve PWA mimarileri başlıca çalışma alanlarıdır."
+          }
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
@@ -33,9 +115,7 @@
         }
     </script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             background-color: #0A0A0A;
@@ -45,487 +125,262 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Noise Overlay */
         .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 40;
-            opacity: 0.03;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 40; opacity: 0.03;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        /* Custom Cursor */
         #cursor {
-            width: 12px;
-            height: 12px;
-            background: #FF3D00;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
+            width: 12px; height: 12px; background: #FF3D00; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
             mix-blend-mode: difference;
         }
 
         #cursor-outline {
-            width: 45px;
-            height: 45px;
-            border: 1.5px solid rgba(255, 61, 0, 0.6);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: all 0.15s ease-out;
+            width: 45px; height: 45px; border: 1.5px solid rgba(255, 61, 0, 0.6);
+            border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%); transition: all 0.15s ease-out;
         }
 
-        .cursor-hover #cursor {
-            width: 70px;
-            height: 70px;
-            opacity: 0.15;
-        }
-
-        .cursor-hover #cursor-outline {
-            width: 90px;
-            height: 90px;
-            border-color: #FF3D00;
-        }
+        .cursor-hover #cursor { width: 70px; height: 70px; opacity: 0.15; }
+        .cursor-hover #cursor-outline { width: 90px; height: 90px; border-color: #FF3D00; }
 
         @media (hover: none) {
-            body {
-                cursor: auto;
-            }
-
-            #cursor,
-            #cursor-outline {
-                display: none;
-            }
+            body { cursor: auto; }
+            #cursor, #cursor-outline { display: none; }
         }
 
-        /* Header */
-        .nav-blur {
-            backdrop-filter: blur(12px);
-            background: rgba(10, 10, 10, 0.85);
-        }
+        .nav-blur { backdrop-filter: blur(12px); background: rgba(10, 10, 10, 0.85); }
 
-        /* Hero Section */
         .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center;
+            position: relative; overflow: hidden;
         }
 
         .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -20%;
-            width: 80vw;
-            height: 80vw;
+            content: ''; position: absolute; top: -30%; right: -20%;
+            width: 80vw; height: 80vw;
             background: radial-gradient(circle, rgba(255, 61, 0, 0.15) 0%, transparent 60%);
             animation: pulse-glow 8s ease-in-out infinite;
         }
 
         .hero-section::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
+            content: ''; position: absolute; bottom: -20%; left: -10%;
+            width: 50vw; height: 50vw;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
         }
 
         @keyframes pulse-glow {
-
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.1);
-            }
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
-        /* Floating Elements */
-        .floating-badge {
-            animation: float 4s ease-in-out infinite;
-        }
-
+        .floating-badge { animation: float 4s ease-in-out infinite; }
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-15px) rotate(2deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
-        /* Marquee */
         .marquee-wrapper {
-            overflow: hidden;
-            white-space: nowrap;
-            background: #FF3D00;
-            padding: 18px 0;
-            transform: rotate(-1.5deg) scale(1.03);
+            overflow: hidden; white-space: nowrap; background: #FF3D00;
+            padding: 18px 0; transform: rotate(-1.5deg) scale(1.03);
             margin: -20px -20px 60px;
         }
 
-        .marquee-content {
-            display: inline-flex;
-            animation: marquee 25s linear infinite;
-            gap: 60px;
-        }
-
+        .marquee-content { display: inline-flex; animation: marquee 25s linear infinite; gap: 60px; }
         @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        /* Product Cards */
         .product-card {
             position: relative;
             background: linear-gradient(165deg, rgba(30, 30, 30, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 28px;
-            overflow: hidden;
+            border-radius: 28px; overflow: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px;
             background: linear-gradient(180deg, rgba(255, 61, 0, 0.08) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            opacity: 0; transition: opacity 0.5s ease;
         }
 
         .product-card:hover {
             transform: translateY(-12px) scale(1.02);
             border-color: rgba(255, 61, 0, 0.4);
-            box-shadow:
-                0 30px 60px rgba(0, 0, 0, 0.4),
-                0 0 80px rgba(255, 61, 0, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(255, 61, 0, 0.1);
         }
 
-        .product-card:hover::before {
-            opacity: 1;
-        }
+        .product-card:hover::before { opacity: 1; }
 
-        .product-image-wrapper {
-            position: relative;
-            height: 280px;
-            overflow: hidden;
+        .product-icon-wrapper {
+            position: relative; height: 220px; overflow: hidden;
             background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .product-image-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(10, 10, 10, 1) 0%, transparent 50%);
+        .product-icon-wrapper::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(0deg, rgba(10, 10, 10, 1) 0%, transparent 60%);
         }
 
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        .product-icon {
+            width: 84px; height: 84px; border-radius: 22px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 61, 0, 0.15) 0%, rgba(255, 61, 0, 0.04) 100%);
+            border: 1px solid rgba(255, 61, 0, 0.25);
+            font-size: 30px; color: #FF3D00;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative; z-index: 2;
         }
 
-        .product-card:hover .product-image {
-            transform: scale(1.08);
-        }
+        .product-card:hover .product-icon { transform: scale(1.1) rotate(-4deg); }
 
         .product-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-            padding: 8px 16px;
-            background: rgba(255, 61, 0, 0.9);
-            color: #000;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
+            position: absolute; top: 20px; right: 20px; z-index: 10;
+            padding: 8px 16px; background: rgba(255, 61, 0, 0.9); color: #000;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase; border-radius: 50px; backdrop-filter: blur(10px);
         }
 
-        .product-content {
-            position: relative;
-            padding: 32px;
-            z-index: 5;
-        }
+        .product-content { position: relative; padding: 32px; z-index: 5; }
 
         .product-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            margin-bottom: 12px;
+            font-size: 2.1rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: -0.02em; margin-bottom: 12px;
             background: linear-gradient(135deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .product-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 28px;
-            background: transparent;
-            border: 2px solid rgba(255, 61, 0, 0.5);
-            color: #FF3D00;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            border-radius: 60px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            display: inline-flex; align-items: center; gap: 12px;
+            padding: 14px 28px; background: transparent;
+            border: 2px solid rgba(255, 61, 0, 0.5); color: #FF3D00;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+            text-transform: uppercase; border-radius: 60px;
+            transition: all 0.4s ease; position: relative; overflow: hidden;
         }
 
         .product-link::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: #FF3D00;
-            transform: translateX(-100%);
-            transition: transform 0.4s ease;
-            z-index: -1;
+            content: ''; position: absolute; inset: 0; background: #FF3D00;
+            transform: translateX(-100%); transition: transform 0.4s ease; z-index: -1;
         }
 
-        .product-link:hover {
-            color: #000;
-            border-color: #FF3D00;
-            transform: scale(1.05);
-        }
+        .product-link:hover { color: #000; border-color: #FF3D00; transform: scale(1.05); }
+        .product-link:hover::before { transform: translateX(0); }
 
-        .product-link:hover::before {
-            transform: translateX(0);
-        }
-
-        /* Stats Section */
         .stat-card {
-            text-align: center;
-            padding: 40px 30px;
+            text-align: center; padding: 40px 30px;
             background: linear-gradient(180deg, rgba(20, 20, 20, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px;
             transition: all 0.4s ease;
         }
 
-        .stat-card:hover {
-            border-color: rgba(255, 61, 0, 0.3);
-            transform: translateY(-5px);
-        }
+        .stat-card:hover { border-color: rgba(255, 61, 0, 0.3); transform: translateY(-5px); }
 
         .stat-number {
-            font-size: 4rem;
-            font-weight: 800;
+            font-size: 3.5rem; font-weight: 800;
             background: linear-gradient(135deg, #FF3D00 0%, #ff6a00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1;
         }
 
-        /* Services Grid */
         .service-card {
-            padding: 40px;
-            background: rgba(20, 20, 20, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            padding: 40px; background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px;
+            transition: all 0.4s ease; position: relative; overflow: hidden;
         }
 
         .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
             background: linear-gradient(180deg, #FF3D00 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            opacity: 0; transition: opacity 0.4s ease;
         }
 
         .service-card:hover {
-            background: rgba(25, 25, 25, 0.8);
-            border-color: rgba(255, 61, 0, 0.2);
+            background: rgba(25, 25, 25, 0.8); border-color: rgba(255, 61, 0, 0.2);
             transform: translateX(8px);
         }
 
-        .service-card:hover::before {
-            opacity: 1;
-        }
+        .service-card:hover::before { opacity: 1; }
 
         .service-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255, 61, 0, 0.15) 0%, rgba(255, 61, 0, 0.05) 100%);
-            border-radius: 16px;
-            font-size: 24px;
-            color: #FF3D00;
-            margin-bottom: 24px;
+            border-radius: 16px; font-size: 24px; color: #FF3D00; margin-bottom: 24px;
         }
 
-        /* CTA Section */
-        .cta-section {
-            position: relative;
-            padding: 120px 0;
-            text-align: center;
-            overflow: hidden;
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 28px 0;
         }
+
+        .faq-item h3 {
+            font-size: 1.25rem; font-weight: 700; margin-bottom: 10px;
+        }
+
+        .cta-section { position: relative; padding: 120px 0; text-align: center; overflow: hidden; }
 
         .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 300px;
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 120%; height: 300px;
             background: linear-gradient(90deg, transparent 0%, rgba(255, 61, 0, 0.1) 50%, transparent 100%);
             pointer-events: none;
         }
 
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 16px;
-            padding: 22px 50px;
-            background: #FF3D00;
-            color: #000;
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            border-radius: 60px;
+            display: inline-flex; align-items: center; gap: 16px;
+            padding: 22px 50px; background: #FF3D00; color: #000;
+            font-size: 14px; font-weight: 800; letter-spacing: 0.15em;
+            text-transform: uppercase; border-radius: 60px;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: 0 20px 40px rgba(255, 61, 0, 0.3);
+            border: none; cursor: pointer;
         }
 
-        .cta-button:hover {
-            transform: scale(1.08) translateY(-4px);
-            box-shadow: 0 30px 60px rgba(255, 61, 0, 0.4);
-        }
+        .cta-button:hover { transform: scale(1.08) translateY(-4px); box-shadow: 0 30px 60px rgba(255, 61, 0, 0.4); }
 
-        /* Form Styles */
         .form-input {
-            width: 100%;
-            padding: 18px 24px;
-            background: rgba(15, 15, 15, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            color: #fff;
-            font-size: 15px;
-            transition: all 0.3s ease;
+            width: 100%; padding: 18px 24px; background: rgba(15, 15, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
+            color: #fff; font-size: 15px; transition: all 0.3s ease;
         }
 
         .form-input:focus {
-            outline: none;
-            border-color: rgba(255, 61, 0, 0.5);
+            outline: none; border-color: rgba(255, 61, 0, 0.5);
             box-shadow: 0 0 0 4px rgba(255, 61, 0, 0.1);
         }
 
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
+        .form-input::placeholder { color: rgba(255, 255, 255, 0.3); }
 
-        /* Text Animations */
-        .text-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: reveal 0.8s ease forwards;
-        }
+        .text-reveal { opacity: 0; transform: translateY(30px); animation: reveal 0.8s ease forwards; }
+        @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+        .text-reveal:nth-child(1) { animation-delay: 0.1s; }
+        .text-reveal:nth-child(2) { animation-delay: 0.2s; }
+        .text-reveal:nth-child(3) { animation-delay: 0.3s; }
 
-        @keyframes reveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .text-reveal:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .text-reveal:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .text-reveal:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        /* Scroll Progress */
         #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
+            position: fixed; top: 0; left: 0; height: 3px;
             background: linear-gradient(90deg, #FF3D00 0%, #ff6a00 100%);
-            z-index: 9999;
-            transition: width 0.1s linear;
+            z-index: 9999; transition: width 0.1s linear;
         }
 
-        /* Glow Effects */
-        .glow-text {
-            text-shadow: 0 0 40px rgba(255, 61, 0, 0.3);
-        }
+        .glow-text { text-shadow: 0 0 40px rgba(255, 61, 0, 0.3); }
 
-        /* Tag Pills */
         .tag-pill {
-            display: inline-block;
-            padding: 8px 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
+            display: inline-block; padding: 8px 18px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 50px;
+            font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
+            text-transform: uppercase; color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease;
         }
 
-        .tag-pill:hover {
-            border-color: rgba(255, 61, 0, 0.4);
-            color: #FF3D00;
-        }
+        .tag-pill:hover { border-color: rgba(255, 61, 0, 0.4); color: #FF3D00; }
     </style>
 </head>
 
@@ -535,12 +390,9 @@
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
 
-    <!-- Header -->
     <header
         class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group"
         id="main-header">
-        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100">
-        </div>
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="index.html"
                 class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
@@ -550,8 +402,7 @@
             <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
                 <a href="projeler.html" class="nav-link relative group py-2" data-i18n="nav-projects">
                     Projeler
-                    <span
-                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="urunler.html" class="nav-link relative group py-2 text-primary" data-i18n="nav-about">
                     Ürünler
@@ -559,8 +410,7 @@
                 </a>
                 <a href="index.html#contact" class="nav-link relative group py-2" data-i18n="nav-contact">
                     İletişim
-                    <span
-                        class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </nav>
 
@@ -570,82 +420,46 @@
                         class="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium uppercase tracking-wider bg-bgDark/80 backdrop-blur-sm border border-white/15 rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 active:scale-95"
                         aria-label="Dil seç">
                         <span id="current-lang-display" class="font-bold">TR</span>
-                        <i
-                            class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
+                        <i class="fas fa-chevron-down text-[10px] opacity-70 transition-transform group-hover:rotate-180 duration-300"></i>
                     </button>
                     <div id="lang-dropdown-menu"
                         class="absolute top-full right-0 mt-2 w-44 bg-bgDark/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/60 py-1.5 opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
-                        <button onclick="changeLanguage('tr')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇹🇷</span>
-                            <span>Türkçe</span>
-                            <span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('tr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇹🇷</span><span>Türkçe</span><span id="tr-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-                        <button onclick="changeLanguage('en')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇬🇧</span>
-                            <span>English</span>
-                            <span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇬🇧</span><span>English</span><span id="en-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('es')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇪🇸</span>
-                            <span>Español</span>
-                            <span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇪🇸</span><span>Español</span><span id="es-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('de')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇩🇪</span>
-                            <span>Deutsch</span>
-                            <span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('de')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇩🇪</span><span>Deutsch</span><span id="de-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('fr')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇫🇷</span>
-                            <span>Français</span>
-                            <span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('fr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇫🇷</span><span>Français</span><span id="fr-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('it')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇮🇹</span>
-                            <span>Italiano</span>
-                            <span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('it')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇮🇹</span><span>Italiano</span><span id="it-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('pt')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇵🇹</span>
-                            <span>Português</span>
-                            <span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('pt')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇵🇹</span><span>Português</span><span id="pt-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('ru')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇷🇺</span>
-                            <span>Русский</span>
-                            <span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('ru')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇷🇺</span><span>Русский</span><span id="ru-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
-
-                        <button onclick="changeLanguage('jp')"
-                            class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
-                            <span class="text-lg">🇯🇵</span>
-                            <span>日本語</span>
-                            <span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
+                        <button onclick="changeLanguage('jp')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors flex items-center gap-3">
+                            <span class="text-lg">🇯🇵</span><span>日本語</span><span id="jp-check" class="ml-auto text-primary opacity-0">✓</span>
                         </button>
                     </div>
-
                 </div>
-                <a href="mailto:yakupdelilakin@gmail.com"
-                    class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
-                    data-i18n="coffee">
+
+                <!-- E-POSTA KORUMALI: href boş bırakıldı, js/mail-protect.js runtime'da dolduruyor -->
+                <a href="#" class="protected-mail hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40"
+                    data-i18n="coffee" data-user="yakupdelilakin" data-domain="gmail.com">
                     Let's Talk
                 </a>
 
-                <!-- Mobile Menu -->
                 <button id="mobile-menu-btn"
                     class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-bgDark/80 border border-white/10">
                     <i class="fas fa-bars"></i>
@@ -659,51 +473,44 @@
         <div class="max-w-7xl mx-auto w-full">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="space-y-8">
-                    <div
-                        class="floating-badge inline-flex items-center gap-3 px-5 py-2.5 bg-primary/10 border border-primary/30 rounded-full">
+                    <div class="floating-badge inline-flex items-center gap-3 px-5 py-2.5 bg-primary/10 border border-primary/30 rounded-full">
                         <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-primary">Canlı Ürünler</span>
                     </div>
 
-                    <h1
-                        class="text-reveal text-[14vw] md:text-[8vw] lg:text-[6vw] font-display font-black uppercase leading-[0.9]">
+                    <h1 class="text-reveal text-[14vw] md:text-[8vw] lg:text-[6vw] font-display font-black uppercase leading-[0.9]">
                         Dijital<br>
-                        <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">Ürünlerim</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">Ürünlerim</span>
                         <span class="text-primary glow-text">.</span>
                     </h1>
 
                     <p class="text-reveal text-lg md:text-xl text-zinc-400 leading-relaxed max-w-lg">
-                        Fikirden ürüne, tasarımdan yayına. İşte <span class="text-white font-semibold">gerçek
-                            kullanıcılar</span> tarafından kullanılan, canlı yayındaki projelerim.
+                        Yazılım geliştirici olarak fikirden ürüne, tasarımdan yayına kadar sürecin tamamını yürütüyorum. Aşağıdakiler
+                        <span class="text-white font-semibold">gerçek kullanıcılar</span> tarafından kullanılan, canlı yayındaki projelerim.
                     </p>
 
                     <div class="text-reveal flex flex-wrap gap-3">
                         <span class="tag-pill">PWA</span>
-                        <span class="tag-pill">Web App</span>
-                        <span class="tag-pill">Mobile</span>
-                        <span class="tag-pill">SaaS</span>
+                        <span class="tag-pill">Computer Vision</span>
+                        <span class="tag-pill">Cybersecurity</span>
+                        <span class="tag-pill">BCI Research</span>
                     </div>
                 </div>
 
                 <div class="hidden lg:flex justify-end">
                     <div class="relative">
-                        <!-- Decorative Elements -->
-                        <div class="absolute -top-10 -right-10 w-40 h-40 border border-primary/20 rounded-full animate-spin-slow"
-                            style="animation-duration: 20s;"></div>
+                        <div class="absolute -top-10 -right-10 w-40 h-40 border border-primary/20 rounded-full animate-spin-slow" style="animation-duration: 20s;"></div>
                         <div class="absolute -bottom-5 -left-5 w-24 h-24 bg-primary/10 rounded-2xl rotate-12"></div>
 
-                        <!-- Stats Preview -->
-                        <div
-                            class="relative bg-gradient-to-br from-cardDark to-bgDark p-10 rounded-3xl border border-white/10">
+                        <div class="relative bg-gradient-to-br from-cardDark to-bgDark p-10 rounded-3xl border border-white/10">
                             <div class="grid grid-cols-2 gap-8">
                                 <div class="text-center">
-                                    <div class="text-5xl font-black text-primary">3+</div>
-                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Canlı Ürün</div>
+                                    <div class="text-5xl font-black text-primary">Remote</div>
+                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Çalışma Modeli</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-5xl font-black text-white">100%</div>
-                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Uptime</div>
+                                    <div class="text-5xl font-black text-white">Solo</div>
+                                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-2">Uçtan Uca</div>
                                 </div>
                             </div>
                         </div>
@@ -716,26 +523,14 @@
     <!-- Marquee Banner -->
     <div class="marquee-wrapper mt-20">
         <div class="marquee-content font-display font-black text-2xl md:text-4xl text-black uppercase">
-            <span>Athletico</span>
-            <span>•</span>
-            <span>Pulseboard</span>
-            <span>•</span>
-            <span>Kahverengi</span>
-            <span>•</span>
-            <span>PWA Excellence</span>
-            <span>•</span>
-            <span>Real Products</span>
-            <span>•</span>
-            <span>Athletico</span>
-            <span>•</span>
-            <span>Pulseboard</span>
-            <span>•</span>
-            <span>Kahverengi</span>
-            <span>•</span>
-            <span>PWA Excellence</span>
-            <span>•</span>
-            <span>Real Products</span>
-            <span>•</span>
+            <span>Phantom Labs</span><span>•</span>
+            <span>NeuralCanvas</span><span>•</span>
+            <span>Zinciri Kır</span><span>•</span>
+            <span>Dijital Ürünler</span><span>•</span>
+            <span>Phantom Labs</span><span>•</span>
+            <span>NeuralCanvas</span><span>•</span>
+            <span>Zinciri Kır</span><span>•</span>
+            <span>Dijital Ürünler</span><span>•</span>
         </div>
     </div>
 
@@ -750,105 +545,86 @@
             </div>
 
             <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-                <!-- Product 1: Athletico -->
+                <!-- Phantom Labs -->
                 <article class="product-card group">
-                    <div class="product-image-wrapper">
-                        <div
-                            class="w-full h-full bg-gradient-to-br from-orange-900/20 via-bgDark to-bgDark flex items-center justify-center">
-                            <div class="text-8xl opacity-20">🏋️</div>
-                        </div>
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon"><i class="fas fa-shield-halved"></i></div>
                         <span class="product-badge">Yayında</span>
                     </div>
                     <div class="product-content">
                         <div class="flex items-center gap-3 mb-4">
-                            <span class="tag-pill">PWA</span>
-                            <span class="tag-pill">Offline</span>
+                            <span class="tag-pill">Cybersecurity</span>
+                            <span class="tag-pill">Python</span>
                         </div>
-                        <h3 class="product-title font-display">Athletico</h3>
+                        <h3 class="product-title font-display">Phantom Labs</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Sporcular için tasarlanmış, offline çalışabilen antrenman takibi ve performans analizi
-                            uygulaması. IndexedDB ve Service Worker ile tam çevrimdışı deneyim.
+                            Eğitim sistemleri analizi ve uç nokta güvenlik testleri için tasarlanmış, tamamen çevrimdışı
+                            çalışan modüler bir siber güvenlik araştırma framework'ü.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Supabase</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">IndexedDB</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Service
-                                Worker</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Offline</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Forensics</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Endpoint Security</span>
                         </div>
-                        <a href="athletico.html" class="product-link">
+                        <a href="phantomlabs.html" class="product-link">
                             <span>Detayları Gör</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </article>
 
-                <!-- Product 2: Pulseboard -->
+                <!-- NeuralCanvas -->
                 <article class="product-card group">
-                    <div class="product-image-wrapper">
-                        <div
-                            class="w-full h-full bg-gradient-to-br from-blue-900/20 via-bgDark to-bgDark flex items-center justify-center">
-                            <div class="text-8xl opacity-20">📊</div>
-                        </div>
-                        <span class="product-badge">Yayında</span>
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon"><i class="fas fa-brain"></i></div>
+                        <span class="product-badge">Açık Kaynak</span>
                     </div>
                     <div class="product-content">
                         <div class="flex items-center gap-3 mb-4">
-                            <span class="tag-pill">Web App</span>
-                            <span class="tag-pill">Realtime</span>
+                            <span class="tag-pill">BCI</span>
+                            <span class="tag-pill">Research</span>
                         </div>
-                        <h3 class="product-title font-display">Pulseboard</h3>
+                        <h3 class="product-title font-display">NeuralCanvas</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Gerçek zamanlı operasyon panosu ve ekip iş akışı yönetimi. Canlı veri senkronizasyonu ve
-                            anlık bildirimlerle ekip verimliliğini artırın.
+                            Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI araştırma platformu —
+                            motor imagery'den görsel decode'a, düşünceden ekrana.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Realtime</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Auth</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Dashboard</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">EEG</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">PyTorch</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Real-time</span>
                         </div>
-                        <a href="#" class="product-link">
-                            <span>Canlıyı Aç</span>
-                            <i class="fas fa-external-link-alt"></i>
+                        <a href="neuralcanvas.html" class="product-link">
+                            <span>Detayları Gör</span>
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </article>
 
-                <!-- Product 3: Kahverengi -->
+                <!-- Zinciri Kır -->
                 <article class="product-card group">
-                    <div class="product-image-wrapper">
-                        <div
-                            class="w-full h-full bg-gradient-to-br from-amber-900/20 via-bgDark to-bgDark flex items-center justify-center">
-                            <div class="text-8xl opacity-20">☕</div>
-                        </div>
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon"><i class="fas fa-link-slash"></i></div>
                         <span class="product-badge">Yayında</span>
                     </div>
                     <div class="product-content">
                         <div class="flex items-center gap-3 mb-4">
-                            <span class="tag-pill">Mobile</span>
-                            <span class="tag-pill">Cross-Platform</span>
+                            <span class="tag-pill">PWA</span>
+                            <span class="tag-pill">No-Backend</span>
                         </div>
-                        <h3 class="product-title font-display">Kahverengi</h3>
+                        <h3 class="product-title font-display">Zinciri Kır</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                            Kahve tutkunları için kişisel tarif ve deneyim kayıt uygulaması. iOS ve Android'de
-                            çevrimdışı kullanım ile kahve yolculuğunuzu belgeleyin.
+                            İnsanların bağımlılıklarından kurtulmasını sağlayan, açık kaynak kodlu, kâr amacı
+                            gütmeyen bir PWA. Sunucu kullanmadan tamamen tarayıcıda çalışır.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-8">
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">iOS</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Android</span>
-                            <span
-                                class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Offline</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Offline-First</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">LocalStorage</span>
+                            <span class="text-[9px] uppercase tracking-wider px-3 py-1 border border-white/10 rounded-full text-zinc-500">Non-profit</span>
                         </div>
-                        <a href="#" class="product-link">
-                            <span>Canlıyı Aç</span>
-                            <i class="fas fa-external-link-alt"></i>
+                        <a href="zincirikir.html" class="product-link">
+                            <span>Detayları Gör</span>
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </article>
@@ -861,20 +637,20 @@
         <div class="max-w-5xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="stat-card">
-                    <div class="stat-number">3+</div>
-                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Canlı Ürün</div>
+                    <div class="stat-number">5</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Yayınlanmış Proje</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">100%</div>
                     <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">PWA Uyumlu</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">∞</div>
-                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Offline Destek</div>
+                    <div class="stat-number">9</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Dil Desteği</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Erişilebilir</div>
+                    <div class="stat-number">Solo</div>
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mt-3">Uçtan Uca Geliştirme</div>
                 </div>
             </div>
         </div>
@@ -898,49 +674,66 @@
 
                 <div class="grid gap-5">
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
                         <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Ürün Stratejisi</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed">
-                            Fikir doğrulama, MVP kapsamı belirleme ve yol haritası kurgusu. Pazara en hızlı şekilde
-                            ulaşmanızı sağlayacak strateji.
+                            Fikir doğrulama, MVP kapsamı belirleme ve yol haritası kurgusu.
                         </p>
                     </div>
-
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-palette"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-palette"></i></div>
                         <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">UI/UX Tasarım</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed">
-                            Kullanıcıyı merkeze alan arayüzler ve tutarlı tasarım sistemleri. Markanızı yansıtan,
-                            kullanıcı dostu deneyimler.
+                            Kullanıcıyı merkeze alan arayüzler ve tutarlı tasarım sistemleri.
                         </p>
                     </div>
-
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Geliştirme & Yayına Alma
-                        </h3>
+                        <div class="service-icon"><i class="fas fa-code"></i></div>
+                        <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Geliştirme & Yayına Alma</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed">
-                            Modern web teknolojileri ile PWA üretimi, performans optimizasyonu ve sorunsuz yayına alma
-                            süreci.
+                            Modern web teknolojileri ile PWA üretimi, performans optimizasyonu ve yayına alma.
                         </p>
                     </div>
-
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-chart-line"></i></div>
                         <h3 class="text-xl font-display font-bold uppercase tracking-wide mb-3">Ürün Optimizasyonu</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed">
-                            Kullanıcı verisine dayalı iterasyon, performans iyileştirmesi ve sürekli bakım desteği.
+                            Kullanıcı verisine dayalı iterasyon ve sürekli bakım desteği.
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section — görünür metin, hem ziyaretçi hem AI/arama motoru için -->
+    <section class="py-32 px-6 md:px-12 lg:px-24">
+        <div class="max-w-3xl mx-auto">
+            <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Sıkça Sorulanlar</span>
+            <h2 class="text-4xl md:text-5xl font-display font-black uppercase mt-4 mb-12">
+                Merak Edilenler<span class="text-primary">.</span>
+            </h2>
+
+            <div class="faq-item">
+                <h3>Yazılım geliştirme için kime ulaşabilirim?</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                    Yakup Delil Akın; PWA, web uygulaması ve computer vision
+                    projeleri geliştiriyor. Aşağıdaki iletişim formu veya e-posta üzerinden ulaşabilirsiniz.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3>Hangi teknolojilerle çalışıyorsun?</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                    JavaScript, Python, Tailwind CSS, Supabase, MediaPipe ve offline-first PWA mimarileri başlıca
+                    çalışma alanlarım.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3>Projeler yerinde mi yoksa uzaktan mı yürütülüyor?</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                    Uzaktan çalışıyorum; tüm süreç (strateji, tasarım, geliştirme, yayına alma) tek elden
+                    yürütülüyor.
+                </p>
             </div>
         </div>
     </section>
@@ -951,15 +744,14 @@
             <span class="text-primary uppercase tracking-[0.5em] text-xs font-bold">Hazır Mısınız?</span>
             <h2 class="text-5xl md:text-7xl lg:text-8xl font-display font-black uppercase mt-4 leading-[0.95]">
                 Bir Sonraki<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Büyük
-                    Fikir</span><br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">Büyük Fikir</span><br>
                 Sizin Olabilir<span class="text-primary">.</span>
             </h2>
             <p class="text-zinc-400 text-lg md:text-xl mt-8 max-w-xl mx-auto">
-                Projenizi konuşmak, fiyat almak veya sadece merhaba demek için bana ulaşın.
+                Projenizi konuşmak, teklif almak veya sadece merhaba demek için bana ulaşın.
             </p>
             <div class="mt-12">
-                <a href="mailto:yakupdelilakin@gmail.com" class="cta-button">
+                <a href="#" class="protected-mail cta-button" data-user="yakupdelilakin" data-domain="gmail.com">
                     <span>Hemen İletişime Geç</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -979,7 +771,15 @@
                     <p class="text-zinc-400 mt-4">Formu doldurun, size en kısa sürede döneyim.</p>
                 </div>
 
-                <form action="mailto:yakupdelilakin@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                <!--
+                  ÖNEMLİ: mailto form kaldırıldı — çoğu tarayıcıda güvenilmez çalışıyordu ve
+                  e-posta adresini ham HTML'de ifşa ediyordu. Yerine Web3Forms (ücretsiz,
+                  backend gerektirmez) ile fetch tabanlı gönderim kullanılıyor.
+                  Kurulum: https://web3forms.com adresinden ücretsiz bir Access Key al
+                  ve aşağıdaki YOUR_ACCESS_KEY_HERE kısmına yapıştır.
+                -->
+                <form id="contact-form" class="space-y-6">
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
                     <div class="grid md:grid-cols-2 gap-6">
                         <input type="text" name="isim" placeholder="Ad Soyad" class="form-input" required>
                         <input type="email" name="email" placeholder="E-posta Adresi" class="form-input" required>
@@ -994,13 +794,16 @@
                         <option value="Diğer">Diğer</option>
                     </select>
 
-                    <textarea name="mesaj" rows="5" placeholder="Projeniz hakkında kısaca bilgi verin..."
-                        class="form-input resize-none"></textarea>
+                    <textarea name="mesaj" rows="5" placeholder="Projeniz hakkında kısaca bilgi verin..." class="form-input resize-none" required></textarea>
+
+                    <!-- Honeypot: botlara görünür ama insanlara görünmez alan -->
+                    <input type="text" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
 
                     <button type="submit" class="w-full cta-button justify-center">
-                        <span>Talep Gönder</span>
+                        <span id="submit-label">Talep Gönder</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
+                    <p id="form-status" class="text-center text-sm mt-2"></p>
                 </form>
             </div>
         </div>
@@ -1013,18 +816,16 @@
                 YDA<span class="text-primary">_</span>
             </a>
             <p class="text-zinc-500 text-sm">
-                © 2025 Yakup Delil Akın. Tüm hakları saklıdır.
+                © 2026 Yakup Delil Akın. Tüm hakları saklıdır.
             </p>
             <div class="flex gap-6">
                 <a href="https://github.com/YakupAkn" class="text-zinc-400 hover:text-primary transition-colors">
                     <i class="fab fa-github text-xl"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/yakupdelilakin/"
-                    class="text-zinc-400 hover:text-primary transition-colors">
+                <a href="https://www.linkedin.com/in/yakupdelilakin/" class="text-zinc-400 hover:text-primary transition-colors">
                     <i class="fab fa-linkedin text-xl"></i>
                 </a>
-                <a href="https://www.instagram.com/ykp._.56/"
-                    class="text-zinc-400 hover:text-primary transition-colors">
+                <a href="https://www.instagram.com/ykp._.56/" class="text-zinc-400 hover:text-primary transition-colors">
                     <i class="fab fa-instagram text-xl"></i>
                 </a>
             </div>
@@ -1038,50 +839,36 @@
         let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
         });
 
         function animateCursor() {
             outlineX += (mouseX - outlineX) * 0.12;
             outlineY += (mouseY - outlineY) * 0.12;
-            outline.style.left = outlineX + 'px';
-            outline.style.top = outlineY + 'px';
+            outline.style.left = outlineX + 'px'; outline.style.top = outlineY + 'px';
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
-        // Hover Effects
         document.querySelectorAll('a, button, .product-card, .service-card, .stat-card').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
-        // Scroll Effects
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             const scrollProgress = document.getElementById('scroll-progress');
             const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-
             scrollProgress.style.width = scrollPercent + '%';
-
             if (window.scrollY > 50) {
-                header.classList.add('nav-blur', 'py-3');
-                header.classList.remove('py-5');
+                header.classList.add('nav-blur', 'py-3'); header.classList.remove('py-5');
             } else {
-                header.classList.remove('nav-blur', 'py-3');
-                header.classList.add('py-5');
+                header.classList.remove('nav-blur', 'py-3'); header.classList.add('py-5');
             }
         });
 
-        // Intersection Observer for Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1096,6 +883,51 @@
             el.style.transform = 'translateY(40px)';
             el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.1}s`;
             observer.observe(el);
+        });
+
+        // --- E-POSTA KORUMASI ---
+        // Mail adresi HTML kaynağında hiç yazmıyor; sadece JS çalıştığında
+        // data-user + "@" + data-domain birleştirilip href'e yazılıyor.
+        // Hashleme değil bu yöntemin tercih edilme sebebi: hash geri alınamaz,
+        // bu yüzden adresi hash olarak saklayıp gösteremezsin. Bu yöntemde ise
+        // ham HTML'i tarayan botlar (çoğu scraper JS çalıştırmaz) hiçbir şey göremiyor.
+        document.querySelectorAll('.protected-mail').forEach(el => {
+            const user = el.getAttribute('data-user');
+            const domain = el.getAttribute('data-domain');
+            if (user && domain) {
+                el.setAttribute('href', 'mailto:' + user + '@' + domain);
+            }
+        });
+
+        // --- İLETİŞİM FORMU (Web3Forms — backend gerektirmez) ---
+        const form = document.getElementById('contact-form');
+        const statusEl = document.getElementById('form-status');
+        const submitLabel = document.getElementById('submit-label');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitLabel.textContent = 'Gönderiliyor...';
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.success) {
+                    statusEl.textContent = 'Talebiniz gönderildi, teşekkürler!';
+                    statusEl.className = 'text-center text-sm mt-2 text-green-400';
+                    form.reset();
+                } else {
+                    throw new Error(result.message || 'Gönderim başarısız');
+                }
+            } catch (err) {
+                statusEl.textContent = 'Bir şeyler ters gitti, lütfen e-posta ile ulaşın.';
+                statusEl.className = 'text-center text-sm mt-2 text-red-400';
+            } finally {
+                submitLabel.textContent = 'Talep Gönder';
+            }
         });
     </script>
     <script src="js/i18n.js"></script>
