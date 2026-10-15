@@ -1,73 +1,29 @@
 [
   {
-    "id": "athletico",
-    "title": "Athletico",
-    "subtitle": "Sporcu Performans Takip PWA",
-    "shortDescription": "Antrenman ve performans verilerini takip eden offline destekli PWA. Hızlı arayüz ve Supabase ile gerçek kullanım odaklı.",
-    "fullDescription": "Sporcuların antrenman takibini manuel yöntemlerden kurtarmak amacıyla tasarlandı. Tamamen offline çalışabilme, yerel veri saklama ve Supabase ile bulut senkronizasyonu sunuyor. Kullanıcı dostu arayüz ile egzersiz kayıtları, ilerleme grafikleri ve hedef yönetimi yapılabiliyor.",
-    "year": 2025,
-    "tags": ["Web", "PWA", "JavaScript", "Supabase", "Sports Tech"],
-    "technologies": ["HTML5/CSS3/JavaScript", "Tailwind CSS", "Supabase (Auth + Database)", "IndexedDB", "Service Workers", "Netlify"],
-    "role": "Konsept, tasarım, geliştirme ve deploy (solo proje)",
-    "challenges": [
-      "Offline-first mimari ve veri senkronizasyonu",
-      "Mobil cihazlarda performans optimizasyonu",
-      "Kullanıcı verilerinin güvenli saklanması"
-    ],
-    "results": [
-      "Tam offline modda bile akıcı deneyim",
-      "Supabase ile gerçek zamanlı veri senkronizasyonu",
-      "Kullanıcı testlerinde %40 daha hızlı veri girişi"
-    ],
-    "image": "images/athletico-hero.jpg",
-    "gallery": [
-      "images/athletico-dashboard.jpg",
-      "images/athletico-progress.jpg",
-      "images/athletico-offline.jpg"
-    ],
-    "video": null,
-    "liveDemo": "https://athletico-demo.netlify.app", 
-    "github": "https://github.com/yourusername/athletico",
-    "featured": true,
-    "order": 1
-  },
-  {
-    "id": "athleticocore",
-    "title": "AthleticoCore",
-    "subtitle": "AI Destekli Şınav Koçu",
-    "shortDescription": "Kamera ile gerçek zamanlı form analizi yapan, tekrar sayan ve performans metrikleri üreten çekirdek sistem.",
-    "fullDescription": "Athletico altyapısı üzerine kurulu performans odaklı çekirdek. Tarayıcı kamerası üzerinden pose estimation ile dirsek/omuz/kalça açılarını hesaplayarak form doğruluğunu değerlendiriyor. Skorlama, hız, tekrar sayısı gibi istatistikler üretiyor.",
-    "year": 2025,
-    "tags": ["Frontend", "Performance", "Sports Science", "AI", "Computer Vision"],
-    "technologies": ["JavaScript", "TensorFlow.js / MediaPipe Pose", "WebRTC", "Canvas/WebGL", "Tailwind CSS", "Netlify"],
-    "role": "Tam geliştirme (model entegrasyonu, UI, optimizasyon)",
-    "challenges": [
-      "Düşük cihazlarda gerçek zamanlı 25+ FPS koruma",
-      "Farklı vücut tiplerinde doğru açı hesaplama",
-      "Tarayıcı izinleri ve gizlilik uyumu"
-    ],
-    "results": [
-      "Ortalama 28 FPS orta seviye telefonlarda",
-      "Form doğruluğu %88+ (test seti)",
-      "Kullanıcı motivasyonunda belirgin artış"
-    ],
-    "image": "images/athleticocore-hero.jpg",
-    "gallery": [
-      "images/athleticocore-camera.jpg",
-      "images/athleticocore-stats.jpg",
-      "images/athleticocore-feedback.jpg"
-    ],
-    "video": "videos/athleticocore-demo.mp4",
-    "liveDemo": "https://athleticocore.netlify.app",
-    "github": "https://github.com/yourusername/athleticocore",
-    "featured": true,
-    "order": 2
-  },
-  {
     "id": "phantomlabs",
-    "title": "Phantom Labs",
+    "title": {
+      "tr": "Phantom Labs",
+      "en": "Phantom Labs",
+      "es": "Phantom Labs",
+      "de": "Phantom Labs",
+      "fr": "Phantom Labs",
+      "it": "Phantom Labs",
+      "pt": "Phantom Labs",
+      "ru": "Phantom Labs",
+      "jp": "Phantom Labs"
+    },
     "subtitle": "Python Tabanlı Güvenlik Araştırma Çerçevesi",
-    "shortDescription": "Eğitim sistemleri analizi, otomatik keşif ve uç nokta güvenlik testleri için tasarlanmış, çevrimdışı çalışan modüler bir siber güvenlik araştırma framework’ü.",
+    "shortDescription": {
+      "tr": "Eğitim sistemleri analizi, otomatik keşif ve uç nokta güvenlik testleri için tasarlanmış, çevrimdışı çalışan modüler bir siber güvenlik araştırma framework'ü.",
+      "en": "A modular, fully offline cybersecurity research framework designed for system analysis, automated discovery, and endpoint security testing.",
+      "es": "Un framework modular de investigación en ciberseguridad, totalmente offline, diseñado para el análisis de sistemas, el descubrimiento automático y las pruebas de seguridad de endpoints.",
+      "de": "Ein modulares, vollständig offline arbeitendes Cybersicherheits-Forschungsframework für Systemanalyse, automatische Erkennung und Endpoint-Sicherheitstests.",
+      "fr": "Un framework de recherche en cybersécurité modulaire et entièrement hors ligne, conçu pour l'analyse système, la découverte automatisée et les tests de sécurité des terminaux.",
+      "it": "Un framework modulare di ricerca sulla sicurezza informatica, completamente offline, progettato per l'analisi dei sistemi, la scoperta automatica e i test di sicurezza degli endpoint.",
+      "pt": "Um framework modular de pesquisa em cibersegurança, totalmente offline, projetado para análise de sistemas, descoberta automática e testes de segurança de endpoint.",
+      "ru": "Модульный, полностью офлайн-фреймворк для исследований в области кибербезопасности, предназначенный для анализа систем, автоматического обнаружения и тестирования безопасности конечных точек.",
+      "jp": "システム解析、自動検出、エンドポイントセキュリティテストのために設計された、完全オフラインで動作するモジュール式サイバーセキュリティ研究フレームワーク。"
+    },
     "fullDescription": "Phantom Labs, siber güvenlik araştırmacıları ve adli bilişim uzmanları için geliştirilmiş Python tabanlı kapsamlı bir güvenlik analiz çerçevesidir. Sistem envanteri çıkarma, ağ görünürlüğü, donanım ve çevresel analiz, dijital iz (artifact) tespiti ve test sonrası otomatik temizlik modüllerini içerir. Tüm analizler çevrimdışı çalışır ve elde edilen veriler yerel log dosyalarına kaydedilir. Kaynak kodu, kötüye kullanımı önlemek amacıyla kamuya açık değildir.",
     "year": 2026,
     "tags": ["Cybersecurity", "Python", "Forensics", "Endpoint Security"],
@@ -86,7 +42,7 @@
       "Kötüye kullanımı önleyecek modüler yapı tasarımı"
     ],
     "results": [
-      "Tamamen çevrimdışı çalışan uç nokta analiz framework’ü",
+      "Tamamen çevrimdışı çalışan uç nokta analiz framework'ü",
       "Donanım, ağ, çevresel ve dosya bazlı analizlerin tek merkezden yönetimi",
       "Adli bilişim odaklı temiz ve takip edilebilir log çıktıları"
     ],
@@ -100,14 +56,33 @@
     "liveDemo": null,
     "github": null,
     "featured": true,
-    "order": 3
+    "order": 1
   },
-
   {
     "id": "zincirikir",
-    "title": "Zinciri Kır",
+    "title": {
+      "tr": "Zinciri Kır",
+      "en": "Break the Chain",
+      "es": "Rompe la Cadena",
+      "de": "Brich die Kette",
+      "fr": "Brise la Chaîne",
+      "it": "Spezza la Catena",
+      "pt": "Quebre a Corrente",
+      "ru": "Разорви Цепь",
+      "jp": "鎖を断ち切れ"
+    },
     "subtitle": "Bağımlılık bırakma projesi",
-    "shortDescription": "İnsanların bağımlılıklarını bırakabilmelerini ve yeni alışkanlıklar kazanmalarını sağlayan, backend bulunmayan bir PWA Web uygulaması.",
+    "shortDescription": {
+      "tr": "İnsanların bağımlılıklarından kurtulmasını sağlayan açık kaynak kodlu kar amacı gütmeyen bir PWA Web uygulaması.",
+      "en": "An open-source, non-profit PWA that helps people break free from their addictions.",
+      "es": "Una PWA de código abierto y sin fines de lucro que ayuda a las personas a liberarse de sus adicciones.",
+      "de": "Eine quelloffene, gemeinnützige PWA, die Menschen hilft, sich von ihren Süchten zu befreien.",
+      "fr": "Une PWA open source et à but non lucratif qui aide les gens à se libérer de leurs dépendances.",
+      "it": "Una PWA open source e no-profit che aiuta le persone a liberarsi dalle proprie dipendenze.",
+      "pt": "Um PWA de código aberto e sem fins lucrativos que ajuda as pessoas a se libertarem de seus vícios.",
+      "ru": "PWA с открытым исходным кодом, некоммерческое приложение, помогающее людям избавиться от зависимостей.",
+      "jp": "人々が依存から抜け出す手助けをする、オープンソースの非営利PWAアプリ。"
+    },
     "fullDescription": "Zinciri Kır, kullanıcıların hedeflerine ulaşırken süreklilik sağlamaları için 'Zinciri Kırma' (Don't Break the Chain) metodolojisini dijitalleştiren minimalist bir takip uygulamasıdır. Tamamen istemci taraflı (client-side) çalışan bu proje, herhangi bir sunucuya ihtiyaç duymadan verileri kullanıcının tarayıcısında (LocalStorage/IndexedDB) şifreli olarak saklar. Progressive Web App (PWA) mimarisi sayesinde internet bağlantısı olmadan çalışabilir ve mobil cihazlara yerel bir uygulama gibi kurulabilir. Kullanıcı gizliliğini ön planda tutan yapısı, kişisel verilerin cihazdan dışarı çıkmamasını garanti eder.",
     "year": 2026,
     "tags": [
@@ -148,13 +123,33 @@
     "liveDemo": null,
     "github": null,
     "featured": true,
-    "order": 4
+    "order": 2
   },
   {
     "id": "neuralcanvas",
-    "title": "NeuralCanvas",
+    "title": {
+      "tr": "NeuralCanvas",
+      "en": "NeuralCanvas",
+      "es": "NeuralCanvas",
+      "de": "NeuralCanvas",
+      "fr": "NeuralCanvas",
+      "it": "NeuralCanvas",
+      "pt": "NeuralCanvas",
+      "ru": "NeuralCanvas",
+      "jp": "NeuralCanvas"
+    },
     "subtitle": "Açık Kaynak BCI Araştırma Platformu — Düşünceden Ekrana",
-    "shortDescription": "Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI platformu; motor imagery'den gerçek zamanlı görsel decode'a, düşünceden ekrana.",
+    "shortDescription": {
+      "tr": "Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI platformu; motor imagery'den görsel decode'a, düşünceden ekrana.",
+      "en": "An open-source BCI platform that turns brain signals into visual output — from motor imagery to visual decoding, from thought to screen.",
+      "es": "Una plataforma BCI de código abierto que convierte señales cerebrales en salida visual, desde la imaginería motora hasta la decodificación visual: del pensamiento a la pantalla.",
+      "de": "Eine Open-Source-BCI-Plattform, die Gehirnsignale in visuelle Ausgaben umwandelt – von motorischer Vorstellung bis zur visuellen Dekodierung, vom Gedanken zum Bildschirm.",
+      "fr": "Une plateforme BCI open source qui transforme les signaux cérébraux en sortie visuelle — de l'imagerie motrice au décodage visuel, de la pensée à l'écran.",
+      "it": "Una piattaforma BCI open source che trasforma i segnali cerebrali in output visivo, dall'immaginazione motoria alla decodifica visiva: dal pensiero allo schermo.",
+      "pt": "Uma plataforma BCI de código aberto que transforma sinais cerebrais em saída visual — da imagética motora à decodificação visual, do pensamento à tela.",
+      "ru": "Платформа BCI с открытым исходным кодом, преобразующая сигналы мозга в визуальный вывод — от моторных образов к визуальному декодированию, от мысли к экрану.",
+      "jp": "脳信号を視覚出力に変換するオープンソースBCIプラットフォーム。運動イメージから視覚デコードへ、思考から画面へ。"
+    },
     "fullDescription": "NeuralCanvas, beyin-bilgisayar arayüzü (BCI) araştırmaları için geliştirilmiş açık kaynaklı bir platformdur. Motor imagery ve diğer EEG tabanlı sinyallerden gerçek zamanlı özellik çıkarımı ve derin öğrenme tabanlı görsel decode mekanizmalarıyla çalışır. Kullanıcı düşüncelerini veya zihinsel imgelemeyi kaydederek bunları sentezlenmiş görsellere ve dinamik grafik çıktılarına çevirir. Modüler mimarisi sayesinde sinyal ön işleme, kanal seçimi, model eğitimi ve tarayıcı/yerel görüntü oluşturma bileşenleri ayrı ayrı kullanılabilir veya değiştirilebilir. Araştırmacılar için yeniden üretilebilir deney akışları, veri anotasyonu araçları ve GPU hızlandırmalı eğitim desteği sunar.",
     "year": 2026,
     "tags": [
@@ -185,17 +180,120 @@
       "Gerçek zamanlı düşünceden-ekrana demo akışı",
       "Araştırma odaklı, modüler ve yeniden üretilebilir açık kaynak kod tabanı"
     ],
-    "image": "images/zincirikir-hero.jpg",
+    "image": "images/neuralcanvas-hero.jpg",
     "gallery": [
-      "images/zincirikir-calendar.jpg",
-      "images/zincirikir-mobile-view.jpg",
-      "images/zincirikir-darkmode.jpg"
+      "images/neuralcanvas-pipeline.jpg",
+      "images/neuralcanvas-decode.jpg",
+      "images/neuralcanvas-dashboard.jpg"
     ],
     "video": null,
     "liveDemo": null,
     "github": null,
     "featured": true,
+    "order": 3
+  },
+  {
+    "id": "athletico",
+    "title": {
+      "tr": "Athletico",
+      "en": "Athletico",
+      "es": "Athletico",
+      "de": "Athletico",
+      "fr": "Athletico",
+      "it": "Athletico",
+      "pt": "Athletico",
+      "ru": "Athletico",
+      "jp": "Athletico"
+    },
+    "subtitle": "Sporcu Performans Takip PWA",
+    "shortDescription": {
+      "tr": "Antrenman ve performans verilerini takip eden offline destekli PWA. Hızlı arayüz ve Supabase ile gerçek kullanım odaklı.",
+      "en": "An offline-capable PWA for tracking training and performance data. Built for real-world use with a fast interface and Supabase sync.",
+      "es": "Una PWA con soporte offline para el seguimiento de datos de entrenamiento y rendimiento. Interfaz rápida y sincronización real con Supabase.",
+      "de": "Eine offlinefähige PWA zur Erfassung von Trainings- und Leistungsdaten. Schnelle Oberfläche und echte Nutzung mit Supabase-Sync.",
+      "fr": "Une PWA offline pour suivre les données d'entraînement et de performance. Interface rapide et synchronisation réelle avec Supabase.",
+      "it": "Una PWA con supporto offline per monitorare dati di allenamento e prestazioni. Interfaccia veloce e sincronizzazione reale con Supabase.",
+      "pt": "Um PWA com suporte offline para acompanhar dados de treino e desempenho. Interface rápida e sincronização real com Supabase.",
+      "ru": "PWA с офлайн-поддержкой для отслеживания тренировочных и показательных данных. Быстрый интерфейс и реальная синхронизация через Supabase.",
+      "jp": "トレーニングとパフォーマンスデータを追跡するオフライン対応PWA。高速なインターフェースとSupabaseによる実運用同期。"
+    },
+    "fullDescription": "Sporcuların antrenman takibini manuel yöntemlerden kurtarmak amacıyla tasarlandı. Tamamen offline çalışabilme, yerel veri saklama ve Supabase ile bulut senkronizasyonu sunuyor. Kullanıcı dostu arayüz ile egzersiz kayıtları, ilerleme grafikleri ve hedef yönetimi yapılabiliyor.",
+    "year": 2025,
+    "tags": ["Web", "PWA", "JavaScript", "Supabase", "Sports Tech"],
+    "technologies": ["HTML5/CSS3/JavaScript", "Tailwind CSS", "Supabase (Auth + Database)", "IndexedDB", "Service Workers", "Netlify"],
+    "role": "Konsept, tasarım, geliştirme ve deploy (solo proje)",
+    "challenges": [
+      "Offline-first mimari ve veri senkronizasyonu",
+      "Mobil cihazlarda performans optimizasyonu",
+      "Kullanıcı verilerinin güvenli saklanması"
+    ],
+    "results": [
+      "Tam offline modda bile akıcı deneyim",
+      "Supabase ile gerçek zamanlı veri senkronizasyonu",
+      "Kullanıcı testlerinde %40 daha hızlı veri girişi"
+    ],
+    "image": "images/athletico-hero.jpg",
+    "gallery": [
+      "images/athletico-dashboard.jpg",
+      "images/athletico-progress.jpg",
+      "images/athletico-offline.jpg"
+    ],
+    "video": null,
+    "liveDemo": "https://athleticoapp.netlify.app",
+    "github": null,
+    "featured": false,
+    "order": 4
+  },
+  {
+    "id": "athleticocore",
+    "title": {
+      "tr": "AthleticoCore",
+      "en": "AthleticoCore",
+      "es": "AthleticoCore",
+      "de": "AthleticoCore",
+      "fr": "AthleticoCore",
+      "it": "AthleticoCore",
+      "pt": "AthleticoCore",
+      "ru": "AthleticoCore",
+      "jp": "AthleticoCore"
+    },
+    "subtitle": "AI Destekli Şınav Koçu",
+    "shortDescription": {
+      "tr": "Kamera ile gerçek zamanlı form analizi yapan, tekrar sayan ve performans metrikleri üreten çekirdek sistem.",
+      "en": "A core system that analyzes exercise form in real time via camera, counts reps, and generates performance metrics.",
+      "es": "Un sistema central que analiza la forma del ejercicio en tiempo real mediante cámara, cuenta repeticiones y genera métricas de rendimiento.",
+      "de": "Ein Kernsystem, das die Übungsform per Kamera in Echtzeit analysiert, Wiederholungen zählt und Leistungskennzahlen erstellt.",
+      "fr": "Un système central qui analyse la forme d'exercice en temps réel via la caméra, compte les répétitions et génère des métriques de performance.",
+      "it": "Un sistema centrale che analizza la forma dell'esercizio in tempo reale tramite fotocamera, conta le ripetizioni e genera metriche di prestazione.",
+      "pt": "Um sistema central que analisa a forma do exercício em tempo real via câmera, conta repetições e gera métricas de desempenho.",
+      "ru": "Основная система, анализирующая технику выполнения упражнения в реальном времени через камеру, считающая повторения и формирующая показатели эффективности.",
+      "jp": "カメラでリアルタイムにフォームを解析し、回数をカウントし、パフォーマンス指標を生成するコアシステム。"
+    },
+    "fullDescription": "Athletico altyapısı üzerine kurulu performans odaklı çekirdek. Tarayıcı kamerası üzerinden pose estimation ile dirsek/omuz/kalça açılarını hesaplayarak form doğruluğunu değerlendiriyor. Skorlama, hız, tekrar sayısı gibi istatistikler üretiyor.",
+    "year": 2025,
+    "tags": ["Frontend", "Performance", "Sports Science", "AI", "Computer Vision"],
+    "technologies": ["JavaScript", "TensorFlow.js / MediaPipe Pose", "WebRTC", "Canvas/WebGL", "Tailwind CSS", "Netlify"],
+    "role": "Tam geliştirme (model entegrasyonu, UI, optimizasyon)",
+    "challenges": [
+      "Düşük cihazlarda gerçek zamanlı 25+ FPS koruma",
+      "Farklı vücut tiplerinde doğru açı hesaplama",
+      "Tarayıcı izinleri ve gizlilik uyumu"
+    ],
+    "results": [
+      "Ortalama 28 FPS orta seviye telefonlarda",
+      "Form doğruluğu %83+ (test seti)",
+      "Kullanıcı motivasyonunda belirgin artış"
+    ],
+    "image": "images/athleticocore-hero.jpg",
+    "gallery": [
+      "images/athleticocore-camera.jpg",
+      "images/athleticocore-stats.jpg",
+      "images/athleticocore-feedback.jpg"
+    ],
+    "video": "videos/athleticocore-demo.mp4",
+    "liveDemo": "https://athleticocore.netlify.app",
+    "github": null,
+    "featured": false,
     "order": 5
   }
-
 ]
