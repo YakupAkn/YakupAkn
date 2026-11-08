@@ -11,9 +11,8 @@ Merhaba! Ben **Yakup Delil Akın**. Kariyerimin yönünün ne olacağını biliy
 ## Öne Çıkan Özellikler
 
 - **Sinematik Atmosfer:** `Noise` efekti ve özel imleç (custom cursor) ile derinlikli bir görsel deneyim.
-- **Çok Dilli Yapı (i18n):** TR/EN/ES/DE dil desteği ile global erişilebilirlik.
+- **Çok Dilli Yapı (i18n):** 9 dil desteği ile global erişilebilirlik.
 - **Yüksek Performans:** Tailwind CSS ve optimize edilmiş kod yapısı.
-- **Motion & Interaction:** GSAP ve Framer Motion ile 3D hissi veren akıcı geçişler.
 - **Tam Duyarlılık:** Mobil, tablet ve masaüstü cihazlarda kusursuz görünüm.
 - **Dinamik İçerik:** Proje detayları ve içerikler JSON tabanlı yapıdan dinamik olarak çekilir.
 
@@ -32,12 +31,12 @@ Projede kullanılan modern teknolojiler ve kütüphaneler:
 
 Yaratıcı süreçlerimi ve teknik yetkinliklerimi yansıtan bazı çalışmalar:
 
-### 1. [Athletico](https://athleticoapp.netlify.app) 🏃‍♂️
+### 1. [Athletico](https://athleticoapp.netlify.app)
 Sporcular için geliştirilmiş kapsamlı bir takip ve analiz uygulaması.
 - **Teknolojiler:** HTML, CSS, JS, MediaPipe.
 - **Odak:** Kullanıcı dostu arayüz ve veri görselleştirme.
 
-### 2. [AthleticoCore](https://athleticocore.netlify.app) 🧠
+### 2. [AthleticoCore](https://athleticocore.netlify.app)
 Yapay zeka destekli, gerçek zamanlı form analizi aracı.
 - **Teknolojiler:** Html, MediaPipe, OpenCV, JavaScript, Tailwind CSS.
 - **Özellik:** Kamera üzerinden kullanıcının duruşunu analiz eder ve anlık geri bildirim verir.
