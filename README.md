@@ -1,49 +1,78 @@
 # Yakup Delil Akın
-Software Developer 
-Portföy: https://yakupakn.github.io/YakupAkn/  
+Software Developer | BCI & Neuroengineering Path
+
+Portfolio: https://yakupakn.github.io/YakupAkn/
 LinkedIn: https://linkedin.com/in/yakupdelilakin
 
+## About
 
-## Hakkında
+Hi! I'm **Yakup Delil Akın**, a software developer working on brain-computer interfaces, web development, and cybersecurity. My long-term goal is neuroengineering.
 
-Merhaba! Ben **Yakup Delil Akın**. Kariyerimin yönünün ne olacağını biliyorum. Ancak BCI, web geliştirme ve siber güvenlik ile ilgileniyorum
+## Selected Projects
 
-## Öne Çıkan Özellikler
+### 1. [NeuralCanvas](https://yakupakn.github.io/YakupAkn/neuralcanvas)
+Open-source BCI research platform that turns brain signals into visual output.
+- **Result:** 80% single-subject motor imagery classification accuracy on PhysioNet data (FBCSP + SVM).
+- **Tech:** Python, EEG signal processing, FBCSP, SVM.
 
-- **Sinematik Atmosfer:** `Noise` efekti ve özel imleç (custom cursor) ile derinlikli bir görsel deneyim.
-- **Çok Dilli Yapı (i18n):** 9 dil desteği ile global erişilebilirlik.
-- **Yüksek Performans:** Tailwind CSS ve optimize edilmiş kod yapısı.
-- **Tam Duyarlılık:** Mobil, tablet ve masaüstü cihazlarda kusursuz görünüm.
-- **Dinamik İçerik:** Proje detayları ve içerikler JSON tabanlı yapıdan dinamik olarak çekilir.
-
-## Teknoloji Yığını
-
-Projede kullanılan modern teknolojiler ve kütüphaneler:
-
-| Kategori | Teknolojiler |
-| :--- | :--- |
-| **Core** | ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black) |
-| **Styling** | ![TailwindCSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white) ![Sass](https://img.shields.io/badge/-Sass-CC6699?logo=sass&logoColor=white) |
-| **Animation** | ![GSAP](https://img.shields.io/badge/-GSAP-88CE02?logo=greensock&logoColor=white) ![Framer Motion](https://img.shields.io/badge/-Framer_Motion-0055FF?logo=framer&logoColor=white) |
-| **Assets & Fonts** | Font Awesome, Google Fonts (Space Grotesk + Syne) |
-
-## Seçilmiş Projeler
-
-Yaratıcı süreçlerimi ve teknik yetkinliklerimi yansıtan bazı çalışmalar:
-
-### 1. [Athletico](https://athleticoapp.netlify.app)
-Sporcular için geliştirilmiş kapsamlı bir takip ve analiz uygulaması.
-- **Teknolojiler:** HTML, CSS, JS, MediaPipe.
-- **Odak:** Kullanıcı dostu arayüz ve veri görselleştirme.
+*TR: Beyin sinyallerini görsele çeviren açık kaynaklı BCI araştırma platformu.*
 
 ### 2. [AthleticoCore](https://athleticocore.netlify.app)
-Yapay zeka destekli, gerçek zamanlı form analizi aracı.
-- **Teknolojiler:** Html, MediaPipe, OpenCV, JavaScript, Tailwind CSS.
-- **Özellik:** Kamera üzerinden kullanıcının duruşunu analiz eder ve anlık geri bildirim verir.
+Browser-based, real-time exercise form analysis and performance tracking. Analyzes posture through the camera and gives instant feedback.
+- **Tech:** JavaScript, MediaPipe, OpenCV, Tailwind CSS.
 
-## 3. Zinciri Kır
-İnsanların bağımlılıklarından kurtulmasını sağlayan açık kaynak kodlu kar amacı gütmeyen bir PWA Web uygulaması.
+*TR: Kamerayla anlık egzersiz formu analizi yapan tarayıcı uygulaması.*
 
-## 4. [NeuralCanvas](https://yakupakn.github.io/YakupAkn/neuralcanvas)
-Beyin sinyallerini görsel çıktıya dönüştüren açık kaynaklı BCI araştırma platformu — motor imagery'den görsel decode'a, düşünceden ekrana.
+### 3. [Nebula](https://nebulateamapp.vercel.app)
+Real-time, multi-tenant Kanban board.
+- **Features:** Magic link auth, full RLS (Row Level Security), live on Vercel.
+- **Tech:** Next.js, TypeScript, Supabase, Vercel.
 
+*TR: Gerçek zamanlı, çok kiracılı Kanban panosu.*
+
+### 4. [anlat](https://github.com/YakupAkn/anlat)
+Open-source analysis tool that runs a suspicious file in a sandbox and explains what it does in plain language.
+- **Tech:** Python, sandbox, MIT license.
+
+*TR: Şüpheli dosyanın ne yaptığını sade dille anlatan analiz aracı.*
+
+### 5. [guard](https://github.com/YakupAkn/guard)
+Windows security tool that records the lock screen with the camera and uses face recognition to show who touched your computer.
+- **Tech:** Python, face recognition, OpenCV.
+
+*TR: Bilgisayarına kimin dokunduğunu gösteren kilit ekranı güvenlik aracı.*
+
+### 6. [link-kontrol](https://github.com/YakupAkn/link-kontrol)
+Chrome extension that scans links and flags fake ones. Checks lookalike domains, foreign characters, and http/https status with a rule engine and database.
+- **Tech:** JavaScript, Chrome Extension (Manifest), Python.
+
+*TR: Sahte linkleri tespit eden Chrome eklentisi.*
+
+### 7. [MyBad](https://github.com/YakupAkn/MyBad)
+Tool that finds forgotten files on a messy drive using Everything search, guided questions, and date filters.
+- **Tech:** Python, SQLite, Everything.
+
+*TR: Dağınık diskte unutulan dosyaları bulan araç.*
+
+### 8. [Zinciri Kır](https://github.com/YakupAkn/zinciri-kir)
+Open-source, privacy-focused PWA that helps people overcome addictions. No backend.
+- **Tech:** JavaScript, PWA.
+
+*TR: Bağımlılıkları yenmeye yardım eden, backend'siz, gizlilik odaklı PWA.*
+
+## More Projects
+
+- [StudyForce](https://github.com/YakupAkn/StudyForce): Study tool I started building during exam week to stay focused.
+- [OpenSpatial](https://github.com/YakupAkn/OpenSpatial): Open-source spatial audio effects desktop app.
+
+## Tech Stack
+
+| Category | Technologies |
+| :--- | :--- |
+| **Languages** | ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black) ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white) ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white) |
+| **Web** | ![Next.js](https://img.shields.io/badge/-Next.js-000000?logo=nextdotjs&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white) PWA, Chrome Extension |
+| **Database** | ![Supabase](https://img.shields.io/badge/-Supabase-3FCF8E?logo=supabase&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?logo=postgresql&logoColor=white) ![SQLite](https://img.shields.io/badge/-SQLite-003B57?logo=sqlite&logoColor=white) |
+| **AI & Vision** | ![OpenCV](https://img.shields.io/badge/-OpenCV-5C3EE8?logo=opencv&logoColor=white) ![MediaPipe](https://img.shields.io/badge/-MediaPipe-0097A7?logo=google&logoColor=white) YOLOv8, DeepFace |
+| **BCI & Signal Processing** | EEG, FBCSP, SVM, PhysioNet |
+| **Deploy** | ![Vercel](https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white) ![Netlify](https://img.shields.io/badge/-Netlify-00C7B7?logo=netlify&logoColor=white) ![GitHub Pages](https://img.shields.io/badge/-GitHub_Pages-222222?logo=github&logoColor=white) |
+| **Hardware** | ESP32, Deneyap Kart |
