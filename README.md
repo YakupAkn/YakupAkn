@@ -1,5 +1,5 @@
 # Yakup Delil Akın
-Software Developer | BCI & Neuroengineering Path
+Software Developer
 
 Portfolio: https://yakupakn.github.io/YakupAkn/
 LinkedIn: https://linkedin.com/in/yakupdelilakin
