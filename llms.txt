@@ -1,0 +1,51 @@
+# Yakup Delil Akın
+
+> Yakup Delil Akın, beyin-bilgisayar arayüzleri, web geliştirme ve siber güvenlik alanlarında çalışan bir yazılım geliştiricidir. Bu site onun kişisel portföyüdür; statik bir sitedir (GitHub Pages), arka uç veya form içermez.
+> (EN: Personal portfolio of Yakup Delil Akın, a software developer working on brain-computer interfaces, web development and cybersecurity. Static site, no backend.)
+
+Uzun vadeli hedefi nöromühendisliktir (kaynak: README.md). Site Türkçe öncelikli olup 9 dilde arayüz sunar (TR, EN, ES, DE, FR, IT, PT, RU, JP); çeviriler locales/ klasöründedir.
+
+Kök adres: https://yakupakn.github.io/YakupAkn/
+
+## Sayfa haritası
+
+- [Ana sayfa](https://yakupakn.github.io/YakupAkn/): Tanıtım, seçili projeler, hakkında bölümü ve iletişim bağlantıları.
+- [Projeler](https://yakupakn.github.io/YakupAkn/projeler.html): Tüm projelerin listesi. Veri projeler.json dosyasından yüklenir.
+- [Dijital ürünler](https://yakupakn.github.io/YakupAkn/urunler.html): Canlı dijital ürünlerin özeti. Sayfada kişi, hizmet ve sık sorulan sorular için JSON-LD yapılandırılmış verisi bulunur.
+- [Athletico](https://yakupakn.github.io/YakupAkn/athletico.html): Antrenman ve performans verilerini takip eden, çevrimdışı çalışabilen, Supabase ile senkronize olan PWA. Canlı sürüm: https://athleticoapp.netlify.app
+- [AthleticoCore](https://yakupakn.github.io/YakupAkn/athleticocore.html): Tarayıcıda kamerayla gerçek zamanlı egzersiz formu analizi yapan ve tekrar sayan computer vision projesi. Canlı sürüm: https://athleticocore.netlify.app
+- [NeuralCanvas](https://yakupakn.github.io/YakupAkn/neuralcanvas.html): Beyin sinyallerini (EEG) görsel çıktıya dönüştürmeyi amaçlayan açık kaynaklı BCI araştırma platformunun araştırma günlüğü ve zaman çizelgesi.
+- [Phantom Labs](https://yakupakn.github.io/YakupAkn/phantomlabs.html): Python ile yazılmış, çevrimdışı çalışan, adli analiz ve uç nokta güvenliği odaklı modüler siber güvenlik araştırma çerçevesinin mantıksal akışı ve metodolojisi. projeler.json içinde bu proje için canlı demo bağlantısı tanımlı değildir.
+- [Zinciri Kır](https://yakupakn.github.io/YakupAkn/zincirikir.html): Bağımlılıkları bırakmaya yardım eden, açık kaynaklı, kar amacı gütmeyen, sunucusuz (no-backend) ve çevrimdışı çalışan PWA.
+- [Boks](https://yakupakn.github.io/YakupAkn/box.html): Kişisel sayfa; boks müsabakaları, antrenman düzeni ve dövüş stili. Veri box.json dosyasındadır.
+- Oyun ve simülasyonlar: oyun.html (navigasyon ve harita simülasyonu), drone-simulator.html (drone simülatörü) ve oyun1.html, oyun2.html gibi diğer oyun sayfaları. Hepsi tarayıcıda çalışır.
+
+## Yapıldığı belirtilen işler
+
+Sitede ve README'de şu çalışmalar yer alır:
+
+- Web uygulamaları ve PWA geliştirme (Athletico, Zinciri Kır; Next.js, TypeScript, Supabase ile geliştirilen Nebula adlı çok kiracılı Kanban panosu).
+- Computer vision (AthleticoCore; MediaPipe, OpenCV).
+- Siber güvenlik araçları (Phantom Labs; ayrıca GitHub'da anlat, guard, link-kontrol).
+- Beyin-bilgisayar arayüzü araştırması (NeuralCanvas; README'ye göre PhysioNet verisinde tek denekte motor imagery sınıflandırmasında %80 doğruluk, FBCSP + SVM).
+- Küçük yardımcı araçlar ve masaüstü uygulamaları (MyBad, StudyForce, OpenSpatial; GitHub profilinde).
+
+## Hizmetler
+
+Site, hizmet alanlarını şu başlıklarla belirtir: Web Development, PWA Development, UI/UX Design, Product Strategy (urunler.html içindeki JSON-LD) ile Creative Development, UI/UX Strategy, 3D Immersive Web, Web Development (ana sayfa). Fiyat, kapasite, çalışma modeli ve müsaitlik durumu hakkında sitede yayımlanmış bir bilgi yoktur.
+
+## İletişim
+
+- E-posta: mailto:yakupdelilakin@gmail.com
+- GitHub: https://github.com/YakupAkn
+- LinkedIn: https://www.linkedin.com/in/yakupdelilakin/
+
+Siteye ulaşımın tek yolu bu bağlantılardır. Site statik olduğu için iş oluşturma, teklif alma veya mesaj gönderme gibi işlemleri otomatik yapan bir uç nokta yoktur.
+
+## Makine tarafından okunabilir kaynaklar
+
+- projeler.json: Proje verilerinin ana kaynağı (başlık ve kısa açıklama 9 dilde; alt başlık ve uzun açıklama tek dilde (Türkçe); yıl, etiketler, teknolojiler, rol, canlı demo bağlantıları).
+- box.json: Boks sayfasının verisi.
+- sitemap.xml: https://yakupakn.github.io/YakupAkn/sitemap.xml
+- JSON-LD: index.html (Person) ve urunler.html (Person, ProfessionalService, FAQPage); iki Person bloğu aynı @id ile tek kişiyi tanımlar.
+- README.md: Depo yapısı ve proje özetleri.

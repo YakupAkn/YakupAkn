@@ -76,3 +76,51 @@ Open-source, privacy-focused PWA that helps people overcome addictions. No backe
 | **BCI & Signal Processing** | EEG, FBCSP, SVM, PhysioNet |
 | **Deploy** | ![Vercel](https://img.shields.io/badge/-Vercel-000000?logo=vercel&logoColor=white) ![Netlify](https://img.shields.io/badge/-Netlify-00C7B7?logo=netlify&logoColor=white) ![GitHub Pages](https://img.shields.io/badge/-GitHub_Pages-222222?logo=github&logoColor=white) |
 | **Hardware** | ESP32, Deneyap Kart |
+
+## Site Structure
+
+The portfolio is a static site served from GitHub Pages. There is no build step: the files in this repository are what gets published. *TR: Statik bir site; build adımı yok, depodaki dosyalar doğrudan yayınlanır.*
+
+```
+.
+├── index.html            Home: intro, selected projects, about, contact
+├── projeler.html         All projects (data loaded from projeler.json)
+├── urunler.html          Live digital products (+ Person / ProfessionalService / FAQPage JSON-LD)
+├── athletico.html        Athletico (sports tracking PWA)
+├── athleticocore.html    AthleticoCore (camera-based exercise form analysis)
+├── neuralcanvas.html     NeuralCanvas (BCI research log)
+├── phantomlabs.html      Phantom Labs (offline security research framework)
+├── zincirikir.html       Zinciri Kır (addiction-recovery PWA)
+├── box.html              Boxing page (data in box.json)
+├── oyun*.html, drone-simulator.html   Small browser games and simulations
+├── 404.html              Not-found page
+├── js/
+│   ├── layout.js         Shared header and footer (single source for all pages)
+│   ├── game-common.js    Shared helpers for the game pages
+│   ├── i18n.js           Language switching (9 languages)
+│   ├── index.js, main.js, neuralcanvas.js   Page-specific scripts
+├── css/                  Page styles
+├── locales/              Translation files: tr, en, es, de, fr, it, pt, ru, jp
+├── images/               Logos, icons, screenshots
+├── tools/wss.py          Favicon generator (run from anywhere: python tools/wss.py)
+├── sw.js, manifest.json  Service worker (offline support) and PWA manifest
+├── sitemap.xml, ROBOTS.txt   Search engine files
+├── llms.txt              Plain-text site summary for language-model tools
+├── projeler.json         Project data (source of truth for the project pages)
+└── box.json              Data for the boxing page
+```
+
+Texts are translated through `locales/*.json`; `js/layout.js` injects the common header and footer, so navigation or footer changes are made in one place.
+
+## Machine-Readable Sources
+
+- [`projeler.json`](projeler.json): structured project data (titles and short descriptions in 9 languages; subtitle and full description in Turkish only; year, tags, technologies, role, demo links). It is the source the project pages read from, and `llms.txt` points to it.
+- [`llms.txt`](llms.txt): short plain-text description of who I am, what each page contains, and how to reach me.
+- [`sitemap.xml`](sitemap.xml): list of public pages.
+- JSON-LD: `index.html` defines the `Person` entity; `urunler.html` adds service and FAQ data and reuses the same `@id`.
+
+*TR: Makine okunabilir kaynaklar yukarıdadır; projelerin tek veri kaynağı `projeler.json`'dır.*
+
+## Contact and Limits
+
+This is a static site: there is no API, form handler or job-intake endpoint. The only way to reach me is the contact information above and in `llms.txt` (email: yakupdelilakin@gmail.com, plus the GitHub and LinkedIn profiles). Tools that read this site can learn about my work, but cannot assign tasks to me through it.

@@ -20,6 +20,27 @@
     <meta property="og:title" content="Yakup Delil Akın - Portföy">
     <meta property="og:description" content="Yakup Delil Akın'ın portföy sitesi">
     <meta property="og:url" content="https://yakupakn.github.io/YakupAkn/">
+
+    <!-- JSON-LD: kişi varlığı (Person). Aynı @id urunler.html'deki Person bloğunda da var;
+         tarayıcılar iki bloğu tek varlık olarak birleştirir, bu yüzden burada yalnızca
+         bu sayfaya özgü alanlar (e-posta, uzmanlık, bağlantılar) yer alır. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://yakupakn.github.io/YakupAkn/#person",
+      "name": "Yakup Delil Akın",
+      "url": "https://yakupakn.github.io/YakupAkn/",
+      "jobTitle": "Software Developer",
+      "email": "mailto:yakupdelilakin@gmail.com",
+      "knowsAbout": ["Frontend Architecture", "Interactive 3D Web", "Motion Graphics", "Product Design", "Python"],
+      "sameAs": [
+        "https://github.com/YakupAkn",
+        "https://www.linkedin.com/in/yakupdelilakin/"
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
