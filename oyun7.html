@@ -2,11 +2,13 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Neon Breakout | YDA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#f0f' } } } }
     </script>
+    <script src="js/game-common.js" defer data-touch-mouse></script>
 </head>
 <body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono">
     <h1 class="text-3xl font-black mb-4 text-primary drop-shadow-[0_0_10px_rgba(255,0,255,0.8)]">NEON BREAKOUT</h1>
@@ -38,7 +40,8 @@
 
         document.addEventListener("mousemove", mouseMoveHandler, false);
         function mouseMoveHandler(e) {
-            let relativeX = e.clientX - canvas.offsetLeft;
+            const rect = canvas.getBoundingClientRect();
+            let relativeX = (e.clientX - rect.left) * (canvas.width / rect.width);
             if(relativeX > 0 && relativeX < canvas.width) {
                 paddle.x = relativeX - paddle.w/2;
             }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FF3D00">
+<title>Boks | Yakup Delil Akın</title>
+<link rel="icon" type="image/png" href="images/yda-logo.png?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--card:#141414;--line:rgba(255,255,255,.09);--text:#F5F5F5;--muted:#8d8d8d;--primary:#FF3D00}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;line-height:1.6;padding:0 1.5rem}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+main{max-width:900px;margin:0 auto;padding:2.5rem 0 7rem}
+.back{display:inline-block;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:4rem}
+.back:hover{color:var(--primary)}
+h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-.02em}
+h1{font-size:clamp(4.5rem,20vw,11rem);font-weight:800;line-height:.9;margin-bottom:1.5rem}
+h1 i{color:var(--primary);font-style:normal}
+h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;margin-bottom:1.5rem}
+.intro{max-width:52ch;color:var(--muted);font-size:1.1rem;margin-bottom:3rem}
+.meta{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;color:var(--muted);font-size:.9rem;margin-bottom:4.5rem}
+.meta b{color:var(--text);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:6rem}
+.stats div{padding:1.4rem 1rem 1.4rem 0}
+.stats strong{display:block;font-family:'Syne',sans-serif;font-size:1.9rem;line-height:1.1}
+.stats span{color:var(--muted);font-size:.85rem}
+section{margin-bottom:5.5rem}
+.list{list-style:none;border-top:1px solid var(--line)}
+.list li{display:grid;grid-template-columns:9rem 1fr;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--line)}
+.list time,.list .k{color:var(--primary);font-weight:600;font-size:.92rem}
+.list h3{font-size:1.15rem;margin-bottom:.15rem}
+.list p{color:var(--muted);font-size:.95rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.two h3{font-size:1.1rem;margin-bottom:1rem}
+.two ul{list-style:none}
+.two li{padding:.55rem 0;border-bottom:1px solid var(--line);color:var(--text)}
+.two .grow li::before{content:"+ ";color:var(--primary);font-weight:700}
+.two .strong li::before{content:"\2713  ";color:var(--primary)}
+.err{border:1px solid var(--primary);border-radius:14px;padding:1.2rem;color:var(--text);max-width:60ch}
+@media(max-width:640px){.list li{grid-template-columns:1fr;gap:.2rem}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">Ana sayfa</a>
+
+  <header>
+    <h1 id="title">Boks<i>.</i></h1>
+    <p class="intro" id="intro"></p>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2>Müsabakalar</h2>
+    <ul class="list" id="matches"></ul>
+  </section>
+
+  <section>
+    <h2>Antrenman düzeni</h2>
+    <ul class="list" id="training"></ul>
+  </section>
+
+  <section>
+    <h2>Dövüş stilim</h2>
+    <div class="two">
+      <div><h3>Güçlü yanlarım</h3><ul class="strong" id="strengths"></ul></div>
+      <div><h3>Üzerinde çalıştığım</h3><ul class="grow" id="improving"></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hedefler</h2>
+    <ul class="list" id="goals"></ul>
+  </section>
+</main>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const fmt = (iso, opts) => new Date(iso).toLocaleDateString('tr-TR', opts || { day: 'numeric', month: 'long', year: 'numeric' });
+
+  function el(tag, text, cls) {
+    const e = document.createElement(tag);
+    if (text != null) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+  function row(left, title, detail, leftClass) {
+    const li = document.createElement('li');
+    li.appendChild(el('span', left, leftClass || 'k'));
+    const box = document.createElement('div');
+    box.appendChild(el('h3', title));
+    if (detail) box.appendChild(el('p', detail));
+    li.appendChild(box);
+    return li;
+  }
+  function fill(id, items, make) {
+    const target = $(id);
+    items.forEach(i => target.appendChild(make(i)));
+  }
+
+  function render(d) {
+    const p = d.profile;
+    $('title').textContent = p.title;
+    $('title').appendChild(el('i', '.'));
+    $('intro').textContent = p.intro;
+
+    const days = Math.max(0, Math.floor((Date.now() - new Date(p.since)) / 86400000));
+    const meta = $('meta');
+    [['Başlangıç', fmt(p.since)], ['Boksta geçen süre', days + ' gün'], ['Antrenör', p.coach], ['Şehir', p.city], ['Stil', p.style]]
+      .forEach(([k, v]) => {
+        const s = document.createElement('span');
+        s.append(k + ': ');
+        s.appendChild(el('b', v));
+        meta.appendChild(s);
+      });
+
+    fill('stats', d.stats, s => {
+      const c = document.createElement('div');
+      c.appendChild(el('strong', s.value));
+      c.appendChild(el('span', s.label));
+      return c;
+    });
+    fill('matches', d.matches, m => row(fmt(m.date), m.title, m.detail, 'k'));
+    fill('training', d.training, t => row(t.time, t.text, null, 'k'));
+    fill('strengths', d.strengths, s => el('li', s));
+    fill('improving', d.improving, s => el('li', s));
+    fill('goals', d.goals, g => row(fmt(g.date, { month: 'long', year: 'numeric' }), g.title, g.detail, 'k'));
+  }
+
+  fetch('box.json', { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(render)
+    .catch(() => {
+      const m = document.querySelector('main');
+      m.appendChild(el('p', 'Veriler yüklenemedi. box.json dosyasının box.html ile aynı klasörde olduğunu ve sayfayı yerel sunucudan (Live Preview) açtığını kontrol et.', 'err'));
+    });
+})();
+</script>
+</body>
+</html>

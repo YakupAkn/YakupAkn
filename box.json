@@ -1,0 +1,52 @@
+{
+  "profile": {
+    "title": "Boks",
+    "since": "2025-11-05",
+    "weightClass": "57 kg",
+    "style": "Baskıcı dövüşçü (swarmer)",
+    "coach": "Erdal Karaca",
+    "city": "Siirt",
+    "intro": "Kasım 2025'te başladım. İlk müsabakamda il ikincisi oldum. Şimdi hedefim il elemelerinde ve Türkiye şampiyonasında yer almak."
+  },
+  "stats": [
+    { "label": "Müsabaka", "value": "1" },
+    { "label": "Madalya", "value": "Gümüş" },
+    { "label": "Kategori", "value": "57 kg" },
+    { "label": "Antrenman", "value": "Haftada 5 gün" }
+  ],
+  "matches": [
+    {
+      "date": "2026-03-03",
+      "title": "İl müsabakası",
+      "detail": "57 kg. İlk resmi maçım, il ikinciliği ve gümüş madalya."
+    }
+  ],
+  "training": [
+    { "time": "Sabah", "text": "3 km koşu ve calisthenics" },
+    { "time": "Akşam", "text": "Salonda boks çalışması, haftada 5 gün" },
+    { "time": "Ay", "text": "8 ila 10 sparring günü" }
+  ],
+  "strengths": [
+    "Sert vuruş",
+    "Yakın mesafede baskı ve vücut vuruşları",
+    "Kendimden uzun rakiplere karşı yakın dövüş"
+  ],
+  "improving": [
+    "Ayak çalışması",
+    "Baş hareketi ve eskiv",
+    "Açılı girişler ve fentler",
+    "Boyun gücü"
+  ],
+  "goals": [
+    {
+      "date": "2027-04-12",
+      "title": "Okul Sporları İl Elemeleri",
+      "detail": "12-15 Nisan 2027 (planlanan tarih)"
+    },
+    {
+      "date": "2027-05-01",
+      "title": "Türkiye Şampiyonası",
+      "detail": "Mayıs 2027, Türkiye derecesi hedefi"
+    }
+  ]
+}

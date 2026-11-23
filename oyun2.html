@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Cyber Pong | YDA (Time Attack)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,6 +17,7 @@
             animation: flash 1.5s ease-in-out;
         }
     </style>
+    <script src="js/game-common.js" defer data-touch-mouse></script>
 </head>
 <body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden relative">
     
@@ -56,7 +58,7 @@
         canvas.addEventListener("mousemove", getMousePos);
         function getMousePos(evt) {
             let rect = canvas.getBoundingClientRect();
-            user.y = evt.clientY - rect.top - user.h/2;
+            user.y = (evt.clientY - rect.top) * (canvas.height / rect.height) - user.h/2;
         }
 
         function resetBall() {

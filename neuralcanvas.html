@@ -42,62 +42,13 @@
         }
     </script>
     </script>
+    <script src="js/layout.js"></script>
 </head>
 <body class="antialiased">
     <div class="noise"></div>
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
-    <header class="fixed top-0 w-full z-[80] px-5 sm:px-6 md:px-12 py-5 transition-all duration-500 backdrop-blur-md bg-bgDark/40 border-b border-white/5 group" id="main-header">
-        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-100"></div>
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-2xl md:text-3xl font-black font-display tracking-tightest hover:skew-x-[-10deg] transition-transform duration-300">
-                YDA<span class="text-primary animate-pulse">_</span>
-            </a>
-            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
-                <a href="projeler.html" class="nav-link relative group py-2">
-                    Projeler
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="hakkimda.html" class="nav-link relative group py-2">
-                    Hakkında
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="index.html#contact" class="nav-link relative group py-2">
-                    İletişim
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="blog.html" class="nav-link relative group py-2">
-                    Blog
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
-            <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-                <button id="menu-toggle" class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-4 py-3 text-white md:hidden hover:bg-white/15 transition-all duration-300" aria-label="Menüyü aç">
-                    <i class="fas fa-bars" aria-hidden="true"></i>
-                </button>
-                <a href="projeler.html" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[10px] font-black uppercase tracking-tighter bg-white text-black rounded-full hover:bg-primary hover:text-black transition-all duration-300 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-primary/40">
-                    Tüm Projeler
-                </a>
-            </div>
-        </div>
-    </header>
-    <div id="mobile-nav" class="fixed inset-x-0 top-0 z-[90] hidden min-h-screen bg-bgDark/95 p-6 backdrop-blur-xl md:hidden">
-        <div class="flex items-center justify-between mb-8">
-            <a href="index.html" class="text-2xl font-black font-display tracking-tightest">YDA<span class="text-primary">_</span></a>
-            <button id="mobile-nav-close" aria-label="Menüyü kapat" class="text-white text-2xl hover:text-primary transition-colors"><i class="fas fa-times" aria-hidden="true"></i></button>
-        </div>
-        <nav class="flex flex-col gap-4 uppercase tracking-[0.22em] text-sm font-bold text-white">
-            <a href="projeler.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Projeler</a>
-            <a href="hakkimda.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Hakkında</a>
-            <a href="index.html#contact" class="py-3 border-b border-white/10 hover:text-primary transition-colors">İletişim</a>
-            <a href="blog.html" class="py-3 border-b border-white/10 hover:text-primary transition-colors">Blog</a>
-        </nav>
-        <div class="mt-8">
-            <a href="projeler.html" class="inline-flex w-full items-center justify-center gap-3 px-6 py-4 rounded-full bg-primary text-black font-black uppercase tracking-[0.2em] hover:bg-white transition-all duration-300">
-                Tüm Projeler
-            </a>
-        </div>
-    </div>
+    <div id="site-header"></div>
     <main class="relative">
         <section id="overview" class="min-h-[92vh] flex items-end pt-24 pb-16 px-6 md:px-12 lg:px-24 project-hero">
             <div class="max-w-7xl mx-auto w-full">
@@ -305,5 +256,6 @@
         </section>
     </main>
     <script src="js/neuralcanvas.js"></script>
+    <div id="site-footer"></div>
 </body>
 </html>

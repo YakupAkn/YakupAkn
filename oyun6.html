@@ -2,99 +2,110 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Matrix Typer: düşen kelimeleri yere ulaşmadan yaz. Masaüstü ve mobil uyumlu mini oyun.">
     <title>Matrix Typer | YDA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', matrix: '#00ff41' } } } }
-    </script>
+    <script>tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', matrix: '#00ff41' } } } }</script>
+    <script src="js/game-common.js" defer></script>
 </head>
-<body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center font-mono overflow-hidden">
-    <div class="absolute top-5 text-center z-10">
-        <h1 class="text-3xl font-black text-matrix tracking-widest">MATRIX <span class="text-white">TYPER</span></h1>
-        <p class="text-xs text-gray-500">Kelimeleri yere düşmeden yaz!</p>
-        <div class="mt-2 text-xl">Skor: <span id="score">0</span></div>
+<body class="bg-bgDark text-white font-mono flex flex-col items-center justify-start min-h-[100dvh] overflow-hidden pt-14">
+    <div class="text-center z-10 px-4">
+        <h1 class="text-2xl sm:text-3xl font-black text-matrix tracking-widest">MATRIX <span class="text-white">TYPER</span></h1>
+        <div class="mt-1 text-sm sm:text-base">Skor: <span id="score">0</span> · Rekor: <span id="best">0</span> · Can: <span id="lives">❤❤❤</span></div>
     </div>
 
-    <canvas id="gameCanvas" width="600" height="500" class="bg-black/50 border border-matrix/30 rounded shadow-[0_0_20px_rgba(0,255,65,0.1)]"></canvas>
-    
-    <div id="gameOverScreen" class="hidden absolute inset-0 bg-black/90 flex-col items-center justify-center z-20">
-        <h2 class="text-4xl font-bold text-red-500 mb-4">SİSTEM ÇÖKTÜ</h2>
-        <button onclick="location.reload()" class="px-6 py-2 bg-matrix text-black font-bold rounded hover:scale-110 transition">YENİDEN BAŞLAT</button>
-        <a href="index.html" class="mt-4 text-gray-400 text-sm hover:text-white">ÇIKIŞ</a>
+    <div id="stage" class="relative mt-3 w-full max-w-[640px] flex-1 min-h-0 px-3" style="max-height:calc(100dvh - 190px)">
+        <canvas id="gameCanvas" class="w-full h-full bg-black/50 border border-matrix/30 rounded shadow-[0_0_20px_rgba(0,255,65,0.1)]" style="max-width:none;max-height:none;width:100%;height:100%"></canvas>
+
+        <div id="overlay" class="absolute inset-3 bg-black/85 flex flex-col items-center justify-center text-center rounded z-20">
+            <h2 id="ovTitle" class="text-3xl font-bold text-matrix mb-2">HAZIR MISIN?</h2>
+            <p id="ovText" class="text-xs text-gray-400 mb-5 px-6">Düşen kelimeleri yere değmeden yaz. Enter / boşluk ile girişi temizle.</p>
+            <button id="startBtn" class="px-8 py-3 bg-matrix text-black font-bold rounded hover:scale-105 transition">BAŞLA</button>
+            <a href="index.html" class="mt-4 text-gray-400 text-sm hover:text-white">ÇIKIŞ</a>
+        </div>
     </div>
 
-    <div class="mt-4">
-        <input type="text" id="inputField" class="bg-transparent border-b-2 border-matrix text-center text-2xl outline-none text-white w-64 uppercase" autofocus placeholder="BURAYA YAZ..." onblur="this.focus()">
+    <div class="py-3 w-full flex justify-center" style="padding-bottom:max(12px,env(safe-area-inset-bottom))">
+        <input type="text" id="inputField" inputmode="text" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"
+            class="bg-transparent border-b-2 border-matrix text-center text-xl sm:text-2xl outline-none text-white w-64 uppercase" placeholder="BURAYA YAZ..." aria-label="Kelimeyi yaz">
     </div>
 
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const wordsList = ["CODE", "HTML", "CSS", "JAVA", "PYTHON", "REACT", "NODE", "LINUX", "BUG", "DATA", "API", "GIT", "SERVER", "CLOUD", "AI", "NEXTJS", "DESIGN", "PIXEL", "LOGIC", "LOOP", "ARRAY"];
-        
-        let fallingWords = [];
-        let score = 0;
-        let gameActive = true;
-        let spawnRate = 2000;
-        let lastSpawn = 0;
+    (() => {
+        const canvas = document.getElementById('gameCanvas'), ctx = canvas.getContext('2d');
+        const input = document.getElementById('inputField'), overlay = document.getElementById('overlay');
+        const $ = id => document.getElementById(id);
+        const words = ["CODE","HTML","CSS","JAVA","PYTHON","REACT","NODE","LINUX","BUG","DATA","API","GIT","SERVER","CLOUD","AI","NEXTJS","DESIGN","PIXEL","LOGIC","LOOP","ARRAY"];
+        let W = 600, H = 500, dpr = 1;
+        let list = [], score = 0, lives = 3, active = false, spawnEvery = 2000, sinceSpawn = 0, last = 0, raf = 0;
+        let best = 0; try { best = +localStorage.getItem('matrixTyperBest') || 0; } catch (e) {}
+        $('best').textContent = best;
 
-        function spawnWord() {
-            const text = wordsList[Math.floor(Math.random() * wordsList.length)];
-            const x = Math.random() * (canvas.width - 100) + 20;
-            fallingWords.push({ text: text, x: x, y: -20, speed: 1 + (score * 0.05) });
+        function resize() {
+            const r = canvas.getBoundingClientRect(); dpr = Math.min(window.devicePixelRatio || 1, 2);
+            W = Math.max(200, r.width); H = Math.max(200, r.height);
+            canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            list.forEach(w => { w.x = Math.min(w.x, W - 90); });
+        }
+        window.addEventListener('resize', resize);
+
+        function setLives() { $('lives').textContent = '❤'.repeat(Math.max(lives, 0)) || '—'; }
+        function spawn() {
+            const text = words[Math.floor(Math.random() * words.length)];
+            list.push({ text, x: 10 + Math.random() * Math.max(10, W - 110), y: -10, speed: 30 + score * 1.5 + Math.random() * 15 });
+        }
+        function flash() { canvas.style.borderColor = '#fff'; setTimeout(() => canvas.style.borderColor = 'rgba(0,255,65,0.3)', 100); }
+
+        function check() {
+            const v = input.value.trim().toUpperCase(); if (!v) return;
+            const i = list.findIndex(w => w.text === v);
+            if (i !== -1) { list.splice(i, 1); score++; $('score').textContent = score; input.value = ''; flash(); }
+        }
+        input.addEventListener('input', check);
+        input.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.value = ''; } });
+
+        function frame(t) {
+            if (!active) return;
+            const dt = Math.min((t - last) / 1000, 0.05); last = t;
+            sinceSpawn += dt * 1000;
+            if (sinceSpawn > spawnEvery) { spawn(); sinceSpawn = 0; if (spawnEvery > 600) spawnEvery -= 25; }
+            ctx.clearRect(0, 0, W, H);
+            ctx.font = '20px "Courier New", monospace'; ctx.textBaseline = 'alphabetic';
+            const v = input.value.trim().toUpperCase();
+            for (let i = list.length - 1; i >= 0; i--) {
+                const w = list[i]; w.y += w.speed * dt;
+                const hit = v && w.text.startsWith(v);
+                ctx.fillStyle = '#00ff41'; ctx.fillText(w.text, w.x, w.y);
+                if (hit) { ctx.fillStyle = '#ffffff'; ctx.fillText(w.text.slice(0, v.length), w.x, w.y); }
+                if (w.y > H) { list.splice(i, 1); lives--; setLives(); canvas.style.borderColor = '#ff3d00'; setTimeout(() => canvas.style.borderColor = 'rgba(0,255,65,0.3)', 150); }
+            }
+            if (lives <= 0) return end();
+            raf = requestAnimationFrame(frame);
         }
 
-        const input = document.getElementById('inputField');
-        input.addEventListener('input', (e) => {
-            const val = e.target.value.toUpperCase();
-            
-            // Eşleşme kontrolü
-            const matchIndex = fallingWords.findIndex(w => w.text === val);
-            if (matchIndex !== -1) {
-                fallingWords.splice(matchIndex, 1); // Kelimeyi sil
-                score++;
-                document.getElementById('score').innerText = score;
-                input.value = ''; // Inputu temizle
-                
-                // Görsel efekt (basit flash)
-                canvas.style.borderColor = '#fff';
-                setTimeout(() => canvas.style.borderColor = 'rgba(0,255,65,0.3)', 100);
-            }
+        function start() {
+            list = []; score = 0; lives = 3; spawnEvery = 2000; sinceSpawn = 1800; active = true;
+            $('score').textContent = 0; setLives(); input.value = '';
+            overlay.classList.add('hidden'); resize(); input.focus({ preventScroll: true });
+            last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
+        }
+        function end() {
+            active = false;
+            if (score > best) { best = score; try { localStorage.setItem('matrixTyperBest', best); } catch (e) {} $('best').textContent = best; }
+            $('ovTitle').textContent = 'SİSTEM ÇÖKTÜ'; $('ovTitle').className = 'text-3xl font-bold text-red-500 mb-2';
+            $('ovText').textContent = 'Skor: ' + score + ' · Rekor: ' + best; $('startBtn').textContent = 'YENİDEN BAŞLAT';
+            overlay.classList.remove('hidden'); input.blur();
+        }
+        document.addEventListener('visibilitychange', () => { if (document.hidden && active) { active = false; cancelAnimationFrame(raf); $('ovTitle').textContent = 'DURAKLATILDI'; $('ovTitle').className = 'text-3xl font-bold text-matrix mb-2'; $('startBtn').textContent = 'DEVAM'; $('startBtn').dataset.resume = '1'; overlay.classList.remove('hidden'); } });
+        $('startBtn').addEventListener('click', () => {
+            if ($('startBtn').dataset.resume) { delete $('startBtn').dataset.resume; active = true; overlay.classList.add('hidden'); input.focus({ preventScroll: true }); last = performance.now(); raf = requestAnimationFrame(frame); }
+            else start();
         });
-
-        function update(timestamp) {
-            if (!gameActive) return;
-
-            if (timestamp - lastSpawn > spawnRate) {
-                spawnWord();
-                lastSpawn = timestamp;
-                if(spawnRate > 500) spawnRate -= 20; // Zamanla hızlan
-            }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00ff41";
-            ctx.font = "20px Courier New";
-
-            for (let i = 0; i < fallingWords.length; i++) {
-                let word = fallingWords[i];
-                word.y += word.speed;
-                ctx.fillText(word.text, word.x, word.y);
-
-                if (word.y > canvas.height) {
-                    gameOver();
-                }
-            }
-            requestAnimationFrame(update);
-        }
-
-        function gameOver() {
-            gameActive = false;
-            document.getElementById('gameOverScreen').classList.remove('hidden');
-            document.getElementById('gameOverScreen').classList.add('flex');
-        }
-
-        requestAnimationFrame(update);
+        canvas.addEventListener('pointerdown', () => { if (active) input.focus({ preventScroll: true }); });
+        window.addEventListener('keydown', e => { if (active && document.activeElement !== input && e.key.length === 1) input.focus({ preventScroll: true }); });
+        resize();
+    })();
     </script>
 </body>
 </html>

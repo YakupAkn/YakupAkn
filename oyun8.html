@@ -2,11 +2,13 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Cyber Flap | YDA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { bgDark: '#0a0a0a', primary: '#facc15' } } } }
     </script>
+    <script src="js/game-common.js" defer></script>
 </head>
 <body class="bg-bgDark text-white h-screen flex flex-col items-center justify-center overflow-hidden" onmousedown="jump()" onkeydown="jump()">
     
