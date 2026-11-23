@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yakupakn.github.io/YakupAkn/SİTEMAP.xml
+Sitemap: https://yakupakn.github.io/YakupAkn/sitemap.xml

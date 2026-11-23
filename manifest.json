@@ -2,7 +2,7 @@
     "name": "Yakup Delil Akın - Portföy",
     "short_name": "YDA Portföy",
     "description": "Yakup Delil Akın'ın kişisel portföy sitesi - Software Developer & Designer",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#0A0A0A",
     "theme_color": "#FF3D00",
@@ -13,13 +13,19 @@
             "src": "images/icon-192.svg",
             "sizes": "192x192",
             "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "purpose": "any"
         },
         {
             "src": "images/icon-512.svg",
             "sizes": "512x512",
             "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "purpose": "any"
+        },
+        {
+            "src": "images/icon-512.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
         }
     ],
     "categories": [
@@ -28,5 +34,7 @@
         "web development"
     ],
     "screenshots": [],
-    "prefer_related_applications": false
+    "prefer_related_applications": false,
+    "id": "./",
+    "scope": "./"
 }

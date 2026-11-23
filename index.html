@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/layout.js"></script>
     <link rel="stylesheet" href="css/index.css">
-    <!-- geri kalan: tailwind.config scripti ve <style> bloğu aynı kalıyor -->
     <script>
         tailwind.config = {
             theme: {
@@ -406,7 +405,6 @@
                 "oyun11.html",
                 "oyun12.html",
                 "oyun13.html",
-                "oyun14.html",
                 "oyun15.html"
             ];
             let rastgeleIndex = Math.floor(Math.random() * oyunlar.length);
@@ -425,7 +423,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('sw.js')
                     .then((registration) => {
                         console.log('✅ Service Worker kayıtlı:', registration.scope);
                         // Güncelleme kontrolü
